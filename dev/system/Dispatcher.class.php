@@ -57,7 +57,7 @@ class Dispatcher {
 						die;
 					} else {
 						mail('exceptions@accepte.nl', 'HNS-Dev exception', 'Request: '.$_SERVER['REQUEST_URI']."\n".$e->__toString());
-						self::$error(500);
+						self::error(500);
 					}
 				}
 				break;
