@@ -11,23 +11,14 @@ class Functie extends ApiRecord {
 
 	protected $hasManyConfig = array(
 		'politicians' => array(
-			'class' 	=> 'Persons',
+			'class' 	=> 'Person',
 			'table' 	=> array(
 				'class'		=> 'Person_Function',
 				'name'		=> 'persons_functions',
 				'local'		=> 'function',
 				'foreign'	=> 'person',
 			),
-		),
-		'parties' => array(
-			'class' 	=> 'Parties',
-			'table' 	=> array(
-				'class'		=> 'Party_Function',
-				'name'		=> 'parties_functions',
-				'local'		=> 'function',
-				'foreign'	=> 'party',
-			),
-		),
+		)
 	);	
 }
 
