@@ -15,40 +15,52 @@ class ApiCall {
 			@list($name, $item, $string) = $tuple;
 			if ($name == 'sql') {
 				/* The sql tag is suppressed on live, and stored in the log */
-				$result = $string;
+				$result = htmlspecialchars($string, ENT_QUOTES, 'UTF-8', false);
 				if (!DEVELOPER) continue;
 			}
 			/* Generate a node with text content if any was supplied */
-			$node = $xml->addChild($name, $string);
+			// Workaround: addChild($key, $value) does not escape $value!
+			$node = $xml->addChild($name);
+			$node[0] = $string;
+
 			$nodes = array();
 			$defer = array();
 			
 			foreach ($item as $key => $value) {
-				/* If the value is a string, we have a terminal node */
-				if (!is_array($value)) {
-					if (strpos($key, '/') === false) {
-						/* Regular node: ids are added as attribute, other keys as child (# forces attribute) */
-						$call = $key == 'id' || $key[0] == '#' ? 'addAttribute' : 'addChild';
-						if ($key[0] == '#') $key = substr($key, 1);
-						$nodes[$key] = $node->$call($key, $value);
-						
-						/* If any deferred attributes (see below) are waiting, add them */
-						if (array_key_exists($key, $defer))
-							foreach($defer[$key] as $att => $value)
-								$nodes[$key]->addAttribute($att, $value);
-					} else {
-						/* The string contains a slash, so it's an attribute for an existing tag */
-						list($key, $att) = explode('/', $key, 2);
-						if (array_key_exists($key, $nodes))
-							/* The tag exists already, add it */
-							$nodes[$key]->addAttribute($att, $value);
-						else
-							/* The tag doesn't exist yet, defer adding it (see above) */
-							$defer[$key][$att] = $value;
-					}
-				} else
+				if (is_array($value)) {
 					/* The value is an array, create the structure recursively */
 					$this->createXml($node->addChild($key), $value);
+					continue;
+				}
+
+				/* If the value is a string, we have a terminal node */
+				if (strpos($key, '/') === false) {
+					/* Regular node: ids are added as attribute, other keys as child (# forces attribute) */
+
+					if ($key == 'id' || $key[0] == '#') {
+						if ($key[0] == '#') $key = substr($key, 1);
+
+						$nodes[$key] = $node->addAttribute($key, $value);
+					} else {
+						// Workaround: addChild($key, $value) does not escape $value!
+						$nodes[$key] = $node->addChild($key);
+						$nodes[$key][0] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false);
+					}
+
+					/* If any deferred attributes (see below) are waiting, add them */
+					if (array_key_exists($key, $defer))
+						foreach($defer[$key] as $att => $value)
+							$nodes[$key]->addAttribute($att, $value);
+				} else {
+					/* The string contains a slash, so it's an attribute for an existing tag */
+					list($key, $att) = explode('/', $key, 2);
+					if (array_key_exists($key, $nodes))
+						/* The tag exists already, add it */
+						$nodes[$key]->addAttribute($att, $value);
+					else
+						/* The tag doesn't exist yet, defer adding it (see above) */
+						$defer[$key][$att] = $value;
+				}
 			}
 		}
 		/* Return any sql tag value */
@@ -155,6 +167,7 @@ class ApiCall {
 			
 			/* Execute the query */
 			$content = $query->execute();
+
 			$selectQuery = $query instanceof SelectQuery;
 
 			/* __toString can't throw exceptions so use this as a workaround */
