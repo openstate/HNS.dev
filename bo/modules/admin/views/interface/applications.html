@@ -12,7 +12,17 @@
 {/script}
 {pofile applications}
 <div id="context-nav">
-	{if $section eq 'logging'}
+	{if $section eq 'users'}
+		<h3>Logs</h3>
+		<ul>			
+			<li>
+				<a{if $active eq 'list'} class="active"{/if} href="{'/users/list'|route}" title="Gebruikers" style="background-image: url('/assets/skins/backoffice/images/icons/group.png');">Gebruikers</a>
+			</li>
+			<li>
+				<a{if $active eq 'affiliates'} class="active"{/if} href="{'/users/affiliates'|route}" title="Affiliates" style="background-image: url('/assets/skins/backoffice/images/icons/group.png');">Affiliates</a>
+			</li>
+		</ul>
+	{elseif $section eq 'logging'}
 		<h3>Logs</h3>
 		<ul>			
 			<li>

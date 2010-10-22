@@ -1,0 +1,110 @@
+{style}
+input[type=checkbox] { margin: 0; padding: 0; }
+table.list td { margin: 0; padding: 0; padding-top: 3px; }
+{/style}
+{script}
+var indentHidden = [];
+
+function indentClickable(id, hide) {
+	$$('.parent-'+id).each(function(obj) {
+		obj.getParent().getParent().setStyle('display', hide ? 'none' : '');
+		$ES('div.indent_clickable', obj).each(function(obj2) {
+			var id2 = obj2.getProperty('id').substr(5);
+			if (hide || !indentHidden[id2]) indentClickable(id2, hide);
+		});
+	});
+}
+
+/*
+function checkboxClick(id, ignoreUncheck) {
+	if (ignoreUncheck && !obj.getProperty('checked'))
+		return;
+	$(id).setStyle('background-color', 'transparent');
+	$ES('input').each(function(obj) {
+		if (obj.getProperty('id')) {
+			if (id == obj.getProperty('id'))
+				return;
+			if (id == obj.getProperty('id').substr(0, id.length)) {
+				obj.setProperty('checked', false);
+				obj.setProperty('disabled', $(id).getProperty('checked'));
+			}
+			if (obj.getProperty('id') == id.substr(0, obj.getProperty('id').length)) {
+				obj.setStyle('background-color', '#999999');
+			}
+		}
+	});
+}
+*/
+
+window.addEvent('domready', function() {
+/*
+	$$('input.tristate').addEvent('click', function(e) {
+		checkboxClick(this.getProperty('id', false));
+	});
+
+	$$('input.tristate').each(function(obj) {
+		checkboxClick(obj.getProperty('id', true));
+	});
+
+*/
+	$$('div.indent_clickable').addEvent('click', function(e) {
+		var id = this.getProperty('id').substr(5);
+		if (this.getProperty('class').indexOf('close') > -1) {
+			this.setProperty('class', this.getProperty('class').replace('close', 'open'));
+			indentHidden[id] = true;
+			indentClickable(id, true);
+		} else {
+			this.setProperty('class', this.getProperty('class').replace('open', 'close'));
+			$$('.parent-'+id).each(function(obj) { obj.getParent().getParent().setStyle('display', ''); });
+			indentHidden[id] = false;
+			indentClickable(id, false);
+		}
+	});
+	
+	$$('div.start_closed').each(function(obj) {
+		var id = obj.getProperty('id').substr(5);
+		obj.removeClass('start_closed');
+		obj.setProperty('class', obj.getProperty('class').replace('close', 'open'));
+		indentHidden[id] = true;
+		indentClickable(id, true);
+	});
+});
+{/script}
+<table class="form">
+<tr><th>Gebruiker:</th><td>{$user}</td></tr>
+</table>
+<form method="post" action="">
+<table class="list">
+<tr><th>Tabel</th><th>Select</th><th>Insert</th><th>Update</th><th>Delete</th></tr>
+<tr><td><div class="indent parent-null"><div class="indent_clickable close_only" id="item-all">&nbsp;</div>
+</div>&nbsp; Alle tabellen</td>
+{foreach from=3|range:0 item=x}
+<td><input id="c{$x}" type="checkbox" name="all[]" value="{$x}"{if $rights.all.$x} checked="checked"{/if} class="tristate" /></td>
+{/foreach}
+</tr>
+{foreach from=$tables item=table key=tbl name=table}
+{assign var=hide value=true}
+{foreach from=$columns.$tbl item=col name=col}
+{assign var=prop value=$tbl|cat:'_'|cat:$col}
+{if $rights.$prop}{assign var=hide value=false}{/if}
+{/foreach}
+<tr><td><div class="indent parent-all"><div>&nbsp;</div><div class="{if $hide}start_closed {/if}indent_clickable close{if $smarty.foreach.table.last}_last{/if}" id="item-{$tbl|htmlspecialchars}">&nbsp;</div>
+</div>&nbsp; {$table|htmlspecialchars}</td>
+{foreach from=3|range:0 item=x}
+<td><input id="c{$x}{$tbl|htmlspecialchars}" type="checkbox" name="{$tbl|htmlspecialchars}[]" value="{$x}"{if $rights.$tbl.$x} checked="checked"{/if} class="tristate" /></td>
+{/foreach}
+</tr>
+{foreach from=$columns.$tbl item=col name=col}
+<tr><td><div class="indent parent-{$tbl|htmlspecialchars}"><div>&nbsp;</div><div{if !$smarty.foreach.table.last} class="level"{/if}>&nbsp;</div><div class="leaf{if $smarty.foreach.col.last}_last{/if}">&nbsp;</div>
+</div>&nbsp; {$col|htmlspecialchars}</td>{assign var=prop value=$tbl|cat:'_'|cat:$col}
+{foreach from=3|range:0 item=x}
+<td><input id="c{$x}{$prop|htmlspecialchars}" type="checkbox" name="{$prop|htmlspecialchars}[]" value="{$x}"{if $rights.$prop.$x} checked="checked"{/if} class="tristate" /></td>
+{/foreach}
+</tr>
+{/foreach}
+{/foreach}
+</table>
+<table class="form">
+<tr><td><input type="submit" value="Opslaan" /></td></tr>
+</table>
+</form>
