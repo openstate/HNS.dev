@@ -1,7 +1,7 @@
 <?php
 
 require_once 'record/plugins/RecordPlugin.abstract.php';
-require_once 'Developer.class.php';
+require_once 'DataStore.class.php';
 
 class CreatedUpdatedByPlugin extends RecordPlugin {
 
@@ -22,14 +22,14 @@ class CreatedUpdatedByPlugin extends RecordPlugin {
 	
 	public function preInsert(RecordEvent $event) {
 		// $this->record->setData('created', 'now'); //Filled by default?!
-		$this->record->setData('created_by', Developer::getInstance()->getId());
+		$this->record->setData('created_by', DataStore::get('api_developer'));
 		// $this->record->setData('revision', '1'); //Filled by default?!
 		parent::preInsert($event);
 	}
 
 	public function preSave(RecordEvent $event) {
 		$this->record->setData('updated', 'now');
-		$this->record->setData('updated_by', Developer::getInstance()->getId());
+		$this->record->setData('updated_by', DataStore::get('api_developer'));
 		$this->record->setData('revision', $this->record->getData('revision')++);
 		parent::preSave($event);
 	}
