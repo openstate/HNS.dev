@@ -35,9 +35,13 @@ EOF;
 		openssl_sign($post['xml'], $sig, $priv);
 		openssl_free_key($priv);
 		$sig = reset(unpack('H*', $sig));
+		
+		$user = @$post['user'] == 'admin' ? 'admin' : 'test';
+		$key = @$post['user'] == 'admin' ? $sig : 'USER_KEY';
+		
 		$this->get = array(
-			'user' => 'test',
-			'key' => $sig,
+			'user' => $user,
+			'key' => $key,
 		);
 		$ch = curl_init($post['url'].'?'.http_build_query($this->get));
 		curl_setopt($ch, CURLOPT_HEADER, false);
@@ -60,6 +64,8 @@ key=<?php echo(htmlspecialchars($this->get['key'])); ?>
 <?php endif; ?>
 <pre><?php echo(htmlspecialchars($this->out)); ?></pre>
 <form method="post" action="">
+<label><input type="radio" name="user" value="admin"<?php if (@$this->post['user'] == 'admin' || !@$this->post['user']): ?> checked="checked"<?php endif; ?>> Admin</label>
+<label><input type="radio" name="user" value="test"<?php if (@$this->post['user'] == 'test'): ?> checked="checked"<?php endif; ?>> Test</label><br />
 <input type="text" size="50" name="url" value="<?php echo(htmlspecialchars($this->post['url'])); ?>" /><br />
 <textarea rows="20" cols="50" name="xml"><?php echo(htmlspecialchars($this->post['xml'])); ?></textarea><br />
 <input type="submit" />

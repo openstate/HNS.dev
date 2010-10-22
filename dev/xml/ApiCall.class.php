@@ -96,10 +96,10 @@ class ApiCall {
 			DataStore::set('api_user', $user);
 			$hash = sha1($user->id.'||'.$input);
 			$cacheFile = $_SERVER['DOCUMENT_ROOT'].'/../'.self::$cacheDir.'/'.$hash.'.xml';
-			#if (file_exists($cacheFile) && filemtime($cacheFile) >= time() - self::$cacheDuration) {
-			#	$this->xml = file_get_contents($cacheFile);
-			#	return;
-			#}
+			if (file_exists($cacheFile) && filemtime($cacheFile) >= time() - self::$cacheDuration) {
+				$this->xml = file_get_contents($cacheFile);
+				return;
+			}
 			$parser = XmlQuery::parse($input);
 			$query = $parser->parseXml();
 			if (is_string($query)) {
