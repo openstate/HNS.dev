@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title>{$title}</title>
+	{meta http_equiv='Content-Type' content='text/html; charset=utf-8'}
+	{meta name='Robots' content='noindex,nofollow'}
+	{meta name='Language' http_equiv='Language' content='Dutch'}
+	<link rel="stylesheet" href="/assets/skins/backoffice/stylesheets/reset.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/skins/backoffice/stylesheets/base.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/skins/backoffice/stylesheets/login.css" type="text/css" />
+	<script type="text/javascript" src="/assets/widgets/mootools/javascripts/mootools.js"></script>
+	<script type="text/javascript" src="/assets/widgets/mootools/javascripts/framework.js"></script>
+	<script type="text/javascript" src="/assets/widgets/formgen/javascripts/formlib.js"></script>
+</head>
+{pofile form}
+<body class="login">
+	<div id="content">
+		<h1>Accept&eacute;</h1>
+		<div class="branding">
+			<h2>{$global->activeSite.title}</h2>
+			<img src="/assets/skins/backoffice/images/login/branding.png" alt="Branding" />
+		</div>
+		<div class="loginform">
+			{$content}
+		</div>
+	</div>
+</body>
+</html>

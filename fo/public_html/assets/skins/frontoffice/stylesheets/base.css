@@ -1,0 +1,110 @@
+/* CSS Document */
+
+* { font-family: Arial, Helvetica, sans-serif; }
+
+a img { border: none; }
+
+body, html { margin: 0; padding: 0; font-size: 12px; color: #333333; }
+
+a { color: #333333; }
+
+.clear,
+.columns-1-1-1-1,
+.columns-3-1 { clear: both; }
+
+div.first,div.second,div.third,div.fourth { float: left; overflow: hidden; margin: 0 10px 0 0; }
+
+.columns-1-1-1-1 .first,
+.columns-1-1-1-1 .second,
+.columns-1-1-1-1 .third,
+.columns-1-1-1-1 .fourth { width: 240px; }
+.columns-1-1-1-1 .fourth { margin: 0; }
+
+.columns-3-1 .first { width: 730px; padding: 0 10px 0 0; }
+.columns-3-1 .second { width: 240px; margin: 0; }
+
+
+#header { height: 230px; overflow: hidden; background: #c7c7c7; }
+#header .inner { width: 990px; margin: 20px auto 0 auto; height: 170px; overflow: hidden; background: url(../images/header-bg.png) no-repeat; position: relative; }
+#header .inner .image { height: 150px; width: 970px; overflow: hidden; background: transparent; position: absolute; top: 10px; left: 10px; z-index: 1; }
+
+#header .inner .left { position: absolute; z-index: 2; top: 10px; left: 10px;  }
+#header .inner .left .logo{ height: 150px; overflow: hidden; background: #FFF; padding: 0 10px 0 0; float: left; }
+#header .inner .left .intro { margin: 10px 0 0 0; padding: 10px; background: url(../images/header-trans.png);  float: left; }
+#header .inner .left .intro h1 { color: #999999; margin: 0; padding: 0; font-size: 18px; }
+#header .inner .left .intro p { color: #c7c7c7; margin: 10px 0 0 0; padding: 0; }
+
+#header .inner .right { z-index: 2;position: absolute; top: 10px; right: 10px; }
+#header .inner .right .logo{ z-index: 3; height: 150px; overflow: hidden; background: #FFF; padding: 0 0 10px 10px; float: right; }
+#header .inner .right .sponsors{ z-index: 3; height: 30px; background: url(../images/header-sponsors.png) no-repeat; padding: 10px; margin: 100px 0 0 0; float: right;  }
+
+#menu { top: 190px; position: absolute; width: 100%; }
+#menu ul { width: 990px;  margin: 0 auto; height: 40px; line-height: 40px; padding: 0;}
+#menu ul li { float: left; list-style: none;  }
+#menu ul li a { text-decoration: none; display: block; color: #FFFFFF; padding: 0 10px; font-size: 14px;  }
+#menu ul li a:hover, 
+#menu ul li.selected a { background: #FFFFFF; color: #c7c7c7; }
+
+div.overlay { display: none;  border-bottom: 5px solid #c7c7c7; position: absolute; top: 230px; min-height: 120px; width: 100%;  background: #FFFFFF url(../images/overlay-bg.gif) repeat-x left bottom; }
+div.overlay .inner { width: 990px; margin: 0 auto; }
+div.overlay h2 {  color: #c7c7c7; margin: 15px 0 0 0; padding: 0; } 
+div.overlay p { line-height: 18px; margin: 15px 0 0 0; padding: 0; }
+div.overlay h3 { color: #999999; margin: 0 0 5px 0; padding: 0; } 
+div.overlay .menu { border-top: 1px dotted #c7c7c7; margin: 15px 0; padding: 15px 0 0 0; line-height: 24px; }
+div.overlay .menu ul { margin: 0; padding: 0; list-style: none; }
+div.overlay .menu ul li a { text-decoration: none; color: #c7c7c7; }
+
+div.show { display: block; }
+
+#content { width: 990px; margin: /* 15px auto */ 0 auto; }
+
+.story { position: relative; }
+.story .caption { position: absolute; color: #FFFFFF; background: #C7C7C7; line-height: 40px; bottom: 35px; left: 0; width: 100%; font-size: 14px; }
+.story .caption strong {  padding: 0 15px; }
+.story .caption a { color: #FFF; }
+
+.agenda h3 { color: #999; border-bottom: 1px dotted #c7c7c7; margin: 15px 0 0 0; padding: 0 0 5px 0; }
+.agenda ul { margin: 0; padding: 0; list-style: none; }
+.agenda ul li { line-height: 25px; }
+.agenda ul li a{ text-decoration: none; }
+
+.mainagenda h3 { margin: 0; border: none; }
+.mainagenda ul { margin: 0; padding: 5px 10px; background: #c7c7c7; }
+.mainagenda ul li { line-height: 25px; border-top: 1px dotted #fff; }
+.mainagenda ul li.first { border: none; }
+.mainagenda ul li a{ text-decoration: none; color: #FFFFFF; }
+
+.subs h3 { color: #999;margin: 15px 0 0 0; padding: 0 0 5px 0; }
+.subs ul { margin: 0; padding: 0; list-style: none; }
+.subs ul li { float: left; }
+.subs a { display: block; width: 109px; height: 30px; text-indent: -999em; }
+.subs .risk { border-bottom: 1px dotted #00acdc; padding: 0 0 10px 0; margin: 0;  }
+.subs .vesting { border-left: 1px dotted #00acdc;  padding: 0 0 0 10px; margin: 0 0 0 10px; }
+.subs .credes { border-right: 1px dotted #00acdc; clear: left;  padding: 0 10px 0 0; margin: 10px 10px 0 0; }
+.subs .marug { border-top: 1px dotted #00acdc; padding: 10px 0 0 0; }
+.subs .risk a{ background: url(../images/ondervereniging/risk.gif) no-repeat; }
+.subs .vesting a{ background: url(../images/ondervereniging/vesting.gif) no-repeat; }
+.subs .credes a{ background: url(../images/ondervereniging/credes.gif) no-repeat; }
+.subs .marug a{ background: url(../images/ondervereniging/marug.gif) no-repeat; }
+
+#advertising { width: 990px; margin: 0 auto 0 auto; border-top: 1px dotted #c7c7c7; height: 70px; padding: 15px 0 0 0; }
+#advertising .ad { width: 240px; height: 70px; background: #eee; position: relative; }
+#advertising .ad .carousel { width: 240px; height: 70px; position: absolute; margin: 0; padding: 0; }
+#advertising .ad .carousel .item { width: 240px; height: 70px; margin: 0; padding: 0; display: block; position: absolute; top: 0; }
+#advertising .ad .carousel .item img { margin: 0 auto; display: block; }
+
+#footer { width: 990px; margin: 15px auto; padding: 15px 0 0 0; border-top: 1px dotted #c7c7c7;  }
+#footer h3 { margin: 0 0 5px 0; padding: 0; color: #00acdc; font-size: 14px; }
+#footer p { line-height: 20px; color: #2e576b; margin: 0; padding: 0; }
+#footer .address { background: url(../images/footer-logo.gif) no-repeat; padding: 0 0 0 80px; width: 160px; }
+
+.search .text{ padding: 2px 5px 3px; font-size: 13px; border: 1px solid #00acdc; width: 190px; font-size: 14px; color: #666; }
+.search .submit{ cursor: pointer; height: 23px; width: 23px; padding: 0; margin: 0 0 0 -3px;  background: #00acdc url('../images/search.gif'); border:none; text-indent: -999em; }
+
+#wrapper h1 { color: #2e576b; border-bottom: 1px dotted #2e576b; font-size: 18px; }
+#wrapper h2 { color: #00acdc; font-size: 18px; }
+#wrapper h3 { font-size: 16px; color: #2e576b; }
+#wrapper h4 { font-size: 14px; color: #00acdc; }
+#wrapper p { line-height: 20px; padding: 0; margin: 14px 0; }
+#wrapper table { border-collapse: collapse; }
+#wrapper table tr td { vertical-align: top; padding: 0 0 0 10px; margin: 0; }

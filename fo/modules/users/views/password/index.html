@@ -1,0 +1,12 @@
+<form id="usersPasswordIndexForm" method="post" action="" enctype="multipart/form-data">
+{eval var=$form->html()}
+</form>
+
+{script}
+	window.addEvent('domready', function() {
+		var form = $('usersPasswordIndexForm');
+		{{capture name=js assign=js}}{{ldelim}}literal{{rdelim}}{{$form->js()}}{{ldelim}}/literal{{rdelim}}{{/capture}}
+		{{$js|eval}}
+		new Form(form, checks, events);
+	});
+{/script}

@@ -1,0 +1,31 @@
+<?php /* Smarty version 2.6.19, created on 2009-07-01 16:10:30
+         compiled from /home/ralf/hns-dev-fo/templates/outerTemplates/frontoffice.html */ ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="Robots" content="index,follow" />
+	<meta name="Language" http-equiv="Language" content="Dutch" />
+    
+    <title>**TITEL**</title>    
+	
+    <link rel="stylesheet" href="/assets/skins/frontoffice/stylesheets/base.css" type="text/css" />       
+	
+	<link rel="stylesheet" href="/assets/widgets/calendar/stylesheets/calendar.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/widgets/squeezebox/stylesheets/squeezebox.css" type="text/css" />
+
+	<script type="text/javascript" src="/assets/widgets/mootools/javascripts/mootools.js"></script>
+	<script type="text/javascript" src="/assets/widgets/mootools/javascripts/icarousel.js"></script>
+	<script type="text/javascript" src="/assets/widgets/mootools/javascripts/framework.js"></script>
+	<script type="text/javascript" src="/assets/widgets/calendar/javascripts/calendar.js"></script>
+	<script type="text/javascript" src="/assets/widgets/squeezebox/javascripts/squeezebox.js"></script>
+	<script type="text/javascript" src="/assets/widgets/formgen/javascripts/formlib.js"></script>
+	<script type="text/javascript" src="/assets/widgets/formgen/javascripts/simpleTabs.js"></script>
+</head>
+
+<body>
+<?php echo $this->_tpl_vars['content']; ?>
+
+</body>
+</html>

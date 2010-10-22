@@ -1,0 +1,53 @@
+msgid "app.contents"
+msgstr "Inhoud"
+
+msgid "app.styling"
+msgstr "Styling"
+
+msgid "app.pages"
+msgstr "Pagina's"
+
+msgid "app.menuitems"
+msgstr "Menu-items"
+
+msgid "app.sidebar"
+msgstr "Sidebar"
+
+msgid "app.banners"
+msgstr "Banners"
+
+msgid "app.forms"
+msgstr "Aanmeldformulieren"
+
+msgid "app.templates"
+msgstr "Pagina-indelingen"
+
+msgid "app.sites"
+msgstr "Sites"
+
+msgid "app.layouts"
+msgstr "Layouts"
+
+msgid "app.blocks"
+msgstr "BackOffice Blocks"
+
+msgid "app.blockconfig"
+msgstr "Bob Configuraties"
+
+msgid "app.users"
+msgstr "Gebruikers"
+
+msgid "app.agenda"
+msgstr "Agenda"
+
+msgid "app.editsite"
+msgstr "Site instellingen"
+
+msgid "app.sponsors"
+msgstr "Sponsoren"
+
+msgid "app.photos"
+msgstr "Foto's"
+
+
+

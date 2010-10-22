@@ -1,0 +1,5 @@
+table span.status-allowed    { height: 16px; margin-right: 0.5em; background:transparent url(../images/icons/allowed.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;}
+table span.status-disallowed { height: 16px; margin-right: 0.5em; background:transparent url(../images/icons/disallowed.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;}
+table a.entry-allow    {background:transparent url(../images/icons/allow.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;}
+table a.entry-disallow {background:transparent url(../images/icons/disallow.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;}
+.inner-content .add { padding-left: 19px; margin-top: 3px; background:transparent url(../images/icons/toolbar-add.png) top left no-repeat }

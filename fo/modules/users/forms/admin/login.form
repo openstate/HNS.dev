@@ -1,0 +1,53 @@
+<form>
+	<!-- Login block -->
+	<h2>Inloggen</h2>
+	<e:hidden name="destination" value="{$destination}" />
+	<table class="register">
+		<e:field>
+			<label>E-mailadres</label>
+			<content>
+				<e:text name="email" maxlength="40">
+					<c:required />
+				</e:text>
+			</content>
+		</e:field>
+
+		<e:field>
+			<label>Wachtwoord</label>
+			<content>
+				<e:password name="password" maxlength="255">
+					<c:required />
+				</e:password>
+			</content>
+		</e:field>
+
+		<e:field class="last">
+			<label>Onthouden</label>
+			<content>
+				<e:checkbox name="cookie" />
+			</content>
+		</e:field>
+
+
+		<c:server>
+			<p:callback>isCorrectLogin</p:callback>
+			<p:target>cookie</p:target>
+			<p:target>email</p:target>
+			<p:target>password</p:target>
+			<msg>Combinatie gebruikersnaam en wachtwoord is onjuist of je account is nog niet geactiveerd</msg>
+		</c:server>
+
+
+		<e:field>
+			<label />
+			<content>
+				<input type="submit" value="Inloggen" />
+			</content>
+		</e:field>
+	</table>
+{*
+	<p>
+		<a href="{'/users/password/'|route}" title="Wachtwoord vergeten?">Wachtwoord vergeten?</a>
+	</p>
+*}
+</form>

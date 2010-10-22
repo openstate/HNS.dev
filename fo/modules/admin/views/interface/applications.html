@@ -1,0 +1,54 @@
+{script}
+	function showApp(id) {
+		document.getElementById('app_show_'+id).style['display']= '';
+		document.getElementById('app_hide_'+id).style['display']= 'none';
+		return false;
+	}
+	function hideApp(id) {
+		document.getElementById('app_show_'+id).style['display']= 'none';
+		document.getElementById('app_hide_'+id).style['display']= '';
+		return false;
+	}
+{/script}
+{pofile applications}
+<div id="context-nav">
+	{if $section eq 'cms'}
+		<h3>##app.contents##</h3>
+		<ul>			
+			<li>
+				<a{if $active eq 'pages'} class="active"{/if} href="{'/cms/index'|route}" title="##app.pages##" style="background-image: url('/assets/skins/backoffice/images/icons/pages.png');">##app.pages##</a>
+			</li>
+			<li>
+				<a{if $active eq 'editsite'} class="active"{/if} href="{'/cms/sites/edit/'|cat:$site->id|route}" title="##app.editsite##" style="background-image: url('/assets/skins/backoffice/images/icons/house.png');">##app.editsite##</a>
+			</li>
+			<li>
+				<a{if $active eq 'menuitems'} class="active"{/if} href="{'/cms/menuitems'|route}" title="##app.menuitems##" style="background-image: url('/assets/skins/backoffice/images/icons/sitemap.png');">##app.menuitems##</a>
+			</li>
+		</ul>
+		<br/>
+		<h3>##app.styling##</h3>
+		<ul>
+			<li>
+				<a{if $active eq 'templates'} class="active"{/if} href="{'/cms/templates'|route}" title="##app.templates##" style="background-image: url('/assets/skins/backoffice/images/icons/style.png');">##app.templates##</a>
+			</li>
+		</ul>
+	{elseif $section eq 'administration' && $admin}
+		<h3>##app.contents##</h3>
+		<ul>
+			<li>
+				<a{if $active eq 'sites'} class="active"{/if} href="{'/cms/sites'|route}" title="##app.sites##" style="background-image: url('/assets/skins/backoffice/images/icons/pages.png');">##app.sites##</a>
+			</li>
+			{if $accepte_user}		
+			<li>
+				<a{if $active eq 'block'} class="active"{/if} href="{'/cms/block'|route}" title="##app.blocks##" style="background-image: url('/assets/skins/backoffice/images/icons/calender.png');">##app.blocks##</a>
+			</li>
+			<li>
+				<a{if $active eq 'blockconfig'} class="active"{/if} href="{'/cms/blockconfig'|route}" title="##app.blockconfig##" style="background-image: url('/assets/skins/backoffice/images/icons/calender.png');">##app.blockconfig##</a>
+			</li>
+			<li>
+				<a{if $active eq 'layouts'} class="active"{/if} href="{'/cms/layouts'|route}" title="##app.layouts##" style="background-image: url('/assets/skins/backoffice/images/icons/style.png');">##app.layouts##</a>
+			</li>
+			{/if}
+		</ul>			
+	{/if}
+</div>

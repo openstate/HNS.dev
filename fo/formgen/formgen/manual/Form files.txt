@@ -1,0 +1,57 @@
+Chapter: Form files
+
+Section: Introduction
+Form files describe a single form. The file format is XML, but giving an xml header is not needed.
+
+Section: Structure
+All form files have a root tag named 'form'. Currently this tag has no attributes you can specify.
+Inside this form tag is the form's content. This consists of a mix of plain xhtml, special
+<Elements>, and <Checks>. Additionally, each normal xhtml tag or special element tag may have
+<Conditions> associated with it.
+
+Section: Elements
+
+Most of the special functionality is achieved through the use of special tags, which represent
+some kind of structure. These element tags all live in the *e:* namespace to avoid collisions with
+existing XHTML elements. Each element has its own attributes, child elements, and processing, so
+for the various available elements and behaviours, check the <List of elements>.
+
+Each element uses a template to display itself. If for this instance an alternative template is
+needed, the attribute *tpl* can give the name of such a variation. See also
+<Alternative templates>.
+
+Section: Checks
+
+Checks are used to validate the various input elements in the form. Most of the time, these
+will be children of input elements, but they can be specified anywhere in the form. Like elements,
+they live in a separate namespace, *c:*. Unlike elements, checks have a fairly rigid structure.
+
+Each check can have zero or more parameters, which are dependent on the check. Parameters can
+be of two types, *values* and *targets*. Values are literals which generally affect the behaviour
+of the check. Targets are similar, except that they always refer to (part of) an input element
+that the check needs to perform validation. All parameter tags live in the *p:* namespace.
+
+Besides parameters, the *msg* tag is available to override the check's default error message.
+This tag may contain any XHTML, and even custom elements (although it is not recommended to use
+input elements at this point). Also, a check can be forced to display its error message at a
+specific named <Error locations> by giving this name in the attribute *name* of a *position* tag.
+
+See also the <List of checks>.
+
+Section: Error locations
+
+To specify where error messages may be displayed, special tags are used inside a form file. This
+tag is *error*, and is not inside a namespace. A name can be given to it via the attribute
+*name*, this makes it possible to force checks to use this spot.
+
+The method inside element templates is different, see <Element templates> for that. Also, a
+template variation for the error can be given via the *tpl* attribute.
+
+Section: Conditions
+
+To indicate that a certain element (and all its children) are only relevant in certain situations,
+a condition can be specified on any element. This includes both custom elements in the e: namespace,
+and any other element that occurs in the form file. By giving an element an expression via the
+attribute *if*, that element and its children will only be considered active if the expression
+evaluates to *true*. Currently, this means that if a check targets inputs that are currently
+inactive, this check will not be executed. Also, the data for inactive elements cannot be queried.

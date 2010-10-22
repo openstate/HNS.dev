@@ -1,0 +1,54 @@
+<form>
+	<table>
+		<tbody>
+			<e:field>
+				<label>E-mailadres:</label>
+				<content>
+					<e:text name="email" maxlength="100">
+						<c:required />
+						<c:email />
+						<c:server>
+							<p:callback>isValidEmail</p:callback>
+							<msg>E-mail adres is ongeldig</msg>
+						</c:server>
+						<c:server>
+							<p:callback>isUniqueEmail</p:callback>
+							<msg>E-mail adres is al in gebruik</msg>
+						</c:server>
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>Wachtwoord:</label>
+				<content>
+					<e:password name="password" maxlength="50">
+						<c:required />
+					</e:password>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label><strong>Nogmaals</strong> wachtwoord:</label>
+				<content>
+					<e:password name="repeat_password" maxlength="50">
+						<c:required />
+					</e:password>
+				</content>
+			</e:field>
+
+			<c:compare>
+				<p:expr>password = repeat_password</p:expr>
+				<msg>De wachtwoorden komen niet overeen</msg>
+			</c:compare>
+			
+			<e:field>
+				<label />
+				<content>
+					<input type="submit" value="Opslaan" />
+				</content>
+			</e:field>
+
+		</tbody>
+	</table>
+</form>

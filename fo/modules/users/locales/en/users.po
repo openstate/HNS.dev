@@ -1,0 +1,14 @@
+msgid "users.listtitle"
+msgstr "Useroverview"
+
+msgid "users.createtitle"
+msgstr "Add user"
+
+msgid "users.edittitle"
+msgstr "Edit user"
+
+msgid "users.email"
+msgstr "Emailaddress"
+
+msgid "users.created"
+msgstr "Creation date"

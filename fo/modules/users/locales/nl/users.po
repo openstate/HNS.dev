@@ -1,0 +1,14 @@
+msgid "users.listtitle"
+msgstr "Gebruikersoverzicht"
+
+msgid "users.createtitle"
+msgstr "Gebruiker toevoegen"
+
+msgid "users.edittitle"
+msgstr "Gebruiker wijzigen"
+
+msgid "users.email"
+msgstr "E-mailadres"
+
+msgid "users.created"
+msgstr "Aanmaakdatum"

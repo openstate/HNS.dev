@@ -1,0 +1,29 @@
+/* light */
+.story .caption,
+.mainagenda ul,
+#header { background: #00acdc; }
+
+#header .inner .left .intro p,
+#menu ul li.selected a,
+#wrapper h2,
+#wrapper h4,
+div.overlay h2,
+div.overlay .menu ul li a { color: #00acdc; }
+
+#footer,
+#advertising,
+.agenda h3,
+div.overlay .menu { border-color: #00acdc; }
+
+/* dark */
+#menu ul li a:hover, 
+.agenda h3,
+.subs h3,
+div.overlay h3,
+#wrapper h1,
+#wrapper h3, 
+#header .inner .left .intro h1 { color: #2e576b; }
+
+#wrapper h1 { border-color: #00acdc; }
+
+#header { background: #00acdc url(../images/satellites/default/header-bg.gif) repeat-x; }

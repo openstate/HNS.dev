@@ -1,0 +1,16 @@
+/*	Login
+	-------------------------------------------------------------------------------------------------------------------------------------	*/
+	.login {background:#c9c9c9;}	
+	.login #content {background:transparent url(../images/login/bg-loginform.jpg) no-repeat bottom center;margin:130px auto 0 auto;height:430px;padding:20px 85px 0px 85px;width:600px;}
+	.login #content h1 {display:block;background:transparent url(../images/login/logo.png) no-repeat 527px 5px;height:36px;text-indent:-9999px;}
+	.login #content table th {color:#666;border-bottom:none;line-height:25px;padding:8px 7px 8px 0px;}
+	.login #content table td {color:#666;border-bottom:none;line-height:25px;padding:8px 7px 8px 10px;}
+	.login #content table.form td input[type="text"], .login #content table.form td input[type="password"] {width:200px;}
+	.login #content table.form td input[type="password"] {font-size:12px;padding:2px;}
+	.login #content p {padding-top: 10px; margin-bottom:0px !important;}
+	.login #content p a, .login #content p a:visited {color:#5c6e44;margin-left:138px;}
+	.login #content .branding {background:#fff;border:1px solid #ccc;float:left;height:40px;margin-right:20px;padding:3px;width:200px;}
+	.login #content h2 {display:none;height:0;}
+	.login #content .loginform {border-left:1px solid #ccc;margin-left:228px;padding-left:20px;height:270px;}
+	.login #content .loginform h2 {display:block;color:#89c23e;font-size:13px;padding-bottom:20px;}
+	.login #content input[type=text], .login #content input[type=password] {width:200px;}

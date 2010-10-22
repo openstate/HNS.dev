@@ -1,0 +1,30 @@
+{pofile crud}
+{if $toolbar}
+{script}
+	function findChecks(obj, name) {
+		els = obj.parentNode.parentNode.parentNode.parentNode.getElementsByTagName('INPUT');
+		result = ''
+		for (i = 0; i < els.length; i++)
+			if (els[i].name == name+'[]' && els[i].checked)
+				result += ','+els[i].value
+		if (result == '') return false;
+		result = result.substr(1);
+		if (obj.href[obj.href.length-1] != '/')
+			obj.href += '/';
+		obj.href = obj.href+result;
+		return true;
+	}
+{/script}
+<div class="toolbar">
+	<h4>Toolbar</h4>
+	<ul class="toolbar">
+	{foreach from=$toolbar item=tool}
+		{if $tool.check && !$last.check}
+		<li class="no-bg">##crud.with_selected##:</li>		
+		{/if}		
+		<li><a href="{$tool.url|route|escape}" title="{$tool.title|escape|eval}" class="{$tool.class}{if $tool.check} disable-{$tool.check} disabled" onclick="return findChecks(this, '{$tool.check}');{/if}">{$tool.title|escape|eval}</a></li>
+		{assign var=last value=$tool}
+	{/foreach}
+	</ul>
+</div>
+{/if}

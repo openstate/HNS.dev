@@ -1,0 +1,60 @@
+{pofile backoffice}
+<!-- Header -->
+<div id="header">
+	<!-- Branding -->
+	<h1>Accept&eacute;</h1>
+	<!-- Topnavigation -->
+	<div id="top-nav">
+		<h2>Backoffice</h2>
+		<ul>		
+			<li>
+				<a href="{'/admin/index/setLanguage?locale=nl_NL&return='|cat:$smarty.server.REQUEST_URI|route}" title="NL">
+					<img src="/assets/skins/backoffice/images/flags/nl.png" alt="NL" />
+				</a>
+				<a href="{'/admin/index/setLanguage?locale=en_EN&return='|cat:$smarty.server.REQUEST_URI|route}" title="EN">
+					<img src="/assets/skins/backoffice/images/flags/gb.png" alt="EN" />
+				</a>
+			</li>
+			<li class="last">				
+				<a href="{'/users/index/logout'|route}">##bo.logout##</a>
+			</li>
+		</ul>
+	</div>
+	<!-- Mainnavigation -->
+	{render url='/admin/interface/navigation' active=$activeNavigation}
+</div>
+<!-- Sidebar -->
+<div id="left-nav">
+	<!-- Site selection -->
+{*	{render url='/site/index/selection'}*}
+	<!-- Contextualnavigation -->
+	{render url='/admin/interface/applications' active=$activeApplication section=$activeNavigation}
+</div>
+<!-- Content -->
+<div id="sitecontent">
+	<!-- Breadcrumbs -->	
+	{*render url='/admin/interface/crumbs/' crumbs=$crumbs*}
+	{*'/admin/interface/crumbs?'|cat:$crumbs|render*}
+	<!-- Page or module description -->
+	<h3 class="description">{$header|htmlspecialchars}</h3>
+	<!-- Dashboard -->
+	<div id="{if $sidebar}dashboard{else}default{/if}">
+		{render url='/admin/interface/tabs' active=$activeTab tabs=$tabs}
+		<!-- Content -->
+		<div class="inner-content">			
+			{$content}
+		</div>
+	</div>	
+	{if $sidebar}
+	{capture name=sidebar_content assign=sidebar_content}{render url=$sidebar}{/capture}
+	<div id="system-info">
+		<h3>##bo.sidebar##</h3>
+		
+		{render url='/admin/interface/tabs' active=$activeTab tabs=$tabs}
+		<!-- Content -->
+		<div class="inner-content">
+			{$sidebar_content}
+		</div>
+	</div>
+	{/if}
+</div>

@@ -1,0 +1,11 @@
+{pofile navigation}
+<div id="main-nav">
+	<h3>##nav.header##</h3>	
+	<ul>		
+		{if $admin}		
+		<li>
+			<a{if $active eq "users"} class="active"{/if} href="{'/users/list'|route}" title="##nav.users##" style="background-image: url(/assets/skins/backoffice/images/icons/group.png);">##nav.users##</a>
+		</li>				
+		{/if}
+	</ul>
+</div>

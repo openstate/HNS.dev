@@ -1,0 +1,8 @@
+<h1>Not Found</h1>
+<p>The requested URL {$requestUri|escape} was not found on this server.</p>
+{if $message}
+<p>{$message|escape}</p>
+{/if}
+{if $returnUrl}
+<p><a href="{$returnUrl}" title="back">Go back</a></p>
+{/if}

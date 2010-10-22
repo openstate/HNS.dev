@@ -1,0 +1,56 @@
+msgid "form.next"
+msgstr "next"
+
+msgid "form.previous"
+msgstr "previous"
+
+msgid "form.submit"
+msgstr "Submit"
+
+msgid "form.add"
+msgstr "Add"
+
+msgid "form.edit"
+msgstr "Edit"
+
+msgid "form.delete"
+msgstr "Delete"
+
+msgid "form.required"
+msgstr "Dit field is required"
+
+msgid "form.regex"
+msgstr "Invalid value"
+
+msgid "form.server"
+msgstr "Invalid value"
+
+msgid "form.compare"
+msgstr "The values don't match"
+
+msgid "form.yes"
+msgstr "Yes"
+
+msgid "form.no"
+msgstr "No"
+
+msgid "form.email"
+msgstr "Invalid email address"
+
+msgid "form.color"
+msgstr "Invalid color code"
+
+msgid "form.back"
+msgstr "Back"
+
+msgid "form.url"
+msgstr "Invalid url, please include the http(s):// or let it start with a /"
+
+msgid "confirm.delete"
+msgstr "Are you sure you wish to delete?"
+
+msgid "form.notset"
+msgstr "Not Set"
+
+msgid "form.transparent"
+msgstr "No color"

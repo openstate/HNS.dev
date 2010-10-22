@@ -1,0 +1,17 @@
+msgid "nav.header"
+msgstr "MainNavigation"
+
+msgid "nav.logout"
+msgstr "Logout"
+
+msgid "nav.users"
+msgstr "Members"
+
+msgid "nav.cms"
+msgstr "CMS"
+
+msgid "nav.administration"
+msgstr "Systemadministration"
+
+msgid "nav.filemanager"
+msgstr "Filemanager"

@@ -1,0 +1,15 @@
+De basisvhost van het framework staat in rewrite.txt. Deze kan worden ingevuld aan de hand van het project.
+Voorbeelden van de private files staan in privates/*.txt, deze kunnen worden gekopieerd naar *.php en ingevuld/aangepast.
+
+In bootstrap.php moeten de regels met $site->addSite worden aangepast, in ieder geval de regexes die de domeinen matchen.
+Backoffice login branding kan worden aangepast in public_html/backoffice/assets/skins/backoffice/images/login/branding.png
+
+Ten slotte moet voor backoffice access in de database in de usr_users tabel een entry worden aangemaakt
+met admin = 1, accepte_user = 1
+
+De volgende directories moeten schrijfbaar zijn:
+/files
+/cache/templates
+
+Nota:
+Ten tijde van het maken van deze export was fg2 op revisie 55.

@@ -1,0 +1,18 @@
+{html_select_date prefix='' field_array='{$name}' time='{$value}'|default:'--' field_order='DMY'
+ display_days={$display_days}     day_extra='class="date_day"'     {$sm_day_empty}   day_format='%d' day_value_format='%02d'
+ display_months={$display_months} month_extra='class="date_month"' {$sm_month_empty}
+ display_years={$display_years}   year_extra='class="date_year"'   {$sm_year_empty}  start_year={$start_year} end_year={$end_year} reverse_years={$reverse_years}
+ all_extra='{$attributes}'
+}
+
+{if {$display_hours} || {$display_minutes} || {$display_seconds}}
+{html_select_time prefix='' field_array='{$name}' time='{$value}'
+ display_seconds={$display_seconds} second_interval={$second_interval}
+ display_minutes={$display_minutes} minute_interval={$minute_interval}
+ display_hours={$display_hours}
+ hour_extra='class="date_hour"'
+ minute_extra='class="date_minute"'
+ second_extra='class="date_second"'
+ all_extra='{$attributes}'
+}
+{/if}

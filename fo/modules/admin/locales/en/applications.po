@@ -1,0 +1,50 @@
+msgid "app.contents"
+msgstr "Content"
+
+msgid "app.styling"
+msgstr "Styling"
+
+msgid "app.pages"
+msgstr "Pages"
+
+msgid "app.menuitems"
+msgstr "Menu-items"
+
+msgid "app.sidebar"
+msgstr "Sidebar"
+
+msgid "app.banners"
+msgstr "Banners"
+
+msgid "app.forms"
+msgstr "Registration forms"
+
+msgid "app.templates"
+msgstr "Templates"
+
+msgid "app.sites"
+msgstr "Sites"
+
+msgid "app.layouts"
+msgstr "Layouts"
+
+msgid "app.blocks"
+msgstr "BackOffice Blocks"
+
+msgid "app.blockconfig"
+msgstr "Bob Configurations"
+
+msgid "app.users"
+msgstr "Users"
+
+msgid "app.agenda"
+msgstr "Agenda"
+
+msgid "app.editsite"
+msgstr "Site settings"
+
+msgid "app.sponsors"
+msgstr "Sponsors"
+
+msgid "app.photos"
+msgstr "Photos"
