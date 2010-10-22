@@ -3,7 +3,9 @@
 	ServerName	<domain>.gl
 	ServerAlias	*.<domain>.gl
 
-	RewriteEngine on
-	RewriteRule   ^/(assets|favicon.ico|robots.txt) - [L]
-	RewriteRule   ^. /index.php [QSA,L]
+        Alias /wiki <docroot>/w/index.php
+
+        RewriteEngine on
+        RewriteRule   ^/(assets|favicon.ico|robots.txt|w/|wiki) - [L]
+        RewriteRule   ^. /index.php [QSA,L]
 </VirtualHost>
