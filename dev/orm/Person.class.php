@@ -20,7 +20,6 @@ class Person extends ApiRecord {
 		'website' => array('type' => self::STRING, 'length' => 50, 'regex' => '!^https?://!'),
 		'blog' => array('type' => self::STRING, 'length' => 50, 'regex' => '!^https?://!'),
 		'email' => array('type' => self::STRING, 'length' => 50, 'regex' => '!^.+@.+\..+$!'),
-		'bio' => array('type' => self::STRING, 'length' => 50),
 		'place_birth' => array('type' => self::STRING, 'length' => 50),
 		'origin_mom' => array('type' => self::LOOKUP, 'lookup' => 'sys_countries'),
 		'origin_dad' => array('type' => self::LOOKUP, 'lookup' => 'sys_countries'),
