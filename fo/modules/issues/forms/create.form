@@ -1,0 +1,70 @@
+<form>
+	<table>
+		<tbody>
+			<e:field>
+				<label>##issue.title##:</label>
+				<content>
+					<e:text name="title" maxlength="30">
+						<c:required />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##issue.description##:</label>
+				<content>
+					<e:textarea name="description">
+						<c:required />
+					</e:textarea>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##issue.category##:</label>
+				<content>
+					<e:select name="category">
+						<values>
+							<value value="bug">##issue.category.bug##</value>
+							<value value="suggestion">##issue.category.suggestion##</value>
+							<value value="question">##issue.category.question##</value>
+						</values>
+						<c:required />
+					</e:select>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##issue.priority##:</label>
+				<content>
+					<e:select name="priority">
+						<values>
+							<value value="1">1. ##issue.priority.1##</value>
+							<value value="2">2. ##issue.priority.2##</value>
+							<value value="3">3. ##issue.priority.3##</value>
+							<value value="4">4. ##issue.priority.4##</value>
+							<value value="5">5. ##issue.priority.5##</value>
+						</values>
+						<c:required />
+					</e:select>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##issue.url##:</label>
+				<content>
+					<e:text name="url" maxlength="200">
+						<c:required />
+						<c:url />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label />
+				<content>
+					<input type="submit" value="##form.submit##" />
+				</content>
+			</e:field>
+		</tbody>
+	</table>
+</form>

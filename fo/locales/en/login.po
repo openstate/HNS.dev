@@ -12,3 +12,9 @@ msgstr "Special:UserLogin"
 
 msgid "login.home"
 msgstr "Main_Page"
+
+msgid "forbidden.title"
+msgstr "Permission error"
+
+msgid "forbidden.line1"
+msgstr "You are not allowed to execute the action you have requested."

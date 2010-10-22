@@ -140,6 +140,9 @@ class User extends Record {
 			return false;
 	}
 
+	public function inGroup($group) {
+		return (boolean) $this->db->query('SELECT 1 FROM mediawiki.user_groups WHERE ug_user = % AND ug_group = %', $this->user_id, $group)->fetchCell();
+	}
 
 	/*
 		Method: cookieLogin

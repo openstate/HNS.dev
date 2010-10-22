@@ -1,0 +1,77 @@
+msgid "issue.title"
+msgstr "Title"
+
+msgid "issue.description"
+msgstr "Description"
+
+msgid "issue.category"
+msgstr "Category"
+
+msgid "issue.category.bug"
+msgstr "Bug"
+
+msgid "issue.category.suggestion"
+msgstr "Suggestion"
+
+msgid "issue.category.question"
+msgstr "Question"
+
+msgid "issue.priority"
+msgstr "Priority"
+
+msgid "issue.priority.1"
+msgstr "Very high"
+
+msgid "issue.priority.2"
+msgstr "High"
+
+msgid "issue.priority.3"
+msgstr "Normal"
+
+msgid "issue.priority.4"
+msgstr "Low"
+
+msgid "issue.priority.5"
+msgstr "Very low"
+
+msgid "issue.url"
+msgstr "Reference URL"
+
+msgid "issue.status"
+msgstr "Status"
+
+msgid "issue.status.new"
+msgstr "New"
+
+msgid "issue.status.progress"
+msgstr "In progress"
+
+msgid "issue.status.closed"
+msgstr "Closed"
+
+msgid "issue.progress"
+msgstr "mark as in progress"
+
+msgid "issue.close"
+msgstr "mark as closed"
+
+msgid "issue.submitted_by"
+msgstr "Submitted by"
+
+msgid "issue.talk"
+msgstr "talk"
+
+msgid "issue.contribs"
+msgstr "contribs"
+
+msgid "issue.to_new"
+msgstr "Opened"
+
+msgid "issue.to_progress"
+msgstr "In progress"
+
+msgid "issue.to_closed"
+msgstr "Closed"
+
+msgid "issue.time_format"
+msgstr "%H:%M, %e %B %Y (%Z)"

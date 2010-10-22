@@ -67,12 +67,12 @@ class Wiki {
 		if (@$test['error']['code'] == 'wlnotloggedin')
 			$this->request('POST', array(
 				'action' => 'login',
-				'lgname' => 'admin',
-				'lgpassword' => 'asdasd'
+				'lgname' => 'Bot',
+				'lgpassword' => 'A?L0d7G\gD#YHN6'
 			));
 	}
 
-	public function edit($title, $content, $options = array()) {
+	public function edit($title, $content, array $options = array()) {
 		$this->login();
 		
 		$query = $this->request('GET', array(
@@ -98,12 +98,12 @@ class Wiki {
 		) + $options + $data);
 	}
 
-	public function create($title, $content, $options = array()) {
-		$this->doEdit($title, $content, $options + array('createonly' => 1));
+	public function create($title, $content, array $options = array()) {
+		$this->edit($title, $content, $options + array('createonly' => 1));
 	}
 	
-	public function forceEdit($title, $content, $options = array()) {
-		$this->doEdit($title, $content, $options + array('nocreate' => 1));
+	public function forceEdit($title, $content, array $options = array()) {
+		$this->edit($title, $content, $options + array('nocreate' => 1));
 	}
 
 	public function delete($title) {
@@ -123,6 +123,35 @@ class Wiki {
 			'title' => $title,
 			'token' => $query['deletetoken'],
 		));
+	}
+
+	protected function doProtect($title, array $protections, $expiry, array $options = array()) {
+		$this->login();
+		
+		$query = $this->request('GET', array(
+			'action' => 'query',
+			'prop' => 'info',
+			'intoken' => 'protect',
+			'titles' => $title
+		));
+
+		$query = reset($query['query']['pages']);
+
+		$this->request('POST', array(
+			'action' => 'protect',
+			'title' => $title,
+			'protections' => implode('|', array_map(create_function('$k,$v', 'return $k."=".$v;'), array_keys($protections), $protections)),
+			'expiry' => $expiry,
+			'token' => $query['protecttoken'],
+		) + $options);
+	}
+
+	public function protect($title, $expiry = 'never', array $options = array()) {
+		$this->doProtect($title, array('edit' => 'sysop'), $expiry, $options);
+	}
+
+	public function unprotect($title, $expiry = 'never', array $options = array()) {
+		$this->doProtect($title, array('edit' => 'all'), $expiry, $options);
 	}
 
 	public function upload($title, $file, $description = '') {

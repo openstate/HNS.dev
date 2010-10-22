@@ -114,4 +114,14 @@ abstract class Controller {
 			'<p>'.sprintf($tr->getMsgstr('login.line2'),
 				'<a title="'.$tr->getMsgstr('login.home').'" href="/wiki/'.$tr->getMsgstr('login.home').'">', '</a>').'</p>'."\n");
 	}
+	
+	protected function displayForbidden() {
+		$locale = substr($this->request->getSite()->getLocale(), 0, 2);
+		$tr = new GettextPO($_SERVER['DOCUMENT_ROOT'].'/../locales/'.$locale.'/login.po');
+		$this->response->getLayout()->title = $tr->getMsgstr('forbidden.title');
+		echo(
+			'<p>'.$tr->getMsgstr('forbidden.line1').'</p>'."\n".
+			'<p>'.sprintf($tr->getMsgstr('login.line2'),
+				'<a title="'.$tr->getMsgstr('login.home').'" href="/wiki/'.$tr->getMsgstr('login.home').'">', '</a>').'</p>'."\n");
+	}
 }
