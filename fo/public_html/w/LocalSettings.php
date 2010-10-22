@@ -114,7 +114,7 @@ $wgCacheEpoch = max( $wgCacheEpoch, gmdate( 'YmdHis', @filemtime( __FILE__ ) ) )
 
 $wgScript = "$wgScriptPath/index.php";
 $wgRedirectScript = "$wgScriptPath/redirect.php";
-$wgArticlePath = "/wiki/$1";
+$wgArticlePath = "/$1";
 $wgUsePathInfo = true;
 
 $wgLogo = '/w/skins/common/images/logo.png';

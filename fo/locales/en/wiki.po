@@ -1,5 +1,5 @@
 msgid "wiki.path"
-msgstr "/wiki"
+msgstr ""
 
 msgid "wiki.name"
 msgstr "HNS.dev"

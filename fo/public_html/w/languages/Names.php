@@ -6,6 +6,7 @@
   * @ingroup Language
   */
 /* private */ $wgLanguageNames = array(
+/*
 	'aa' => 'Qafár af',	# Afar
 	'ab' => 'Аҧсуа',	# Abkhaz, should possibly add ' бысжѡа'
 	'ace' => 'Acèh',	# Aceh
@@ -79,7 +80,9 @@
 	'ee' => 'Eʋegbe',	# Éwé
 	'el' => 'Ελληνικά',	# Greek
 	'eml' => 'Emiliàn e rumagnòl',	# Emiliano-Romagnolo / Sammarinese
+*/
 	'en' => 'English',		# English
+/*
 	'en-gb' => 'British English',		# British English
 	'eo' => 'Esperanto',	# Esperanto
 	'es' => 'Español',	# Spanish
@@ -221,7 +224,9 @@
 	'new' => 'नेपाल भाषा',		# Newar / Nepal Bhasa
 	'ng' => 'Oshiwambo',		# Ndonga
 	'niu' => 'Niuē',	# Niuean
+*/
 	'nl' => 'Nederlands',	# Dutch
+/*
 	'nn' => "\xE2\x80\xAANorsk (nynorsk)\xE2\x80\xAC",	# Norwegian (Nynorsk)
 	'no' => "\xE2\x80\xAANorsk (bokmål)\xE2\x80\xAC",		# Norwegian
 	'nov' => 'Novial',		# Novial
@@ -363,4 +368,5 @@
 	'zh-tw' => "\xE2\x80\xAA中文(台灣)\xE2\x80\xAC",	# Chinese (Taiwan)
 	'zh-yue' => '粵語',					# Cantonese -- (see bug 8217)
 	'zu' => 'isiZulu'		# Zulu
+*/
 );

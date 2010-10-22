@@ -38,7 +38,6 @@ class Wiki {
 		if (@$error)
 			throw new WikiException($error);
 		$out = json_decode($out, true);
-		var_dump($out);
 		if (@$out['error'] && $allowError != $out['error']['code'])
 			throw new WikiException('['.$out['error']['code'].'] '.$out['error']['info']);
 		return $out;
@@ -176,7 +175,7 @@ class Wiki {
 	}
 	
 	public function redirect($title) {
-		return '/wiki/'.$title;
+		return '/'.$title;
 	}
 	
 }

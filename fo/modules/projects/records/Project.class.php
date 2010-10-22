@@ -90,7 +90,7 @@ class Project extends Record {
 		
 		$change = strtolower($change);
 		
-		$server = 'http'.($_SERVER['HTTPS'] ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
+		$server = 'http'.(@$_SERVER['HTTPS'] ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
 		
 		$wiki = '';
 		if ($logo || $screenshot) {
@@ -107,7 +107,7 @@ class Project extends Record {
 		$wiki .= "* '''$license''': {$this->license}\n\n";
 		$wiki .= "=== $description ===\n\n".str_replace("\n", "\n\n", trim($this->description))."\n\n";
 		$wiki .= "=== $files ===\n\n{{Special:Transclude/modules/projects/index/filelist/{$this->id}/}}\n\n";
-		$wiki .= "[[Category:Projects]]\n";
+		$wiki .= "[[Category:Projects|{$this->name}]]\n";
 		
 		return $wiki;
 	}

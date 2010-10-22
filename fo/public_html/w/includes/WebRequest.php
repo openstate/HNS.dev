@@ -121,6 +121,10 @@ class WebRequest {
 				// Regular old PATH_INFO yay
 				$matches['title'] = substr( $_SERVER['PATH_INFO'], 1 );
 			}
+/* TITLE PARAMETER HACK - Ralf 2009-07-14 */
+			if (@$_GET['title'] || @$_POST['title'])
+				unset($matches['title']);
+/* END HACK */
 			foreach( $matches as $key => $val) {
 				$this->data[$key] = $_GET[$key] = $_REQUEST[$key] = $val;
 			}
