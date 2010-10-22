@@ -1,0 +1,53 @@
+\documentclass{accepte}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{lmodern}
+\usepackage{ifthen}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{url}
+\title{HNS.dev API documentation}
+\author{Ralf van den Broek}
+\phone{+31 (0)88 7000 119}
+\email{ralf.vandenbroek@accepte.nl}
+\begin{document}
+\maketitle
+\section{Introduction}
+This document describes the API calls available through the HNS.dev system
+
+\section{Calling the API}
+
+The API is accessed through a HTTP POST request to \url{http://www.hnsdev.gl/query} containing
+an XML document (using the content type text/xml).
+
+Authentication is performed using the query
+parameters \emph{user} and \emph{key}. The \emph{user} parameter contains the user name of the
+user who is accessing the system, and the \emph{key} parameter either contains the user key
+known to the system, or a hexadecimal representation of the cryptographic signature of the 
+XML contents. In the latter case, the RSA public key should be known to the system and the
+contents are signed with the RSA private key known only to the user.
+
+\section{Query}
+
+Example:
+\begin{verbatim}
+<query>
+<select>usualname</select>
+<select>lastname</select>
+<from>person</from>
+<where>gender = 'm'</where>
+</query>
+\end{verbatim}
+
+\section{Insert}
+
+\section{Update}
+
+\section{Delete}
+
+\section{Objects}
+
+TODO
+
+\end{document}
