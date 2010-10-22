@@ -276,7 +276,7 @@ class XmlQuery {
 		/* If we have a hash tag, check cache file existance and return file hash */
 		foreach ($xml->xpath('hash') as $hash) {
 			$hash = (string) $hash;
-			$cacheFile = $_SERVER['DOCUMENT_ROOT'].'/../'.ApiCall::$cacheDir.'/'.$hash.'.xml';
+			$cacheFile = $_SERVER['DOCUMENT_ROOT'].'/../'.ApiCall::$cacheDir.'/'.$hash.'.'.DataStore::get('api_user')->id.'.xml';
 			if (!file_exists($cacheFile))
 				throw new ParseException('Cached query not found');
 			if (filemtime($cacheFile) < time() - ApiCall::$cacheDuration)
