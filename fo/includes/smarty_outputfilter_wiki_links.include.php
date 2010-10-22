@@ -5,7 +5,7 @@
 	function rewrite_class($match) {
 		global $namespaces;
 		$new = false;
-		if (preg_match('!^/wiki/(.+)$!', $match[2] == '?new?' ? $match[4] : $match[2], $href)) {
+		if (preg_match('!^/(.+)$!', $match[2] == '?new?' ? $match[4] : $match[2], $href)) {
 			$list = explode(':', $href[1], 2);
 			if (count($list) > 1 && !$namespaces) {
 				$namespaces = require('namespaces.include.php');

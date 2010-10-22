@@ -112,6 +112,15 @@ msgstr "Log out"
 msgid "wiki.logout.title"
 msgstr "Log out"
 
+msgid "wiki.anonuser.title"
+msgstr "The user page for the ip you&#039;re editing as"
+
+msgid "wiki.anontalk"
+msgstr "Talk for this IP"
+
+msgid "wiki.anontalk.title"
+msgstr "Discussion about edits from this IP adddress"
+
 msgid "wiki.login"
 msgstr "Log in / create account"
 
