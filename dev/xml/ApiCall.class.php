@@ -164,20 +164,8 @@ class ApiCall {
 			if (DataStore::exists('query_exception'))
 				throw DataStore::get('query_exception');
 		} catch (Exception $e) {
-			/* Error, get the error message and store the exception */
-			$ex = $e;
-
-			/* Reraise if developer */
-			if (DEVELOPER)
-				throw $e;
-
-			/* Format error message */
-			if ($e instanceof RecordException || $e instanceof ParseException)
-				$error = $e->getMessage();
-			elseif ($e instanceof DatabaseQueryException)
-				$error = 'Unspecified query error';
-			else
-				$error = 'Internal server error';
+			$this->log($input, $this->xml, !empty($selectQuery) ? $hash : null, @$sql, count($queries), $time, $e);
+			throw $e;
 		}
 
 		/* Find the root tag for the return xml */
@@ -185,18 +173,14 @@ class ApiCall {
 		
 		/* Generate the return xml */
 		$xml = new SimpleXmlElement('<?xml version="1.0" encoding="UTF-8" ?><'.$rootTag.'></'.$rootTag.'>');
-		if (@$error) {
-			/* Error, add a tag with the error message */
-			$xml->addChild('error', htmlspecialchars($error));
-		} elseif (@$content) {
-			/* Build the xml tree */
-			$sql = $this->createXml($xml, $content);
-			
-			/* If this is a select query, add the hash as attribute and store the result in the cache */
-			if ($selectQuery) {
-				$xml->addAttribute('hash', $hash);
-				file_put_contents($cacheFile, $xml->asXml());
-			}
+
+		/* Build the xml tree */
+		$sql = $this->createXml($xml, $content);
+
+		/* If this is a select query, add the hash as attribute and store the result in the cache */
+		if ($selectQuery) {
+			$xml->addAttribute('hash', $hash);
+			file_put_contents($cacheFile, $xml->asXml());
 		}
 		
 		/* Store the xml */
