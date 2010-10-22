@@ -1,9 +1,18 @@
 <?php
-	return array(DBs::SYSTEM => array(
-		'type' => 'pgsql',
-		'host' => '192.168.1.3',
-		'user' => 'hns-dev',
-		'pass' => 'PhlSmbh057eg2nCkficV',
-		'database' => 'hns-dev'
-	));
+	return array(DBs::SYSTEM => 
+		array(
+			'type' => 'pgsql',
+			'host' => '192.168.1.3',
+			'user' => 'hns-dev',
+			'pass' => 'PhlSmbh057eg2nCkficV',
+			'database' => 'hns-dev'
+		), DBs::LOGGING => 
+		array(
+			'type' => 'pgsql',
+			'host' => '192.168.1.3',
+			'user' => 'hns-dev',
+			'pass' => 'PhlSmbh057eg2nCkficV',
+			'database' => 'hns-dev-logging'
+		)
+	);
 ?>
