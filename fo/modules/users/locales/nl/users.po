@@ -46,6 +46,9 @@ msgstr "LinkedIn"
 msgid "user.skype"
 msgstr "Skype"
 
+msgid "user.terms_link"
+msgstr "De "
+
 msgid "user.terms"
 msgstr "Algemene voorwaarden"
 

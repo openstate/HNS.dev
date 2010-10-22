@@ -98,13 +98,6 @@
 			</e:field>
 
 			<e:field>
-				<label>##user.terms##:</label>
-				<content>
-					<e:a name="terms" content="{'/terms'|route}"/>
-				</content>
-			</e:field>
-			
-			<e:field>
 				<label>##user.accept_terms##:</label>
 				<content>
 					<e:checkbox name="accept_terms">

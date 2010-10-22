@@ -168,7 +168,7 @@ class UsersIndexController extends Controller {
 		$this->addPoFile('users.po');
 		$this->addPoFile('form.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
 		$this->addPoFile('crud.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->view->render('index/user.html');
+		$this->view->render('index/credentials.html');
 	}
 	
 	public function createAction() {
