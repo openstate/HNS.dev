@@ -22,11 +22,20 @@ class XmlQuery {
 
 	/* Delegate parsing to the appropriate function */
 	public function parseXml() {
-		/* Hack to suppress warnings, ob_start doesn't seem to work here */
-		if (DEVELOPER && !HIDE_SOME_WARNINGS)
-			$xml = new SimpleXmlElement($this->xml);
-		else
-			$xml = @new SimpleXmlElement($this->xml);
+		try {
+			/* Hack to suppress warnings, ob_start doesn't seem to work here */
+			if (DEVELOPER && !HIDE_SOME_WARNINGS) {
+				$xml = new SimpleXmlElement($this->xml);
+			}
+			else {
+				$xml = new SimpleXmlElement($this->xml, LIBXML_NOERROR);
+			}
+		}
+		// Rethrow ParseException (HTTP 400 error) instead of Exception (HTTP 500 error)
+		catch (Exception $e) {
+			throw new ParseException($e->getMessage());
+		}
+
 		$func = 'parse'.ucfirst($xml->getName());
 		if (method_exists($this, $func)) {
 			$this->rootTag = $xml->getName();
