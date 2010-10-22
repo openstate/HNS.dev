@@ -20,6 +20,23 @@ class Developer extends ApiRecord {
 		'created' => array('type' => self::DATE),
 		'email' => array('type' => self::STRING, 'length' => 50, 'regex' => '!^.+@.+\..+$!'),
 	);
+
+    //Make Developer a Singleton???
+	private static $oInstance;
+ 
+    private function __construct() {}
+    private function __clone() {}
+ 
+    public static function getInstance() {
+        if (!Developer::$oInstance instanceof self) {
+            Developer::$oInstance = new self();
+        }
+        return Developer::$oInstance;
+    }
+    
+    public function getID() {
+    	return $this->data['id'];
+    }
 }
 
 ?>
