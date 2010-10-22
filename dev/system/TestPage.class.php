@@ -4,6 +4,10 @@ class TestPage {
 	protected $post = array('url' => 'http://www.hnsdev.gl/query', 'xml' => '');
 	protected $out = '';
 	
+	public function __construct() {
+		$post['url'] = 'http://'.$_SERVER['HTTP_HOST'].'/query';
+	}
+	
 	public function processPost($post) {
 		if (!@$post['url'] || !@$post['xml']) return;
 		$this->post = $post;
