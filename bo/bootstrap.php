@@ -26,7 +26,7 @@ if(isset($_POST['swfupload_id'])) {
 */
 require_once 'Site.class.php';
 $site = new Site();
-$site->addSite('/^(?:(?P<subdomain>backoffice)\.)?(?P<domain>hnsdev|hns-dev)\.(?P<tld>(?:nl\.)?gl|nl\.devel|nl\.accepteproject\.nl|nl\.acceptelive\.nl)(?::80)?(?:\/.*)?$/i', 'backoffice');
+$site->addSite('/^(?:(?P<subdomain>backoffice)\.)?(?P<domain>hnsdev|hns-dev)\.(?P<tld>(?:nl\.)?gl|(?:nl\.)?devel|(?:nl\.)?accepteproject\.nl|(?:nl\.)?acceptelive\.nl|nl)(?::80)?(?:\/.*)?$/i', 'backoffice');
 
 $site->process();
 
