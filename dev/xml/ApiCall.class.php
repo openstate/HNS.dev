@@ -15,7 +15,7 @@ class ApiCall {
 			@list($name, $item, $string) = $tuple;
 			if ($name == 'sql') {
 				/* The sql tag is suppressed on live, and stored in the log */
-				$result = htmlspecialchars($string, ENT_QUOTES, 'UTF-8', false);
+				$result = htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
 				if (!DEVELOPER) continue;
 			}
 			/* Generate a node with text content if any was supplied */
@@ -44,7 +44,7 @@ class ApiCall {
 					} else {
 						// Workaround: addChild($key, $value) does not escape $value!
 						$nodes[$key] = $node->addChild($key);
-						$nodes[$key][0] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false);
+						$nodes[$key][0] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 					}
 
 					/* If any deferred attributes (see below) are waiting, add them */
