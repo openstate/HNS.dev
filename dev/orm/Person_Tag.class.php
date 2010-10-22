@@ -10,18 +10,6 @@ class Person_Tag extends Record {
 		'created' => array('type' => self::DATE),
 	);
 	
-	protected $hasOneConfig = array(
-		'persons' => array(
-			'class' 	=> 'Person',
-			'local'		=> 'person',
-			'foreign'	=> 'id',
-		),
-		'tags' => array(
-			'class' 	=> 'Tag',
-			'local'		=> 'tag',
-			'foreign'	=> 'id',
-		),
-	);
 }
 
 ?>

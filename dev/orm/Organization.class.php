@@ -10,7 +10,7 @@ class Organization extends Record {
 		'area' => array('type' => self::LOOKUP, 'lookup' => 'sys_regions'),
 		'description' => array('type' => self::STRING, 'length' => 250),
 		'orientation' => array('type' => self::LOOKUP, 'lookup' => 'org_orientations'),
-		'child' => array('type' => self::INT),
+		'child' => array('type' => self::RELATION, 'relation' => 'Organization'),
 		'mother' => array('type' => self::RELATION, 'relation' => 'Organization'),
 	);
 	
@@ -19,13 +19,17 @@ class Organization extends Record {
 			'class' 	=> 'Organization',
 			'foreign'	=> 'mother',
 		),
+		'mother' => array(
+			'class' 	=> 'Organization',
+			'foreign'	=> 'child',
+		),
 		'citations' => array(
 			'class' 	=> 'Citation',
 			'foreign'	=> 'organization',
 		),
 		'documents' => array(
 			'class' 	=> 'Document',
-			'foreign'	=> 'submitter',
+			'foreign'	=> 'submitter_organization',
 		),
 		'parties' => array(
 			'class' 	=> 'Party',

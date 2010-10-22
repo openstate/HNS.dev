@@ -10,18 +10,6 @@ class Author extends Record {
 		'order' => array('type' => self::INT),
 	);
 	
-	protected $hasOneConfig = array(
-		'persons' => array(
-			'class' 	=> 'Person',
-			'local'		=> 'person',
-			'foreign'	=> 'id',
-		),
-		'documents' => array(
-			'class' 	=> 'Document',
-			'local'		=> 'document',
-			'foreign'	=> 'id',
-		),
-	);
 }
 
 ?>

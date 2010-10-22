@@ -52,8 +52,13 @@ class Person extends Record {
 			),
 		),
 		'functions' => array(
-			'class' 	=> 'Function',
-			'foreign'	=> 'person',
+			'class' 	=> 'Functie',
+			'table' 	=> array(
+				'class'		=> 'Person_Function',
+				'name'		=> 'persons_functions',
+				'local'		=> 'person',
+				'foreign'	=> 'function',
+			),
 		),
 		'petitions' => array(
 			'class' 	=> 'Petition',

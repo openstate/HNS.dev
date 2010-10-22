@@ -11,19 +11,6 @@ class Citation extends Record {
 		'citation' => array('type' => self::STRING, 'length' => 250),
 	);
 
-	protected $hasOneConfig = array(
-		'persons' => array(
-			'class' 	=> 'Person',
-			'local'		=> 'person',
-			'foreign'	=> 'id',
-		),
-		'documents' => array(
-			'class' 	=> 'Document',
-			'local'		=> 'document',
-			'foreign'	=> 'id',
-		),
-	);
-	
 }
 
 ?>

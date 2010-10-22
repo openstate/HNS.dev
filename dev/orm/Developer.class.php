@@ -8,7 +8,7 @@ class Developer extends Record {
 		'initials' => array('type' => self::STRING, 'length' => 10),
 		'usualname' => array('type' => self::STRING, 'length' => 25),
 		'surname' => array('type' => self::STRING, 'length' => 50),
-		'gender' => array('type' => self::INT),
+		'gender' => array('type' => self::STRING, 'length' => 1, 'regex' => '!^(m|f)$!'),
 		'date_birth' => array('type' => self::DATE),
 		'nationality' => array('type' => self::LOOKUP, 'lookup' => 'sys_nationalities'),
 		'picture' => array('type' => self::STRING, 'length' => 250),

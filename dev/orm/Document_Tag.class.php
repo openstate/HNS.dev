@@ -10,18 +10,6 @@ class Document_Tag extends Record {
 		'created' => array('type' => self::DATE),
 	);
 	
-	protected $hasOneConfig = array(
-		'documents' => array(
-			'class' 	=> 'Document',
-			'local'		=> 'document',
-			'foreign'	=> 'id',
-		),
-		'tags' => array(
-			'class' 	=> 'Tag',
-			'local'		=> 'tag',
-			'foreign'	=> 'id',
-		),
-	);
 }
 
 ?>
