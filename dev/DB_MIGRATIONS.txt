@@ -1,2 +1,10 @@
 -- Create a new organization type
 INSERT INTO org_types VALUES (3, 'Partij');
+
+-- Create document types
+INSERT INTO doc_types (name) VALUES ('Raadsvoorstel');
+INSERT INTO doc_types (name) VALUES ('Initiatiefvoorstel');
+INSERT INTO doc_types (name) VALUES ('Amendement');
+INSERT INTO doc_types (name) VALUES ('Motie');
+INSERT INTO doc_types (name) VALUES ('Burgerinitiatief');
+INSERT INTO doc_types (name) VALUES ('Onbekend');
