@@ -12,12 +12,11 @@ class Developer extends ApiRecord {
 		'date_birth' => array('type' => self::DATE),
 		'nationality' => array('type' => self::LOOKUP, 'lookup' => 'sys_nationalities'),
 		'picture' => array('type' => self::STRING, 'length' => 250),
-		'party' => array('type' => self::INT),
+		'party' => array('type' =>  self::RELATION, 'relation' => 'Party'),
 		'address' => array('type' => self::STRING, 'length' => 50),
 		'workphone' => array('type' => self::STRING, 'length' => 15),
 		'mobilephone' => array('type' => self::STRING, 'length' => 15),
 		'password' => array('type' => self::STRING, 'length' => 40),
-		'created' => array('type' => self::DATE),
 		'email' => array('type' => self::STRING, 'length' => 50, 'regex' => '!^.+@.+\..+$!'),
 	);
 

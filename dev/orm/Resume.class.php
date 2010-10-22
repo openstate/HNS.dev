@@ -10,7 +10,7 @@ class Resume extends ApiRecord {
 		'year_from' => array('type' => self::INTEGER),
 		'year_to' => array('type' => self::INTEGER),
 		'header' => array('type' => self::STRING, 'length' => 255),
-		'content' => array('type' => self::STRING, 'length' => 255),
+		'content' => array('type' => self::STRING),
 		'category' => array('type' => self::STRING, 'length' => 25),
 		'location' => array('type' => self::STRING, 'length' => 255),
 	);

@@ -22,9 +22,8 @@ class Person extends ApiRecord {
 		'email' => array('type' => self::STRING, 'length' => 50, 'regex' => '!^.+@.+\..+$!'),
 		'bio' => array('type' => self::STRING, 'length' => 50),
 		'place_birth' => array('type' => self::STRING, 'length' => 50),
-		'country_birth' => array('type' => self::STRING),
-		'origin_mom' => array('type' => self::LOOKUP, 'lookup' => 'sys_nationalities'),
-		'origin_dad' => array('type' => self::LOOKUP, 'lookup' => 'sys_nationalities'),
+		'origin_mom' => array('type' => self::LOOKUP, 'lookup' => 'sys_countries'),
+		'origin_dad' => array('type' => self::LOOKUP, 'lookup' => 'sys_countries'),
 		'marital_status' => array('type' => self::LOOKUP, 'lookup' => 'marital_status'),
 	);
 	
@@ -63,15 +62,6 @@ class Person extends ApiRecord {
 		'petitions' => array(
 			'class' 	=> 'Petition',
 			'foreign'	=> 'person',
-		),
-		'tags' => array(
-			'class' 	=> 'Tag',
-			'table' 	=> array(
-				'class'		=> 'Person_Tag',
-				'name'		=> 'persons_tags',
-				'local'		=> 'person',
-				'foreign'	=> 'tag',
-			),
 		),
 	);
 }

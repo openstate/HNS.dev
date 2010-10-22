@@ -39,15 +39,6 @@ class Organization extends ApiRecord {
 			'class' 	=> 'Petition',
 			'foreign'	=> 'organization',
 		),
-		'tags' => array(
-			'class' 	=> 'Tag',
-			'table' 	=> array(
-				'class'		=> 'Organization_Tag',
-				'name'		=> 'organizations_tags',
-				'local'		=> 'organization',
-				'foreign'	=> 'tag',
-			),
-		),
 	);
 }
 

@@ -14,7 +14,8 @@ class Document extends ApiRecord {
 		'summary' => array('type' => self::STRING, 'length' => 250),
 		'type' => array('type' => self::LOOKUP, 'lookup' => 'doc_types'),
 		'result' => array('type' => self::LOOKUP, 'lookup' => 'doc_results'),
-		'submitter' => array('type' => self::RELATION, 'relation' => 'Organization'),
+		'submitter_organization' => array('type' => self::RELATION, 'relation' => 'Organization'),
+		'submitter_person' => array('type' => self::RELATION, 'relation' => 'Person'),
 		'category' => array('type' => self::LOOKUP, 'lookup' => 'doc_categories'),
 	);
 	
@@ -36,16 +37,8 @@ class Document extends ApiRecord {
 			'class' 	=> 'Petition',
 			'foreign'	=> 'document',
 		),
-		'tags' => array(
-			'class' 	=> 'Tag',
-			'table' 	=> array(
-				'class'		=> 'Document_Tag',
-				'name'		=> 'documents_tags',
-				'local'		=> 'document',
-				'foreign'	=> 'tag',
-			),
-		),
 	);
+		
 }
 
 ?>

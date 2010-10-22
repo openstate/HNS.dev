@@ -8,7 +8,7 @@ class Petition extends ApiRecord {
 		'document' => array('type' => self::RELATION, 'relation' => 'Document'),
 		'petitioner' => array('type' => self::RELATION, 'relation' => 'Person'),
 		'organization' => array('type' => self::RELATION, 'relation' => 'Organization'),
-		'status' => array('type' => self::INT),
+		'status' => array('type' => self::LOOKUP, 'lookup' => 'petitions_status'),
 	);
 	
 }

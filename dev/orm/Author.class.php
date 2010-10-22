@@ -7,7 +7,7 @@ class Author extends ApiRecord {
 	protected $config = array(
 		'document' => array('type' => self::RELATION, 'relation' => 'Document'),
 		'person' => array('type' => self::RELATION, 'relation' => 'Person'),
-		'order' => array('type' => self::INT),
+		'auth_order' => array('type' => self::INT),
 	);
 	
 }
