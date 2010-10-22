@@ -5,7 +5,7 @@ class TestPage {
 	protected $out = '';
 	
 	public function __construct() {
-		$post['url'] = 'http://'.$_SERVER['HTTP_HOST'].'/query';
+		$this->post['url'] = 'http://'.$_SERVER['HTTP_HOST'].'/query';
 	}
 	
 	public function processPost($post) {
