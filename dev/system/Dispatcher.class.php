@@ -59,7 +59,7 @@ class Dispatcher {
 							self::error(400, $e);
 							break;
 						case 'RecordNotFoundException':
-							self::error(400, $e);
+							self::error(404, $e);
 							break;
 						case 'ParseException':
 							self::error(400, $e);
@@ -83,7 +83,9 @@ class Dispatcher {
 		$xml->addChild('description', $codes[$code]);
 		$xml->addChild('message', $exception->getMessage());
 
-		if(DEVELOPER){
+		if (DEVELOPER) {
+			$xml->addChild('class', get_class($exception));
+
 			$stack = $xml->addChild('stack');
 			foreach($exception->getTrace() as $call){
 				$callElement = $stack->addChild('call');
@@ -105,8 +107,10 @@ class Dispatcher {
 			mail('exceptions@accepte.nl', 'HNS-Dev exception', 'Request: '.$_SERVER['REQUEST_URI']."\n".$exception->__toString());
 		}
 
+		header("HTTP/1.0 {$code} {$codes[$code]}");
 		header('Content-Type: text/xml');
 		echo (str_replace('><', ">\n<", $xml->asXML()));
+		exit;
 	}
 
 	public static function redirect($url) {
