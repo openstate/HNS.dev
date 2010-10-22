@@ -343,7 +343,6 @@ class QueryFunction implements QueryExpression {
 	}
 	
 	protected function containingTableFinalFn($result) {
-		var_dump($result);
 		$result = array_unique(array_filter($result));
 		if (count($result) > 1)
 			throw new ParseException('Multiple tables referred in single select clause');

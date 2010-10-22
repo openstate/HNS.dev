@@ -1,0 +1,66 @@
+<insert>
+<person>
+<usualname>Ralf</usualname>
+<lastname>van den Broek</lastname>
+</person>
+</insert>
+
+<insert>
+<person>
+<usualname>Wietse</usualname>
+<lastname>van der Wal</lastname>
+</person>
+</insert>
+
+<insert>
+<document>
+<title>Test</title>
+<timestamp>2009-01-01 12:00:00</timestamp>
+</document>
+</insert>
+
+<update>
+<person id="1">
+<usualname>Ralf2</usualname>
+</person>
+</update>
+
+<update>
+<person>
+<usualname>Ralf</usualname>
+<where>lastname like '%Broek'</where>
+</person>
+</update>
+
+<update>
+<person>
+<tags>test tags</tags>
+<author_of>
+<document id="1" auth_order="1" />
+</author_of>
+<where>firstname = 'Ralf'</where>
+</person>
+</update>
+
+<update>
+<document id="1">
+<tags>test tags</tags>
+</document>
+<person id="2">
+<tags>test</tags>
+</person>
+</update>
+
+<query>
+<select>usualname</select>
+<select>lastname</select>
+<from>person</from>
+<where>match document[1] at 100%</where>
+</query>
+
+<query>
+<select>usualname</select>
+<select>lastname</select>
+<from>person</from>
+<where>elem document[1].authors</where>
+</query>

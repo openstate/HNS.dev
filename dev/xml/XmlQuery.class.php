@@ -175,7 +175,7 @@ class XmlQuery {
 							/* If the node has one child, try to parse it as an expression */
 							$query->fields[str_replace('"', '', (string) $key)] = $this->parseExpressionTree($value, 'expression');
 							$reference = false;
-						} catch (ParseError $e) {
+						} catch (ParseException $e) {
 							/* Not an expression, parse as a foreign reference list */
 							$reference = true;
 						}
@@ -227,7 +227,7 @@ class XmlQuery {
 								/* Store xml attributes as fields in the junction table */
 								foreach($item->attributes() as $field => $value)
 									if ($field != 'id')
-										$junction->query->select[str_replace('"'. '', $field)] = new QueryValue($this->parseValue($value));
+										$junction->query->select[str_replace('"', '', $field)] = new QueryValue($this->parseValue($value));
 							}
 							$junctions->add($junction);
 						}
