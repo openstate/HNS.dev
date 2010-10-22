@@ -5,7 +5,7 @@ class Functie extends ApiRecord {
 	protected $softKeyDefinition = "name";
 
 	protected $config = array(
-		'name' => array('type' => self::STRING, 'length' => 25),
+		'name' => array('type' => self::STRING, 'length' => 50),
 		'type' => array('type' => self::LOOKUP, 'lookup' => 'function_types'),
 	);
 
