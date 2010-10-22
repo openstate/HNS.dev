@@ -66,7 +66,7 @@ class LoggingVersioningController extends Controller {
 		$this->view->form = $form;
 		$this->view->data = $data;
 		$this->view->count = $count;
-		$this->view->limit = $this->$limit;
+		$this->view->limit = $this->limit;
 		$this->view->filter = $hasFilter ? 1 : $this->request->getGET('filter', 0);
 		$this->view->has_filter = $hasFilter;
 		$this->view->users = $users;
