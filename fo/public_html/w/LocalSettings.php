@@ -168,4 +168,4 @@ function isValidPassword($password, &$result, $user) {
 
 $wgHooks['isValidPassword'][] = 'isValidPassword';
 
-$wgAllowExternalImagesFrom = array('http://wiki.hnsdev.gl/');
+$wgAllowExternalImagesFrom = array('http://wiki.hnsdev.gl/', 'http://wiki.hns-dev.accepteproject.nl/');
