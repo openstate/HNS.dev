@@ -1,0 +1,191 @@
+msgid "wiki.path"
+msgstr "/wiki"
+
+msgid "wiki.name"
+msgstr "HNS.dev"
+
+msgid "wiki.navigation"
+msgstr "Navigation"
+
+msgid "wiki.mainpage"
+msgstr "Main Page"
+
+msgid "wiki.mainpage.title"
+msgstr "Visit the main page"
+
+msgid "wiki.communityportal"
+msgstr "Community portal"
+
+msgid "wiki.communityportal.title"
+msgstr "About the project, what you can do, where to find things"
+
+msgid "wiki.currentevents"
+msgstr "Current events"
+
+msgid "wiki.currentevents.title"
+msgstr "Find background information on current events"
+
+msgid "wiki.recentchanges"
+msgstr "Recent changes"
+
+msgid "wiki.recentchanges.title"
+msgstr "The list of recent changes in the wiki"
+
+msgid "wiki.randompage"
+msgstr "Random page"
+
+msgid "wiki.randompage.title"
+msgstr "Load a random page"
+
+msgid "wiki.help"
+msgstr "Help"
+
+msgid "wiki.help.title"
+msgstr "The place to find out"
+
+msgid "wiki.search"
+msgstr "Search"
+
+msgid "wiki.search.input.title"
+msgstr "Search %s"
+
+msgid "wiki.search.go"
+msgstr "Go"
+
+msgid "wiki.search.go.title"
+msgstr "Go to a page with this exact name if exists"
+
+msgid "wiki.search.title"
+msgstr "Search the pages for this text"
+
+msgid "wiki.toolbox"
+msgstr "Toolbox"
+
+msgid "wiki.uploadfile"
+msgstr "Upload file"
+
+msgid "wiki.uploadfile.title"
+msgstr "Upload files"
+
+msgid "wiki.specialpages"
+msgstr "Special pages"
+
+msgid "wiki.specialpages.title"
+msgstr "List of all special pages"
+
+msgid "wiki.page"
+msgstr "Page"
+
+msgid "wiki.page.title"
+msgstr "View the content page"
+
+msgid "wiki.user.title"
+msgstr "Your user page"
+
+msgid "wiki.mytalk"
+msgstr "My talk"
+
+msgid "wiki.mytalk.title"
+msgstr "Your talk page"
+
+msgid "wiki.mypreferences"
+msgstr "My preferences"
+
+msgid "wiki.mypreferences.title"
+msgstr "Your preferences"
+
+msgid "wiki.mywatchlist"
+msgstr "My watchlist"
+
+msgid "wiki.mywatchlist.title"
+msgstr "The list of pages you are monitoring for changes"
+
+msgid "wiki.mycontributions"
+msgstr "My contributions"
+
+msgid "wiki.mycontributions.title"
+msgstr "List of your contributions"
+
+msgid "wiki.logout"
+msgstr "Log out"
+
+msgid "wiki.logout.title"
+msgstr "Log out"
+
+msgid "wiki.login"
+msgstr "Log in / create account"
+
+msgid "wiki.login.title"
+msgstr "You are encouraged to log in; however, it is not mandatory"
+
+msgid "wiki.privacypolicy"
+msgstr "Privacy policy"
+
+msgid "wiki.about"
+msgstr "About %s"
+
+msgid "wiki.disclaimers"
+msgstr "Disclaimers"
+
+msgid "wiki.from"
+msgstr "From %s"
+
+msgid "wiki.jumpto"
+msgstr "Jump to"
+
+msgid "wiki.views"
+msgstr "Views"
+
+msgid "wiki.personaltools"
+msgstr "Personal tools"
+
+msgid "wiki.namespace.user"
+msgstr "User"
+
+msgid "wiki.namespace.usertalk"
+msgstr "User_talk"
+
+msgid "wiki.namespace.special"
+msgstr "Special"
+
+msgid "wiki.special.preferences"
+msgstr "Preferences"
+
+msgid "wiki.special.watchlist"
+msgstr "Watchlist"
+
+msgid "wiki.special.contributions"
+msgstr "Contributions"
+
+msgid "wiki.special.userlogout"
+msgstr "UserLogout"
+
+msgid "wiki.special.userlogin"
+msgstr "UserLogin"
+
+msgid "wiki.special.recentchanges"
+msgstr "RecentChanges"
+
+msgid "wiki.special.random"
+msgstr "Random"
+
+msgid "wiki.special.search"
+msgstr "Search"
+
+msgid "wiki.special.upload"
+msgstr "Upload"
+
+msgid "wiki.special.specialpages"
+msgstr "SpecialPages"
+
+msgid "wiki.help.page"
+msgstr "Help:Contents"
+
+msgid "wiki.about.page"
+msgstr "About"
+
+msgid "wiki.disclaimer.page"
+msgstr "General disclaimer"
+
+msgid "wiki.portal.page"
+msgstr "Community_Portal"

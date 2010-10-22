@@ -1,0 +1,191 @@
+msgid "wiki.path"
+msgstr "/wiki"
+
+msgid "wiki.name"
+msgstr "HNS.dev"
+
+msgid "wiki.navigation"
+msgstr "Navigatie"
+
+msgid "wiki.mainpage"
+msgstr "Hoofdpagina"
+
+msgid "wiki.mainpage.title"
+msgstr "Hoofdpaginalogo"
+
+msgid "wiki.communityportal"
+msgstr "Gebruikersportaal"
+
+msgid "wiki.communityportal.title"
+msgstr "Informatie over het project: wie, wat, hoe en waarom"
+
+msgid "wiki.currentevents"
+msgstr "In het nieuws"
+
+msgid "wiki.currentevents.title"
+msgstr "Achtergrondinformatie over actuele zaken"
+
+msgid "wiki.recentchanges"
+msgstr "Recente wijzigingen"
+
+msgid "wiki.recentchanges.title"
+msgstr "De lijst van recente wijzigingen in deze wiki."
+
+msgid "wiki.randompage"
+msgstr "Willekeurige pagina"
+
+msgid "wiki.randompage.title"
+msgstr "Een willekeurige pagina bekijken"
+
+msgid "wiki.help"
+msgstr "Help"
+
+msgid "wiki.help.title"
+msgstr "Hulpinformatie over deze wiki"
+
+msgid "wiki.search"
+msgstr "Zoeken"
+
+msgid "wiki.search.input.title"
+msgstr "%s doorzoeken"
+
+msgid "wiki.search.go"
+msgstr "OK"
+
+msgid "wiki.search.go.title"
+msgstr "Naar een pagina met deze naam gaan als die bestaat"
+
+msgid "wiki.search.title"
+msgstr "De pagina&#039;s voor deze tekst zoeken"
+
+msgid "wiki.toolbox"
+msgstr "Hulpmiddelen"
+
+msgid "wiki.uploadfile"
+msgstr "Bestand uploaden"
+
+msgid "wiki.uploadfile.title"
+msgstr "Bestanden uploaden"
+
+msgid "wiki.specialpages"
+msgstr "Speciale pagina's"
+
+msgid "wiki.specialpages.title"
+msgstr "Lijst van alle speciale pagina&#039;s"
+
+msgid "wiki.page"
+msgstr "Pagina"
+
+msgid "wiki.page.title"
+msgstr "Inhoudspagina bekijken"
+
+msgid "wiki.user.title"
+msgstr "Uw gebruikerspagina"
+
+msgid "wiki.mytalk"
+msgstr "Mijn overleg"
+
+msgid "wiki.mytalk.title"
+msgstr "Uw overlegpagina"
+
+msgid "wiki.mypreferences"
+msgstr "Mijn voorkeuren"
+
+msgid "wiki.mypreferences.title"
+msgstr "Mijn voorkeuren"
+
+msgid "wiki.mywatchlist"
+msgstr "Mijn volglijst"
+
+msgid "wiki.mywatchlist.title"
+msgstr "Pagina"
+
+msgid "wiki.mycontributions"
+msgstr "My contributions"
+
+msgid "wiki.mycontributions.title"
+msgstr "Overzicht van uw bijdragen"
+
+msgid "wiki.logout"
+msgstr "Afmelden"
+
+msgid "wiki.logout.title"
+msgstr "Afmelden"
+
+msgid "wiki.login"
+msgstr "Aanmelden / registreren"
+
+msgid "wiki.login.title"
+msgstr "U wordt van harte uitgenodigd om u aan te melden als gebruiker, maar dit is niet verplicht"
+
+msgid "wiki.privacypolicy"
+msgstr "Privacybeleid"
+
+msgid "wiki.about"
+msgstr "Over %s"
+
+msgid "wiki.disclaimers"
+msgstr "Voorbehoud"
+
+msgid "wiki.from"
+msgstr "Uit %s"
+
+msgid "wiki.jumpto"
+msgstr "Ga naar"
+
+msgid "wiki.views"
+msgstr "Aspecten/acties"
+
+msgid "wiki.personaltools"
+msgstr "Persoonlijke instellingen"
+
+msgid "wiki.namespace.user"
+msgstr "Gebruiker"
+
+msgid "wiki.namespace.usertalk"
+msgstr "Overleg_gebruiker"
+
+msgid "wiki.namespace.special"
+msgstr "Speciaal"
+
+msgid "wiki.special.preferences"
+msgstr "Voorkeuren"
+
+msgid "wiki.special.watchlist"
+msgstr "Volglijst"
+
+msgid "wiki.special.contributions"
+msgstr "Bijdragen"
+
+msgid "wiki.special.userlogout"
+msgstr "Afmelden"
+
+msgid "wiki.special.userlogin"
+msgstr "Aanmelden"
+
+msgid "wiki.special.recentchanges"
+msgstr "RecenteWijzigingen"
+
+msgid "wiki.special.random"
+msgstr "Willekeurig"
+
+msgid "wiki.special.search"
+msgstr "Search"
+
+msgid "wiki.special.upload"
+msgstr "Uploaden"
+
+msgid "wiki.special.specialpages"
+msgstr "SpecialePaginas"
+
+msgid "wiki.help.page"
+msgstr "Help:Inhoud"
+
+msgid "wiki.about.page"
+msgstr "Info"
+
+msgid "wiki.disclaimer.page"
+msgstr "Algemeen voorbehoud"
+
+msgid "wiki.portal.page"
+msgstr "Gebruikersportaal"

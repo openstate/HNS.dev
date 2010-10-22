@@ -88,7 +88,7 @@ $wgUseTeX           = false;
 
 $wgLocalInterwiki   = strtolower( $wgSitename );
 
-$wgLanguageCode = "nl";
+$wgLanguageCode = "en";
 
 $wgSecretKey = "f776b232518f64cbc2e0f5da0d0b9023a8e31e7cc0dcebb8af7409ea5a55daa3";
 
