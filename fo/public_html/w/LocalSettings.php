@@ -129,7 +129,12 @@ $wgDBuser           = $dbSettings[0]['user'];
 $wgDBpassword       = $dbSettings[0]['pass'];
 
 define('NS_REDIRECT', 100);
+define('NS_ISSUE', 102);
+define('NS_ISSUE_TALK', 103);
+
 $wgExtraNamespaces[NS_REDIRECT] = 'Redirect';
+$wgExtraNamespaces[NS_ISSUE] = 'Issue';
+$wgExtraNamespaces[NS_ISSUE_TALK] = 'Issue_talk';
 
 require_once("$IP/extensions/GeSHiCodeTag.php");
 require_once( "$IP/extensions/UnblockUser/UnblockUser.php" );

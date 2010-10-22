@@ -36,6 +36,14 @@ abstract class Controller {
 			throw new Exception('No view set');
 	}
 
+	protected function getTitle($request = null) {
+		$request = $request ? $request : $this->request;
+		$locale = substr($request->getSite()->getLocale(), 0, 2);
+		$destination = $request->getDestination();
+		$tr = new GettextPO($_SERVER['DOCUMENT_ROOT'].'/../locales/'.$locale.'/title.po');
+		return $tr->getMsgstr('title.'.$destination->module.'.'.$destination->controller.'.'.$destination->action);
+	}
+
 	public function dispatch($request, $response) {
 		$this->request = $request;
 		$this->response = $response;
@@ -53,6 +61,8 @@ abstract class Controller {
 		} else {
 			throw new NoRouteException(get_class($this).' couldn\'t route request ' . $response->getViewHelper()->reverseRoute($request->getDestination()->toUrlString()));
 		}
+
+		$this->response->getLayout()->title = $this->getTitle();
 
 		if (method_exists($this, 'preDispatch')) {
 			$this->preDispatch();
@@ -92,5 +102,16 @@ abstract class Controller {
 			$this->view->getEngine()->addPoFile($file, $_SERVER['DOCUMENT_ROOT'].'/../modules/'.$this->request->getDestination()->module.'/locales');
 		}
 
+	}
+	
+	protected function displayLogin() {
+		$locale = substr($this->request->getSite()->getLocale(), 0, 2);
+		$tr = new GettextPO($_SERVER['DOCUMENT_ROOT'].'/../locales/'.$locale.'/login.po');
+		$this->response->getLayout()->title = $tr->getMsgstr('login.title');
+		echo(
+			'<p>'.sprintf($tr->getMsgstr('login.line1'),
+				'<a title="'.$tr->getMsgstr('login.page').'" href="/w/index.php?title='.$tr->getMsgstr('login.page').'&returnto=Redirect:'.urlencode($_SERVER['REQUEST_URI']).'">', '</a>').'</p>'."\n".
+			'<p>'.sprintf($tr->getMsgstr('login.line2'),
+				'<a title="'.$tr->getMsgstr('login.home').'" href="/wiki/'.$tr->getMsgstr('login.home').'">', '</a>').'</p>'."\n");
 	}
 }

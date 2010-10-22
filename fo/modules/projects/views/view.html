@@ -9,27 +9,46 @@
 <tr><th>##project.license##</th><td>{$project->license|htmlspecialchars}</td></tr>
 </table>
 
+{if $loggedIn}
 <a href="{'/projects/index/change/'|cat:$id|route}">##project.change##</a>
+{/if}
 
+{if $loggedIn}
+<form method="post" action="">
+{/if}
 <table>
 <tr>
 	<th>##project.upload.file##</th>
 	<th>##project.upload.version##</th>
 	<th>##project.upload.language##</th>
+{if $loggedIn}
 	<th>##project.publish##</th>
+{/if}
 </tr>
-<form method="post" action="">
+{assign var=filesPublished value=0}
 {foreach from=$files item=file key=id}
+{if $loggedIn || $file->published}
+{assign var=filesPublished value=1}
 <tr>
 	<td><a href="{'/projects/index/download/'|cat:$id|route}">{$file->filename|htmlspecialchars}</a></td>
 	<td>{$file->version|htmlspecialchars}</td>
 	<td>{$file->language|htmlspecialchars}</td>
+{if $loggedIn}
 	<td>
 		<label><input type="radio" name="publish[{$id}]" value="1"{if $file->published} checked="checked"{/if} /> ##project.publish.yes##</label>
 		<label><input type="radio" name="publish[{$id}]" value="0"{if !$file->published} checked="checked"{/if} /> ##project.publish.no##</label>
 	</td>
+{/if}
 </tr>
+{/if}
 {/foreach}
+{if !$filesPublished}
+<tr><td colspan="4"><em>##project.nofiles##</em></td></tr>
+{/if}
+{if $loggedIn}
 <tr><td colspan="4" style="text-align:right;"><input type="submit" value="##project.save##" /></td></tr>
-</form>
+{/if}
 </table>
+{if $loggedIn}
+</form>
+{/if}

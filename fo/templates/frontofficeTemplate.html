@@ -2,7 +2,7 @@
 		<div id="column-content">
 	<div id="content">
 		<a name="top" id="top"></a>
-				<h1 id="firstHeading" class="firstHeading">{if $title}{$title|eval}{else}##title.untitled##{/if}</h1>
+				<h1 id="firstHeading" class="firstHeading">{$title}</h1>
 		<div id="bodyContent">
 			<h3 id="siteSub">Uit HNS.dev</h3>
 
@@ -40,8 +40,6 @@
 				<li id="pt-mycontris"><a href="/wiki/Speciaal:Bijdragen/{$user->user_name|htmlspecialchars}" title="Overzicht van uw bijdragen [y]" accesskey="y">Mijn bijdragen</a></li>
 				<li id="pt-logout"><a href="/w/index.php?title=Speciaal:Afmelden&amp;returnto=Redirect:{$smarty.server.REQUEST_URI|urlencode}" title="Afmelden">Afmelden</a></li>
 			{else}
-				<li id="pt-anonuserpage"><a href="/wiki/Gebruiker:{$smarty.server.REMOTE_ADDR}" title="Gebruikerspagina voor uw IP-adres [.]" accesskey="." class="?new?">{$smarty.server.REMOTE_ADDR}</a></li>
-				<li id="pt-anontalk"><a href="/wiki/Overleg_gebruiker:{$smarty.server.REMOTE_ADDR}" title="Overlegpagina van de anonieme gebruiker van dit IP-adres [n]" accesskey="n" class="?new?">Overlegpagina voor dit IP-adres</a></li>
 				<li id="pt-anonlogin"><a href="/w/index.php?title=Speciaal:Aanmelden&amp;returnto=Redirect:{$smarty.server.REQUEST_URI|urlencode}" title="U wordt van harte uitgenodigd om u aan te melden als gebruiker, maar dit is niet verplicht [o]" accesskey="o">Aanmelden / registreren</a></li>
 			{/if}
 			</ul>

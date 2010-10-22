@@ -108,3 +108,6 @@ msgstr "Modify project"
 
 msgid "project.clear"
 msgstr "Clear image"
+
+msgid "project.nofiles"
+msgstr "No files available"

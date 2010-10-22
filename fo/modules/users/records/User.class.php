@@ -20,6 +20,8 @@ class User extends Record {
 		'user_touched'				=> array(),
 		'user_registration'			=> array(),
 		'user_editcount'			=> array(),
+		'user_failed_attempts'		=> array(),
+		'user_forced_resets'		=> array(),
 	);
 	
 	protected static $cookiePrefix = null;

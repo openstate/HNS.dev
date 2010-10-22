@@ -1,0 +1,14 @@
+msgid "login.title"
+msgstr "Login required"
+
+msgid "login.line1"
+msgstr "You must %slog in%s to view other pages."
+
+msgid "login.line2"
+msgstr "Return to %sMain Page%s"
+
+msgid "login.page"
+msgstr "Special:UserLogin"
+
+msgid "login.home"
+msgstr "Main_Page"

@@ -1,24 +1,24 @@
 msgid "title.untitled"
 msgstr "Untitled"
 
-msgid "title.project.create"
+msgid "title.projects.index.create"
 msgstr "Create project"
 
-msgid "title.project.edit"
+msgid "title.projects.index.edit"
 msgstr "Edit %s"
 
-msgid "title.project.credentials"
+msgid "title.projects.index.credentials"
 msgstr "Credentials for %s"
 
-msgid "title.project.files"
+msgid "title.projects.index.files"
 msgstr "Add files for %s"
 
-msgid "title.project.publish"
+msgid "title.projects.index.publish"
 msgstr "Publish %s"
 
-msgid "title.project.view"
+msgid "title.projects.index.view"
 msgstr "%s"
 
-msgid "title.project.change"
+msgid "title.projects.index.change"
 msgstr "Modify %s"
 

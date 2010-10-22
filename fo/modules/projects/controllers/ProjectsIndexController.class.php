@@ -6,8 +6,15 @@ require_once('Project.class.php');
 require_once('ProjectFile.class.php');
 
 class ProjectsIndexController extends Controller {
-	protected function redirectLogin() {
-		$this->response->redirect('/wiki/Special:UserLogin');
+	protected function getTitle($request = null) {
+		try {
+			$project = new Project();
+			$request = $request ? $request : $this->request;
+			$project->load((int) $request->getParam(0));
+			return sprintf(parent::getTitle($request), htmlspecialchars($project->name));
+		} catch (Exception $e) {
+			return parent::getTitle($request);
+		}
 	}
 
 	public function saveProject($id, $values) {
@@ -35,6 +42,7 @@ class ProjectsIndexController extends Controller {
 			$project->rights_write = 0;
 		}
 		
+		$project->user_id = $this->request->user->user_id;
 		$project->save();
 		
 		return $project->id;
@@ -132,6 +140,11 @@ class ProjectsIndexController extends Controller {
 	}
 
 	public function createAction() {
+		if (!$this->request->user->loggedIn) {
+			$this->displayLogin();
+			return;
+		}
+	
 		$form = new FormInstance(dirname(__FILE__).'/../forms/create.form');
 		$form->addCallback('isValidImage', array($this, 'isValidImage'));
 		
@@ -141,20 +154,21 @@ class ProjectsIndexController extends Controller {
 				$id = $this->saveProject(false, $form->getValues());
 				$this->redirect('/projects/index/credentials/'.$id);
 			}
-		} else {
-			//$form->setRawdata($this->loadData(false));
 		}
 
 		$this->view->form = $form;
 		$this->addPoFile('projects.po');
 		$this->addPoFile('form.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
 		$this->addPoFile('crud.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->addPoFile('title.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->response->getLayout()->title = $this->view->translate('title.project.create', 'title');
 		$this->view->render('project.html');
 	}
 	
 	public function editAction() {
+		if (!$this->request->user->loggedIn) {
+			$this->displayLogin();
+			return;
+		}
+	
 		$form = new FormInstance(dirname(__FILE__).'/../forms/edit.form');
 		$form->addCallback('isValidImage', array($this, 'isValidImage'));
 		
@@ -167,6 +181,11 @@ class ProjectsIndexController extends Controller {
 			throw new NoRouteException();
 		}
 		
+		if ($this->request->user->user_id != $project->user_id) {
+			$this->displayLogin();
+			return;
+		}
+	
 		if ($this->request->isPost()) {
 			$form->setPostData($this->request->getPost(), $this->request->getFiles());
 			if ($form->isValid()) {
@@ -183,12 +202,15 @@ class ProjectsIndexController extends Controller {
 		$this->addPoFile('projects.po');
 		$this->addPoFile('form.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
 		$this->addPoFile('crud.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->addPoFile('title.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->response->getLayout()->title = sprintf($this->view->translate('title.project.edit', 'title'), htmlspecialchars($project->name));
 		$this->view->render('project.html');
 	}
 
 	public function credentialsAction() {
+		if (!$this->request->user->loggedIn) {
+			$this->displayLogin();
+			return;
+		}
+	
 		$form = new FormInstance(dirname(__FILE__).'/../forms/credentials.form');
 
 		$id = $this->request->getParam(0);
@@ -201,6 +223,11 @@ class ProjectsIndexController extends Controller {
 			throw new NoRouteException();
 		}
 		
+		if ($this->request->user->user_id != $project->user_id) {
+			$this->displayLogin();
+			return;
+		}
+	
 		if ($this->request->isPost()) {
 			$form->setPostData($this->request->getPost(), $this->request->getFiles());
 			if ($form->isValid()) {
@@ -219,12 +246,15 @@ class ProjectsIndexController extends Controller {
 		$this->addPoFile('projects.po');
 		$this->addPoFile('form.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
 		$this->addPoFile('crud.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->addPoFile('title.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->response->getLayout()->title = sprintf($this->view->translate('title.project.credentials', 'title'), htmlspecialchars($project->name));
 		$this->view->render('project.html');
 	}
 	
 	public function filesAction() {
+		if (!$this->request->user->loggedIn) {
+			$this->displayLogin();
+			return;
+		}
+	
 		$form = new FormInstance(dirname(__FILE__).'/../forms/file.form');
 		$form->addCallback('isValidFile', array($this, 'isValidFile'));
 
@@ -238,6 +268,11 @@ class ProjectsIndexController extends Controller {
 			throw new NoRouteException();
 		}
 
+		if ($this->request->user->user_id != $project->user_id) {
+			$this->displayLogin();
+			return;
+		}
+	
 		if ($this->request->isPost()) {
 			$form->setPostData($this->request->getPost(), $this->request->getFiles());
 			if ($form->isValid()) {
@@ -258,12 +293,15 @@ class ProjectsIndexController extends Controller {
 		$this->addPoFile('projects.po');
 		$this->addPoFile('form.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
 		$this->addPoFile('crud.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->addPoFile('title.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->response->getLayout()->title = sprintf($this->view->translate('title.project.files', 'title'), htmlspecialchars($project->name));
 		$this->view->render('project.html');
 	}
 
 	public function publishAction() {
+		if (!$this->request->user->loggedIn) {
+			$this->displayLogin();
+			return;
+		}
+	
 		$form = new FormInstance(dirname(__FILE__).'/../forms/publish.form');
 
 		$id = $this->request->getParam(0);
@@ -276,6 +314,11 @@ class ProjectsIndexController extends Controller {
 			throw new NoRouteException();
 		}
 
+		if ($this->request->user->user_id != $project->user_id) {
+			$this->displayLogin();
+			return;
+		}
+	
 		if ($this->request->isPost()) {
 			$form->setPostData($this->request->getPost(), $this->request->getFiles());
 			if ($form->isValid()) {
@@ -294,12 +337,15 @@ class ProjectsIndexController extends Controller {
 		$this->addPoFile('projects.po');
 		$this->addPoFile('form.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
 		$this->addPoFile('crud.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->addPoFile('title.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->response->getLayout()->title = sprintf($this->view->translate('title.project.publish', 'title'), htmlspecialchars($project->name));
 		$this->view->render('project.html');
 	}
 	
 	public function changeAction() {
+		if (!$this->request->user->loggedIn) {
+			$this->displayLogin();
+			return;
+		}
+	
 		$id = $this->request->getParam(0);
 		if (!ctype_digit($id)) throw new NoRouteException();
 		$project = new Project();
@@ -309,12 +355,15 @@ class ProjectsIndexController extends Controller {
 			throw new NoRouteException();
 		}
 
+		if ($this->request->user->user_id != $project->user_id) {
+			$this->displayLogin();
+			return;
+		}
+	
 		$this->view->id = $id;
 		$this->view->project = $project;
 		$this->addPoFile('projects.po');
 		$this->view->render('change.html');
-		$this->addPoFile('title.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->response->getLayout()->title = sprintf($this->view->translate('title.project.change', 'title'), htmlspecialchars($project->name));
 	}
 	
 	public function viewAction() {
@@ -327,9 +376,14 @@ class ProjectsIndexController extends Controller {
 			throw new NoRouteException();
 		}
 
+		if ($this->request->user->user_id != $project->user_id && !$project->published) {
+			$this->displayLogin();
+			return;
+		}
+	
 		$files = $this->listFiles($id);
 		
-		if ($this->request->isPost())
+		if ($this->request->isPost() && $this->request->user->user_id == $project->user_id)
 			foreach ($this->request->getPost('publish', array()) as $key => $value)
 				if (isset($files[$key])) {
 					$files[$key]->published = (int) (boolean) $value;
@@ -339,9 +393,8 @@ class ProjectsIndexController extends Controller {
 		$this->view->id = $id;
 		$this->view->project = $project;
 		$this->view->files = $files;
+		$this->view->loggedIn = $this->request->user->user_id == $project->user_id;
 		$this->addPoFile('projects.po');
-		$this->addPoFile('title.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->response->getLayout()->title = sprintf($this->view->translate('title.project.view', 'title'), htmlspecialchars($project->name));
 		$this->view->render('view.html');
 	}
 
@@ -364,6 +417,11 @@ class ProjectsIndexController extends Controller {
 			throw new NoRouteException();
 		}
 		
+		if ($this->request->user->user_id != $file->project->user_id && !($file->project->published && $file->published)) {
+			$this->displayLogin();
+			return;
+		}
+	
 		header('Content-Type: application/octet-stream');
 		header('Content-Disposition: attachment; filename='.$file->filename);
 		readfile($file->file->getPath());

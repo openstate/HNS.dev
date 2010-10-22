@@ -3407,6 +3407,10 @@ class Title {
 			// we don't call MessageCache::loadAllMessages.
 			list( $basename, /* rest */ ) = explode( '/', $this->mDbkeyform, 2 );
 			return wfMsgWeirdKey( $basename );  // known system message
+/* REDIRECT HACK - Ralf 2009-07-09 */
+		case NS_REDIRECT:
+			return true;
+/* END REDIRECT HACK */
 		default:
 			return false;
 		}
@@ -3430,6 +3434,9 @@ class Title {
 	* @return \type{\bool} TRUE or FALSE
 	*/
 	public function canExist() {
+/* REDIRECT HACK - Ralf 2009-07-09 */
+		if ($this->mNamespace == NS_REDIRECT) return false;
+/* END REDIRECT HACK */
 		return $this->mNamespace >= 0 && $this->mNamespace != NS_MEDIA;
 	}
 
