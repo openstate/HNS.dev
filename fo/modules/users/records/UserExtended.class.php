@@ -59,7 +59,7 @@ class UserExtended extends Record {
 		$wiki = '';
 		if ($photo) {
 			$wiki .= "<div style=\"float:right;\">\n";
-			$wiki .= "<div style=\"margin: 5px; padding: 5px; border: 1px solid black;\"><img src=\"{$server}$photo\" alt=\"{$this->photo->basename}\" /></div>\n\n";
+			$wiki .= "<div style=\"margin: 5px; padding: 5px; border: 1px solid black;\">{$server}$photo</div>\n\n";
 			$wiki .= "</div>\n\n";
 		}
 		$wiki .= "<guard user=\"".htmlspecialchars($user)."\"><div style=\"float: right;\">&#91;[[Redirect:/modules/users/index/change/{$this->getPk()}/|$change]]]</div>\n\n</guard>";
