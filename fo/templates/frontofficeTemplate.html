@@ -1,106 +1,176 @@
 {pofile wiki}
-	<div id="globalWrapper">
-		<div id="column-content">
+<div class="gumax-center" align="center">
+<div id="gumax-rbox" align="left">
+<div class="gumax_head_acc">
+		<!-- Login -->
+		<div id="gumax-p-login">
+			<ul>
+										</ul>
+
+		</div>
+		<!-- end of Login -->
+		
+		<!-- Special and Login menu -->
+		<div id="gumax-p-special">
+			<ul>
+			{if $user->user_id}
+				<li id="gumax-pt-userpage"><a href="##wiki.path##/##wiki.namespace.user##:{$user->user_name|htmlspecialchars}" title="##wiki.user.title## [.]" accesskey="." class="?new?">{$user->user_name|htmlspecialchars}</a></li>
+				<li id="gumax-pt-mytalk"><a href="##wiki.path##/##wiki.namespace.usertalk##:{$user->user_name|htmlspecialchars}" title="##wiki.mytalk.title## [n]" accesskey="n" class="?new?">##wiki.mytalk##</a></li>
+
+				<li id="gumax-pt-preferences"><a href="##wiki.path##/##wiki.namespace.special##:##wiki.special.preferences##" title="##wiki.mypreferences.title##">##wiki.mypreferences##</a></li>
+				<li id="gumax-pt-watchlist"><a href="##wiki.path##/##wiki.namespace.special##:##wiki.special.watchlist##" title="##wiki.mywatchlist.title## [l]" accesskey="l">##wiki.mywatchlist##</a></li>
+				<li id="gumax-pt-mycontris"><a href="##wiki.path##/##wiki.namespace.special##:##wiki.special.contributions##/{$user->user_name|htmlspecialchars}" title="##wiki.mycontributions.title## [y]" accesskey="y">##wiki.mycontributions##</a></li>
+				<li id="gumax-pt-logout"><a href="/w/index.php?title=##wiki.namespace.special##:##wiki.special.userlogout##&amp;returnto=Redirect:{$smarty.server.REQUEST_URI|urlencode}" title="##wiki.logout.title##">##wiki.logout##</a></li>
+			{else}
+				<li id="gumax-pt-anonuserpage"><a href="##wiki.path##/##wiki.namespace.user##:{$smarty.server.REMOTE_ADDR}" class="?new?">{$smarty.server.REMOTE_ADDR}</a></li>
+				<li id="gumax-pt-anontalk"><a href="##wiki.path##/##wiki.namespace.usertalk##:{$smarty.server.REMOTE_ADDR}" class="?new?">##wiki.anontalk##</a></li>
+
+				<li id="gumax-pt-anonlogin"><a href="/w/index.php?title=##wiki.namespace.special##:##wiki.special.userlogin##&amp;returnto=Redirect:{$smarty.server.REQUEST_URI|urlencode}">##wiki.login##</a></li>
+			{/if}
+			</ul>
+
+		</div>
+		<!-- end of Special and Login menu -->
+
+</div>
+<div class="gumax_box_acc">
+<div class="gumax-rbroundbox"><div class="gumax-rbtop"><div><div></div></div></div>
+<div class="gumax-rbcontentwrap"><div class="gumax-rbcontent">
+
+	<div class="gumax">
+	<!-- =================== gumax-page =================== -->
+	<div id="gumax-page">
+	
+	<!-- ===== Header ===== -->
+
+	<div id="gumax-header">
+		<a name="top" id="contentTop"></a>
+
+		<!-- Site Logo -->
+		<div id="gumax-p-logo">
+			<div id="p-logo">
+			<a style="background-image: url(/w/skins/common/images/logo.gif);" href="##wiki.path##/##wiki.mainpage##"></a>
+			</div>
+		</div>
+
+		<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+		<!-- end of Site Logo -->
+
+		<!-- Search -->
+		<div id="gumax-p-search" class="gumax-portlet">
+			<div id="gumax-searchBody" class="gumax-pBody">
+				<form action="##wiki.path##/##wiki.namespace.special##:##wiki.special.search##" id="searchform"><div style="padding-right:10px;">
+					<input id="searchInput" name="search" type="text" accesskey="f" value="" />
+					<input type='submit' name="go" class="searchButton" id="searchGoButton" value="##wiki.search.go##" />
+					<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="##wiki.search##" />
+				</div></form>
+			</div>
+		</div> <!-- end of gumax-p-search DIV -->
+
+		<!-- end of Search -->
+	</div> <!-- end of header DIV -->
+	<!-- ===== end of Header ===== -->
+
+	<!-- Navigation Menu -->
+	<div id="gumax-p-navigation-wrapper">
+					<div class='gumax-portlet' id='gumax-p-navigation'>
+				<h5>##wiki.navigation##</h5>
+
+				<div id="gumax-p-navigation">
+					<ul>
+						<li id="n-mainpage-description"><a href="##wiki.path##/##wiki.mainpage##">##wiki.mainpage##</a></li>
+						<li id="n-portal"><a href="##wiki.path##/##wiki.name##:##wiki.portal.page##">##wiki.communityportal##</a></li>
+						<li id="n-currentevents"><a href="##wiki.path##/##wiki.name##:##wiki.currentevents##">##wiki.currentevents##</a></li>
+						<li id="n-recentchanges"><a href="##wiki.path##/##wiki.namespace.special##:##wiki.special.recentchanges##">##wiki.recentchanges##</a></li>
+						<li id="n-randompage"><a href="##wiki.path##/##wiki.namespace.special##:##wiki.special.random##">##wiki.randompage##</a></li>
+						<li id="n-help"><a href="##wiki.path##/##wiki.help.page##">##wiki.help##</a></li>
+					</ul>
+				</div>
+			</div>
+			</div>
+	<!-- end of Navigation Menu -->
+
+	<div id="main_menu_spacer"></div>
+
+	<!-- ===== dynamic site logo ===== -->
+	<!-- Get page name -->
+		<!-- ===== end of dynamic site picture ===== -->
+
+	<!-- ===== Content body ===== -->
+	<div id="gumax-content-body">
+	<!-- Main Content -->
 	<div id="content">
 		<a name="top" id="top"></a>
-				<h1 id="firstHeading" class="firstHeading">{$title}</h1>
-		<div id="bodyContent">
+				<h1 class="firstHeading">{$title}</h1>
+		<div id= "bodyContent" class="gumax-bodyContent">
 			<h3 id="siteSub">{'##wiki.from##'|sprintf:'##wiki.name##'}</h3>
 
 			<div id="contentSub"></div>
 									<div id="jump-to-nav">##wiki.jumpto##: <a href="#column-one">{'##wiki.navigation##'|strtolower}</a>, <a href="#searchInput">{'##wiki.search##'|strtolower}</a></div>			<!-- start content -->
 {$content}
-						<!-- end content -->
-						<div class="visualClear"></div>
-		</div>
-	</div>
+<div class="printfooter">
+                        <!-- end content -->
 
-		</div>
-		<div id="column-one">
-	<div id="p-cactions" class="portlet">
-		<h5>##wiki.views##</h5>
-		<div class="pBody">
-			<ul>
-	
-				 <li id="ca-nstab-main" class="selected"><a title="##wiki.page.title## [c]" accesskey="c">##wiki.page##</a></li>
-			</ul>
+            <div class="visualClear"></div>
+        </div>
+    </div>
+    <!-- end of Main Content -->
+    </div>
+    <!-- ===== end of Content body ===== -->
 
-		</div>
-	</div>
+    <!-- ===== gumax-content-actions ===== -->
+    <div id="gumax-content-actions">
 
-	<div class="portlet" id="p-personal">
-		<h5>##wiki.personaltools##</h5>
-		<div class="pBody">
-			<ul>
-			{if $user->user_id}
-				<li id="pt-userpage"><a href="##wiki.path##/##wiki.namespace.user##:{$user->user_name|htmlspecialchars}" title="##wiki.user.title## [.]" accesskey="." class="?new?">{$user->user_name|htmlspecialchars}</a></li>
-				<li id="pt-mytalk"><a href="##wiki.path##/##wiki.namespace.usertalk##:{$user->user_name|htmlspecialchars}" title="##wiki.mytalk.title## [n]" accesskey="n" class="?new?">##wiki.mytalk##</a></li>
+        <ul>
+                                </ul>
+    </div>
+    <!-- ===== end of gumax-content-actions ===== -->
 
-				<li id="pt-preferences"><a href="##wiki.path##/##wiki.namespace.special##:##wiki.special.preferences##" title="##wiki.mypreferences.title##">##wiki.mypreferences##</a></li>
-				<li id="pt-watchlist"><a href="##wiki.path##/##wiki.namespace.special##:##wiki.special.watchlist##" title="##wiki.mywatchlist.title## [l]" accesskey="l">##wiki.mywatchlist##</a></li>
-				<li id="pt-mycontris"><a href="##wiki.path##/##wiki.namespace.special##:##wiki.special.contributions##/{$user->user_name|htmlspecialchars}" title="##wiki.mycontributions.title## [y]" accesskey="y">##wiki.mycontributions##</a></li>
-				<li id="pt-logout"><a href="/w/index.php?title=##wiki.namespace.special##:##wiki.special.userlogout##&amp;returnto=Redirect:{$smarty.server.REQUEST_URI|urlencode}" title="##wiki.logout.title##">##wiki.logout##</a></li>
-			{else}
-				<li id="pt-anonuserpage"><a href="##wiki.path##/##wiki.namespace.user##:{$smarty.server.REMOTE_ADDR}" title="##wiki.anonuser.title## [.]" accesskey="." class="?new?">{$smarty.server.REMOTE_ADDR}</a></li>
-				<li id="pt-anontalk"><a href="##wiki.path##/##wiki.namespace.usertalk##:{$smarty.server.REMOTE_ADDR}" title="##wiki.anontalk.title## [n]" accesskey="n" class="?new?">##wiki.anontalk##</a></li>
+    </div> <!-- end of gumax-page DIV -->
+    <!-- =================== end of gumax-page =================== -->
 
-				<li id="pt-anonlogin"><a href="/w/index.php?title=##wiki.namespace.special##:##wiki.special.userlogin##&amp;returnto=Redirect:{$smarty.server.REQUEST_URI|urlencode}" title="##wiki.login.title## [o]" accesskey="o">##wiki.login##</a></li>
-			{/if}
-			</ul>
-		</div>
-	</div>
+    <div id="footer_spacer"></div>
 
-	<div class="portlet" id="p-logo">
-		<a style="background-image: url(/w/skins/common/images/logo.png);" href="##wiki.path##/##wiki.mainpage##" title="##wiki.mainpage.title## [z]" accesskey="z"></a>
-	</div>
-	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
-	<div class='generated-sidebar portlet' id='p-navigation'>
-		<h5>##wiki.navigation##</h5>
-		<div class='pBody'>
-			<ul>
+    <!-- =================== gumax-page-footer =================== -->
+    <div id="gumax-page-footer">
+        <!-- personal tools  -->
+        <div id="gumax-personal-tools">
+            <ul>
+                        </ul>
+        </div>
+        <!-- end of personal tools  -->
 
-				<li id="n-mainpage-description"><a href="##wiki.path##/##wiki.mainpage##">##wiki.mainpage##</a></li>
-				<li id="n-portal"><a href="##wiki.path##/##wiki.name##:##wiki.portal.page##" title="##wiki.communityportal.title##">##wiki.communityportal##</a></li>
-				<li id="n-currentevents"><a href="##wiki.path##/##wiki.name##:##wiki.currentevents##" title="##wiki.currentevents.title##">##wiki.currentevents##</a></li>
-				<li id="n-recentchanges"><a href="##wiki.path##/##wiki.namespace.special##:##wiki.special.recentchanges##" title="##wiki.recentchanges.title## [r]" accesskey="r">##wiki.recentchanges##</a></li>
-				<li id="n-randompage"><a href="##wiki.path##/##wiki.namespace.special##:##wiki.special.random##" title="##wiki.randompage.title## [x]" accesskey="x">##wiki.randompage##</a></li>
-				<li id="n-help"><a href="##wiki.path##/##wiki.help.page##" title="##wiki.help.title##">##wiki.help##</a></li>
+        <!-- gumax-footer -->
+        <div id="gumax-footer">
+            <div id="gumax-f-message">
+                            </div>
 
-			</ul>
-		</div>
-	</div>
-	<div id="p-search" class="portlet">
-		<h5><label for="searchInput">##wiki.search##</label></h5>
-		<div id="searchBody" class="pBody">
-			<form action="/w/index.php" id="searchform"><div>
-				<input type='hidden' name="title" value="##wiki.namespace.special##:##wiki.special.search##"/>
-
-				<input id="searchInput" name="search" type="text" title="{'##wiki.search.input.title##'|sprintf:'##wiki.name##'} [f]" accesskey="f" value="" />
-				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="##wiki.search.go##" title="##wiki.search.go.title##" />&nbsp;
-				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="##wiki.search##" title="##wiki.search.title##" />
-			</div></form>
-		</div>
-	</div>
-	<div class="portlet" id="p-tb">
-		<h5>##wiki.toolbox##</h5>
-
-		<div class="pBody">
-			<ul>
-<li id="t-upload"><a href="##wiki.path##/##wiki.namespace.special##:##wiki.special.upload##" title="##wiki.uploadfile.title## [u]" accesskey="u">##wiki.uploadfile##</a></li>
-<li id="t-specialpages"><a href="##wiki.path##/##wiki.namespace.special##:##wiki.special.specialpages##" title="##wiki.specialpages.title## [q]" accesskey="q">##wiki.specialpages##</a></li>
-
-		</div>
-	</div>
-		</div><!-- end of the left (by default at least) column -->
-			<div class="visualClear"></div>
-			<div id="footer">
-			<ul id="f-list">
+            <ul id="gumax-f-list">
+                <!--
 					<li id="privacy"><a href="##wiki.path##/##wiki.name##:##wiki.privacypolicy##" title="##wiki.name##:##wiki.privacypolicy##">##wiki.privacypolicy##</a></li>
 					<li id="about"><a href="##wiki.path##/##wiki.name##:##wiki.about.page##" title="##wiki.name##:##wiki.about.page##">{'##wiki.about##'|sprintf:'##wiki.name##'}</a></li>
 					<li id="disclaimer"><a href="##wiki.path##/##wiki.name##:##wiki.disclaimer.page##" title="##wiki.name##:##wiki.disclaimer.page##">##wiki.disclaimers##</a></li>
-			</ul>
-		</div>
+                                -->
+                <!--<li><a href="#">&copy; 2005 - 2007 PaulGu.com</a></li>
+                <li><a href="http://mediawiki.org">Powered by MediaWiki</a></li>
+                <li id="f-designby"><a href="http://paulgu.com">Design by Paul Gu</a></li>-->
+            </ul>
+        </div>  <!-- end of gumax-footer -->
+        
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+    </div>  <!-- end of gumax-page-footer -->
+
+    <!-- =================== end of gumax-page-footer =================== -->
+    </div>  <!-- class: gumax -->
+
+</div></div>
+<div class="gumax-rbbot"><div><div></div></div></div></div>
+<div class="special_bottom_acc">##wiki.copyright##</div>
+<div class="special_participation_acc"><a href="http://www.http://www.digitalepioniers.nl/"><img src="/w/skins/common/images/dplogo.gif" style="float:right;padding-left:10px;" /></a>##wiki.participation##</div>
 </div>
 
-		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<div class="gumax_foot_acc"></div>
+</div>
+</div> <!--  end of gumax-center -->
+<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
 
