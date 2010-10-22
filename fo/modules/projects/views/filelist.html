@@ -15,7 +15,7 @@
 {if $loggedIn || $file->published}
 {assign var=filesPublished value=1}
 <tr>
-	<td><a href="{'/projects/index/download/'|cat:$id|route}">{$file->filename|htmlspecialchars}</a></td>
+	<td><a href="{'/projects/index/file/'|cat:$id|route}">{$file->filename|htmlspecialchars}</a></td>
 	<td>{$file->version|htmlspecialchars}</td>
 	<td>{$file->language|htmlspecialchars}</td>
 {if $loggedIn}

@@ -1,0 +1,7 @@
+<table class="form">
+<tr><th>##project.upload.file##:</th><td>{$file->filename|htmlspecialchars}</td></tr>
+<tr><th>##project.upload.size##:</th><td>{$size}</td></tr>
+<tr><th>##project.upload.language##:</th><td>{$file->language|htmlspecialchars}</td></tr>
+<tr><th>##project.upload.description##:</th><td>{$file->description|htmlspecialchars|nl2br}</td></tr>
+<tr><th></th><td><form method="get" action="{'/projects/index/download/'|cat:$file->id|route}"><input type="submit" value="##project.upload.download##" /></form></td></tr>
+</table>

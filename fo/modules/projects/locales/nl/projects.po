@@ -76,6 +76,12 @@ msgstr "Beschrijving"
 msgid "project.upload.language"
 msgstr "Taal"
 
+msgid "project.upload.size"
+msgstr "Grootte"
+
+msgid "project.upload.download"
+msgstr "Downloaden"
+
 msgid "project.upload.more"
 msgstr "Meer uploaden"
 

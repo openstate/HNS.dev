@@ -470,6 +470,34 @@ class ProjectsIndexController extends Controller {
 		die;
 	}
 
+	public function fileAction() {
+		$id = $this->request->getParam(0);
+		if (!ctype_digit($id)) throw new NoRouteException();
+		$file = new ProjectFile();
+		try {
+			$file->load($id);
+		} catch (RecordNotFoundException $e) {
+			throw new NoRouteException();
+		}
+		
+		if ($this->request->user->user_id != $file->project->user_id && !($file->project->published && $file->published)) {
+			$this->displayLogin();
+			return;
+		}
+		
+		$size = filesize($file->file->getPath());
+		if ($size >= 1048576) $size = (int) round($size / 1048576.0).' MB';
+		elseif ($size >= 1024) $size = (int) round($size / 1024.0).' kB';
+		else $size .= ' B';
+
+		$this->response->getLayout()->title = str_replace('$1', $file->filename, $this->getTitle());
+
+		$this->view->file = $file;
+		$this->view->size = $size;
+		$this->addPoFile('projects.po');
+		$this->view->render('file.html');
+	}
+
 	public function downloadAction() {
 		$id = $this->request->getParam(0);
 		if (!ctype_digit($id)) throw new NoRouteException();
@@ -485,7 +513,15 @@ class ProjectsIndexController extends Controller {
 			return;
 		}
 	
-		header('Content-Type: application/octet-stream');
+		$finfo = finfo_open(FILEINFO_MIME);
+		if (!$finfo)
+			$mime = 'application/octet-stream';
+		else {
+			$mime = finfo_file($finfo, $file->file->getPath());
+			finfo_close($finfo);
+		}
+	
+		header('Content-Type: '.$mime);
 		header('Content-Disposition: attachment; filename='.$file->filename);
 		readfile($file->file->getPath());
 		die;
@@ -535,6 +571,13 @@ class ProjectsIndexController extends Controller {
 		$this->view->project = $project;
 		$this->addPoFile('projects.po');
 		$this->view->render('grant.html');
+	}
+	
+	public function recentAction() {
+		$project = new Project();
+		$this->view->projects = $project->select()->order('created DESC')->limit(5)->get();
+		$this->addPoFile('projects.po');
+		$this->view->render('recent.html');
 	}
 
 	public function isValidImage($values) {

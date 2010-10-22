@@ -76,6 +76,12 @@ msgstr "Description"
 msgid "project.upload.language"
 msgstr "Language"
 
+msgid "project.upload.size"
+msgstr "Size"
+
+msgid "project.upload.download"
+msgstr "Download"
+
 msgid "project.upload.more"
 msgstr "Upload more"
 

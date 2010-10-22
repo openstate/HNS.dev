@@ -1,0 +1,3 @@
+{pofile wiki}<ul>{foreach from=$issues item=issue}
+<li><a title="{$issue->getWikiTitle()|htmlspecialchars}" href="##wiki.path##/{$issue->getWikiTitle()|htmlspecialchars}">{$issue->id}. {$issue->title|htmlspecialchars}</a></li>
+{/foreach}</ul>

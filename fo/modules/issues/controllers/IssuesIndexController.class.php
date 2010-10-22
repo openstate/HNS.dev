@@ -58,6 +58,13 @@ class IssuesIndexController extends Controller {
 		$this->changeStatus('closed');
 	}
 	
+	public function recentAction() {
+		$issue = new Issue();
+		$this->view->issues = $issue->select()->order('to_new DESC')->limit(5)->get();
+		$this->addPoFile('issues.po');
+		$this->view->render('recent.html');
+	}
+
 	protected function changeStatus($status) {
 		if (!$this->request->user->loggedIn || !$this->request->user->inGroup('sysop')) {
 			$this->displayForbidden();

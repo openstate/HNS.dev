@@ -22,6 +22,9 @@ msgstr "Project:%s"
 msgid "title.projects.index.change"
 msgstr "Modify %s"
 
+msgid "title.projects.index.file"
+msgstr "Download $1"
+
 msgid "title.projects.index.grant"
 msgstr "Grant rights to %s"
 
