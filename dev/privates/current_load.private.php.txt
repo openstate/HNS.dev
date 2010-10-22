@@ -1,0 +1,5 @@
+<?php
+
+	define('CURRENT_LOAD', 0.0);
+
+?>

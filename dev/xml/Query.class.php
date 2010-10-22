@@ -1,5 +1,7 @@
 <?php
 
+require_once('Rights.class.php');
+
 /*
 	Interface for callable Query objects
 */
@@ -27,11 +29,17 @@ class CompositeQuery implements Query {
 	
 	/* Execute all queries */
 	public function execute() {
-		//var_dump($this->toSql());
-		$result = array();
-		foreach ($this->queries as $query)
-			$result = array_merge($result, $query->execute());
-		return $result;
+		DBs::inst(DBs::SYSTEM)->query('BEGIN');
+		try {
+			$result = array();
+			foreach ($this->queries as $query)
+				$result = array_merge($result, $query->execute());
+			return $result;
+			DBs::inst(DBs::SYSTEM)->query('END');
+		} catch (Exception $e) {
+			DBs::inst(DBs::SYSTEM)->query('ROLLBACK');
+			throw $e;
+		}
 	}
 	
 	/* Add a query to the composite */
@@ -66,8 +74,25 @@ class SelectQuery implements Query {
 		return $this->getRecordQuery()->setFetchMode(RecordQuery::FETCH_SQL)->get();
 	}
 	
+	public function getRaw() {
+		/* Check table access */
+		$rights = new Rights(DataStore::get('api_user'));
+		$table = ApiRecord::getInstance($this->from)->getTableName();
+		if (!$rights->tableAccess($table, Rights::SELECT))
+			throw new RightsException('No SELECT access on '.$table);
+		
+		/* Fetch data */	
+		$raw = array_map(create_function('$a', 'return array_filter($a, "is_scalar");'), $this->getRecordQuery()->get());
+		
+		/* Check select rights */
+		$raw = $rights->resultSetFilter(ApiRecord::getInstance($this->from)->getTableName(), $raw, $this->joins, Rights::SELECT);
+	
+		return $raw;
+	}
+	
 	public function execute() {
-		$raw = array_map(create_function('$a', 'return array("'.addslashes($this->from).'", array_filter($a, "is_scalar"));'), $this->getRecordQuery()->get());
+		/* Map table name on result set */
+		$raw = array_map(create_function('$a', 'return array("'.addslashes($this->from).'", $a);'), $this->getRaw());
 		$result = array();
 		
 		/* Parse the raw query data to a tree structure */
@@ -79,6 +104,10 @@ class SelectQuery implements Query {
 			/* Parse the returned values */
 			foreach ($item[1] as $key => $value) {
 				$parts = explode('::', $key);
+				/* This is a hidden id value (used in the rights system), ignore it */
+				if ($parts[count($parts)-1] == '__hidden_id') 
+					continue;
+				
 				/* This is an id value, only include if it can be used to access the object (ie, not for subquery joins) */
 				if ($parts[count($parts)-1] == 'id') {
 					$table = @$this->joins[implode('::', array_slice($parts, 0, -1))][0];
@@ -120,7 +149,7 @@ class SelectQuery implements Query {
 			}
 		}
 	
-		return array_merge(array(array('sql', array(), $this->toSql())), $result);
+		return array_merge($result, array(array('sql', array(), $this->toSql())));
 	}
 /*	
 	protected function alias($obj) {
@@ -201,12 +230,23 @@ class SelectQuery implements Query {
 			$tables[] = $value->containingTable();
 			
 		/* Add table ids to select and add any orders imposed on tables */
-		foreach (array_unique(array_filter($tables)) as $table) {
+		$sortedTables = array_unique(array_filter($tables));
+		sort($sortedTables);
+		foreach ($sortedTables as $table) {
 			$prop = new QueryProperty(str_replace('::', '.', $table).'.id');
 			$this->select[] = $prop;
 			$query = $query->addExtraColumn('%l AS %t', $prop, $table.'::id');
 			if (array_key_exists($table, $this->tableOrders))
 				$this->order[] = $this->tableOrders[$table];
+			$parts = explode('::', $table);
+			for ($i = 1; $i < count($parts); $i++) {
+				$tbl = implode('::', array_slice($parts, 0, $i));
+				if (!in_array($tbl, $sortedTables)) {
+					$prop = new QueryProperty(str_replace('::', '.', $tbl).'.id');
+					$this->select[] = $prop;
+					$query = $query->addExtraColumn('%l AS %t', $prop, $tbl.'::__hidden_id');
+				}
+			}
 		}
 		
 		/* Find group by clause */
@@ -432,7 +472,12 @@ class InsertQuery implements Query {
 	}
 
 	public function execute() {
-		$data = $this->query ? $this->query->getRecordQuery()->get() : array(array_map('unwrapValue', $this->fields));
+		/* Check table access */
+		$rights = new Rights(DataStore::get('api_user'));
+		if (!$rights->tableAccess($table = ApiRecord::getInstance($this->table)->getTableName(), Rights::INSERT))
+			throw new RightsException('No INSERT access on '.$table);
+		
+		$data = $this->query ? $this->query->getRaw() : array(array_map('unwrapValue', $this->fields));
 		$result = array();
 		foreach ($data as $row) {
 			/* If the table name contains colons, it refers to a foreign relation
@@ -479,7 +524,9 @@ class InsertQuery implements Query {
 				if ($key == 'local_id' && $manyConfig) $key = $manyConfig['table']['local'];
 				if ($key == 'foreign_id' && $manyConfig) $key = $manyConfig['table']['foreign'];
 				
-				$obj->$key = $val;
+				/* Check rights */
+				if ($rights->columnAccess($obj->getTableName(), $key, Rights::INSERT))
+					$obj->$key = $val;
 			}
 			$obj->save();
 			if (!$this->query)
@@ -507,29 +554,46 @@ class UpdateQuery implements Query {
 	}
 	
 	public function execute() {
+		/* Check table access */
+		$rights = new Rights(DataStore::get('api_user'));
+		if (!$rights->tableAccess($table = ApiRecord::getInstance($this->table)->getTableName(), Rights::UPDATE))
+			throw new RightsException('No UPDATE access on '.$table);
+		
+		/* Fetch update data */
 		$select = new SelectQuery();
 		$select->select = array_filter($this->fields, create_function('$f', 'return !is_string($f);'));
 		$select->from = $this->table;
 		$select->where = $this->where;
-		$data = $select->getRecordQuery()->get();
+		$data = $select->getRaw();
 		foreach ($data as &$row)
 			$row = array_merge($row, array_map('unwrapValue', array_filter($this->fields, 'is_string')));
 		unset($row);
 		if (!$data) return array();
 		
+		/* Use id column as key and remove it from value */
 		$data = array_combine(
 			array_map(create_function('$a', 'return (int) $a["id"];'), $data),
 			array_map(create_function('$a', 'unset($a["id"]); return $a;'), $data)
 		);
 		
+		/* Fetch objects that are to be updated */
 		$obj = ApiRecord::getInstance($this->table);
 		$list = $obj->select()->where('id IN (%l)', implode(', ', array_keys($data)))->get();
 		$result = array();
+		
+		/* Perform updates */
 		foreach($list as $obj) {
+			$updated = false;
 			foreach($data[$obj->id] as $key => $val)
-				$obj->$key = $val;
-			$obj->save();
-			$result[] = array(strtolower(get_class($obj)), array('id' => $obj->id), $obj->softKey());
+				/* Check rights */
+				if ($rights->cellAccess($obj->getTableName(), $obj->id, $key, Rights::UPDATE)) {
+					$obj->$key = $val;
+					$updated = true;
+				}
+			if ($updated) {
+				$obj->save();
+				$result[] = array(strtolower(get_class($obj)), array('id' => $obj->id), $obj->softKey());
+			}
 		}
 		return $result;
 	}
@@ -549,26 +613,38 @@ class DeleteQuery implements Query {
 	}
 	
 	public function execute() {
+		/* Check table access */
+		$rights = new Rights(DataStore::get('api_user'));
+		if (!$rights->tableAccess($table = ApiRecord::getInstance($this->table)->getTableName(), Rights::DELETE))
+			throw new RightsException('No DELETE access on '.$table);
+		
 		$obj = ApiRecord::getInstance($this->table);
 		$select = new SelectQuery();
 		$select->from = $this->table;
 		$select->where = $this->where;
 		
 		$query = $select->getRecordQuery();
+		/* Fetch subquery ids */
 		foreach ($this->subqueries as $key => $subquery) {
-			$subids = array_map(create_function('$x', 'return $x["'.$key.'"];'), $subquery->getRecordQuery()->get());
+			$subids = array_map(create_function('$x', 'return $x["'.$key.'"];'), $subquery->getRaw());
 			if ($subids)
 				$query->where('%t IN (%l)', $key, implode(', ', $subids));
 			else
 				return array();
 		}
-		$ids = $query->get();
+		/* Fetch delete ids */
+		$ids = array_map('reset', $query->get());
+		
+		/* Check rights */
+		$ids = $rights->idListFilter($obj->getTableName(), $ids, Rights::DELETE);
 		if (!$ids) return array();
 		
-		$list = $obj->select()->where('id IN (%l)', implode(', ', array_map('reset', $ids)))->get();
+		/* Get objects to delete */
+		$list = $obj->select()->where('id IN (%l)', implode(', ', $ids))->get();
 		
 		$result = array();
 		foreach ($list as $obj) {
+			/* Delete objects */
 			$result[] = array(strtolower(get_class($obj)), array('id' => $obj->id), $obj->softKey());
 			$obj->delete();
 		}
@@ -576,6 +652,7 @@ class DeleteQuery implements Query {
 	}
 }
 
+/* Unwrap QueryValue */
 function unwrapValue($v) {
 	$v = is_object($v) ? $v->__toString() : $v;
 	if (preg_match('/^\'(.+)\'$/', $v, $match))

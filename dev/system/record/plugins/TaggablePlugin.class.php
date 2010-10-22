@@ -113,7 +113,7 @@ class TaggablePlugin extends RecordPlugin {
 				case 'update':
 					/* update creation date and weight of tag */
 					$this->record->getDatabase()->query(
-						'UPDATE %t SET created = now(), weight = %
+						'UPDATE %t SET created = now(), weight = tag_weight(id, %)
 						 WHERE name = % AND object_id = % AND object_table = % AND originated_from IS NULL AND created_by = %',
 						$this->options['tag_table'], $this->options['weight'], $key,
 						$this->record->getPk(), $this->record->getTableName(), $this->options['owner_id']

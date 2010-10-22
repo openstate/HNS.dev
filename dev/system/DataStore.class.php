@@ -26,6 +26,10 @@ class DataStore {
 	public static function set($name, $value) {
 		self::inst()->data[$name] = $value;
 	}
+
+	public static function exists($name) {
+		return array_key_exists($name, $array = self::inst()->data);
+	}
 }
 
 ?>

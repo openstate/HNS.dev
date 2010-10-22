@@ -23,7 +23,7 @@ abstract class ApiRecord extends Record {
 	/* Register the taggle plugin and set the tag owner to the api developer id */
 	protected function registerTaggablePlugin() {
 		try {
-			$this->registerPlugin('Taggable', array('owner_id' => DataStore::get('api_developer')));
+			$this->registerPlugin('Taggable', array('owner_id' => DataStore::get('api_user')->id));
 		} catch (DataStoreException $e) {
 			$this->registerPlugin('Taggable', array());
 		}
@@ -65,7 +65,10 @@ abstract class ApiRecord extends Record {
 	/* Get an instance of a record object by name */
 	public static function getInstance($name) {
 		$name = ucfirst(strtolower($name));
+		ob_start();
 		include_once($name.'.class.php');
+		$ob = ob_get_clean();
+		if (DEVELOPER && !HIDE_SOME_WARNINGS) echo $ob;
 		if (!class_exists($name, false))
 			throw new RecordException('Unknown record class '.$name);
 		$obj = new $name();
@@ -75,7 +78,11 @@ abstract class ApiRecord extends Record {
 	}
 	
 	public function init() {
-		//$this->registerPlugin('CreatedUpdatedBy');
+		try {
+			$this->registerPlugin('Versionable', array('user_id' => DataStore::get('api_user')->id));
+		} catch (DataStoreException $e) {
+			$this->registerPlugin('Versionable');
+		}
 	}
 	
 }

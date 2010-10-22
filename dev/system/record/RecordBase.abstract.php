@@ -25,6 +25,10 @@ abstract class RecordBase {
 		return $this->db;
 	}
 
+	public function getDataArray() {
+		return $this->data;
+	}
+
 	public function getTableName() {
 		return $this->tableName;
 	}

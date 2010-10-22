@@ -1,5 +1,6 @@
 <?php
 
 	define('DEVELOPER', true);
+	define('HIDE_SOME_WARNINGS', false);
 
 ?>

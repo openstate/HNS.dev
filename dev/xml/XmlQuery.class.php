@@ -22,7 +22,11 @@ class XmlQuery {
 
 	/* Delegate parsing to the appropriate function */
 	public function parseXml() {
-		$xml = new SimpleXmlElement($this->xml);
+		/* Hack to suppress warnings, ob_start doesn't seem to work here */
+		if (DEVELOPER && !HIDE_SOME_WARNINGS)
+			$xml = new SimpleXmlElement($this->xml);
+		else
+			$xml = @new SimpleXmlElement($this->xml);
 		$func = 'parse'.ucfirst($xml->getName());
 		if (method_exists($this, $func)) {
 			$this->rootTag = $xml->getName();
