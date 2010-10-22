@@ -22,5 +22,8 @@ msgstr "Project:%s"
 msgid "title.projects.index.change"
 msgstr "%s aanpassen"
 
+msgid "title.projects.index.grant"
+msgstr "Rechten toekennen aan %s"
+
 msgid "title.issues.index.create"
 msgstr "Nieuw probleem"

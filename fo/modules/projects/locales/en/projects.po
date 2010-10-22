@@ -31,6 +31,9 @@ msgstr "Save"
 msgid "project.rights"
 msgstr "Required rights"
 
+msgid "project.grant"
+msgstr "Grant rights"
+
 msgid "project.rights.read"
 msgstr "Read"
 

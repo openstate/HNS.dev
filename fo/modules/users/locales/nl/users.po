@@ -84,3 +84,12 @@ msgstr "Wijzig rechten"
 
 msgid "users.change.view"
 msgstr "Bekijk"
+
+msgid "users.myaccount"
+msgstr "Mijn account"
+
+msgid "users.myissues"
+msgstr "Mijn issues"
+
+msgid "users.myprojects"
+msgstr "Mijn projecten"

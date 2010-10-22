@@ -293,4 +293,19 @@ class UsersIndexController extends Controller {
 		return $obj->checkValue($value);
 	}
 	
+	public function mainAction() {
+		if (!$this->request->user || !$this->request->user->id) return;
+		$user = $this->request->user;
+
+		require_once('Issue.class.php');
+		require_once('Project.class.php');
+		$issue = new Issue();
+		$project = new Project();
+
+		$this->view->user = $user;
+		$this->view->issues = $issue->select()->where('user_id = %', $user->id)->order('id')->get();
+		$this->view->projects = $project->select()->where('user_id = %', $user->id)->order('name')->get();
+		$this->addPoFile('users.po');
+		$this->view->render('index/main.html');
+	}
 }

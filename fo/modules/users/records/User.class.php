@@ -35,7 +35,8 @@ class User extends Record {
 	}
 
 	public function save() {
-		throw new Exception('Operation not supported');
+		return;
+		//throw new Exception('Operation not supported');
 	}
 	
 	public function delete() {

@@ -490,6 +490,52 @@ class ProjectsIndexController extends Controller {
 		readfile($file->file->getPath());
 		die;
 	}
+	
+	public function grantAction() {
+		$id = $this->request->getParam(0);
+		if (!ctype_digit($id)) throw new NoRouteException();
+		$project = new Project();
+		try {
+			$project->load($id);
+		} catch (RecordNotFoundException $e) {
+			throw new NoRouteException();
+		}
+		
+		if ($project->granted || !$project->published)
+			throw new NoRouteException();
+		
+		if (!$this->request->user->loggedIn || !$this->request->user->inGroup('sysop')) {
+			$this->displayForbidden();
+			return;
+		}
+
+		if ($this->request->isPost()) {
+			require_once('HnsDevUser.class.php');
+			$u = new HnsDevUser();
+			$u->name = $project->name;
+			$u->key = $project->key;
+			$u->contact = $project->user->user_real_name ? $project->user->user_real_name : $project->user->user_name;
+			$u->email = $project->user->user_email;
+			$u->max_rate = 150;
+			$u->max_load = 2;
+			$u->save();
+			
+			DBs::inst(DBs::HNSDEV)->query('INSERT INTO usr_rights (user_id, "table", property, access) VALUES (%, %, %, %)',
+				$u->id, '*', '*', $this->request->getPost('write', false) ? '1111' : '0001');
+
+			$project->granted = 1;
+			$project->save();
+
+			require_once('Wiki.class.php');
+			Wiki::inst()->edit($project->getWikiTitle(), $project->getWikiContent());
+
+			$this->redirect('/projects/index/view/'.$project->id);
+		}
+		
+		$this->view->project = $project;
+		$this->addPoFile('projects.po');
+		$this->view->render('grant.html');
+	}
 
 	public function isValidImage($values) {
 		require_once('record/objects/ImageObject.class.php');

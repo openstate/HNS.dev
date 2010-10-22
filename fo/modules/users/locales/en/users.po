@@ -84,3 +84,12 @@ msgstr "Edit credentials"
 
 msgid "users.change.view"
 msgstr "View"
+
+msgid "users.myaccount"
+msgstr "My account"
+
+msgid "users.myissues"
+msgstr "My issues"
+
+msgid "users.myprojects"
+msgstr "My projects"

@@ -1,0 +1,10 @@
+{pofile wiki}{pofile form}
+<form method="post" action="">
+<table class="form">
+<tr><th>##project.name##:</th><td>{$project->name|htmlspecialchars}</td></tr>
+<tr><th>##project.owner##:</th><td><a href="##wiki.path##/User:{$project->user->user_name|htmlspecialchars}" class="?new?" title="User:{$project->user->user_name|htmlspecialchars}">{$project->user->user_name|htmlspecialchars}</a> (<a href="##wiki.path##/User_talk:{$project->user->user_name|htmlspecialchars}" class="?new?" title="User talk:{$project->user->user_name|htmlspecialchars}">##project.talk##</a> • <a href="##wiki.path##/Special:Contributions/{$project->user->user_name|htmlspecialchars}">##project.contribs##</a>)</td></tr>
+<tr><th>##project.key##:</th><td><pre>{$project->key|htmlspecialchars}</pre></td></tr>
+<tr><th>##project.grant##:</th><td><input type="checkbox" checked="checked" disabled="disabled" /> ##project.rights.read##{if $project->rights_write}<br /><label><input type="checkbox" checked="checked" name="write" /> ##project.rights.write##</label>{/if}</td></tr>
+<tr><th></th><td><input type="submit" value="##form.submit##" /></td></tr>
+</table>
+</form>

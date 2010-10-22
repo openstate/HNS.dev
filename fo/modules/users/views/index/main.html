@@ -1,0 +1,16 @@
+{pofile wiki}
+<h2>##users.myaccount##</h2>
+<ul>
+<li><a title="##wiki.namespace.user##:{$user->user_name|htmlspecialchars}" href="##wiki.path##/##wiki.namespace.user##:{$user->user_name|htmlspecialchars}" class="?new?">{$user->user_name|htmlspecialchars}</a></li>
+</ul>
+
+<h2>##users.myissues##</h2>
+<ul>{foreach from=$issues item=issue}
+<li><a title="{$issue->getWikiTitle()|htmlspecialchars}" href="##wiki.path##/{$issue->getWikiTitle()|htmlspecialchars}">{$issue->id}. {$issue->title|htmlspecialchars}</a></li>
+{/foreach}</ul>
+
+<h2>##users.myprojects##</h2>
+<ul>{foreach from=$projects item=project}
+<li><a title="{$project->getWikiTitle()|htmlspecialchars}" href="##wiki.path##/{$project->getWikiTitle()|htmlspecialchars}">{$project->name|htmlspecialchars}</a></li>
+{/foreach}</ul>
+

@@ -20,6 +20,7 @@ class Project extends Record {
 		'key' => array(),
 		'published' => array(),
 		'user_id' => array(),
+		'granted' => array(),
 	);
 	
 	protected $hasOneConfig = array(
@@ -76,7 +77,8 @@ class Project extends Record {
 	
 	public function getWikiContent() {
 		$strings = array(
-			'owner', 'talk', 'contribs', 'date', 'website', 'rss', 'license', 'description', 'files', 'change', 'date_format'
+			'owner', 'talk', 'contribs', 'date', 'website', 'rss', 'license',
+			'description', 'files', 'change', 'date_format', 'grant'
 		);
 
 		$tr = new GettextPO(dirname(__FILE__).'/../locales/en/projects.po');
@@ -89,6 +91,7 @@ class Project extends Record {
 		$date_str = strftime($date_format, strtotime($this->date));
 		
 		$change = strtolower($change);
+		$grant = strtolower($grant);
 		
 		$server = 'http'.(@$_SERVER['HTTPS'] ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
 		
@@ -99,6 +102,8 @@ class Project extends Record {
 			if ($screenshot) $wiki .= "<div style=\"margin: 5px; padding: 5px; border: 1px solid black;\">{$server}$screenshot</div>\n\n";
 			$wiki .= "</div>\n\n";
 		}
+		if (!$this->granted)
+			$wiki .= "<guard group=\"sysop\"><div style=\"float: right;\">&#91;[[Redirect:/modules/projects/index/grant/{$this->id}/|$grant]]]</div>\n\n</guard>";
 		$wiki .= "<guard user=\"".htmlspecialchars($user)."\"><div style=\"float: right;\">&#91;[[Redirect:/modules/projects/index/change/{$this->id}/|$change]]]</div>\n\n</guard>";
 		$wiki .= "* '''$owner''': [[User:$user|$user]] ([[User talk:$user|$talk]] • [[Special:Contributions/$user|$contribs]])''\n";
 		$wiki .= "* '''$date''': {$date_str}\n";
