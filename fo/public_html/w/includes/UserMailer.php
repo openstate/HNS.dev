@@ -106,7 +106,7 @@ class UserMailer {
 	 * @return mixed True on success, a WikiError object on failure.
 	 */
 	static function send( $to, $from, $subject, $body, $replyto=null, $contentType=null ) {
-		var_dump($to, $from, $body); #TODO: REMOVE ME
+		if ($_SERVER['REMOTE_ADDR'] == '127.0.0.1') var_dump($to, $from, $body); #TODO: REMOVE ME
 		global $wgSMTP, $wgOutputEncoding, $wgErrorString, $wgEnotifImpersonal;
 		global $wgEnotifMaxRecips;
 

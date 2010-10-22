@@ -49,8 +49,8 @@ $wgScriptExtension  = ".php";
 $wgEnableEmail      = true;
 $wgEnableUserEmail  = true; # UPO
 
-$wgEmergencyContact = "no-reply@hnsdev.gl";
-$wgPasswordSender = "no-reply@hnsdev.gl";
+$wgEmergencyContact = "no-reply@hns-dev.nl";
+$wgPasswordSender = "no-reply@hns-dev.nl";
 
 $wgEnotifUserTalk = true; # UPO
 $wgEnotifWatchlist = true; # UPO

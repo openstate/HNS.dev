@@ -3,7 +3,7 @@
 require_once('Controller.abstract.php');
 
 class SandboxIndexController extends Controller {
-	protected $url = 'http://sandbox.hnsdev.gl/query';
+	protected $url = SANDBOX_URL;
 	
 	public function __construct() {
 		parent::__construct();

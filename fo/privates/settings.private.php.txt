@@ -1,5 +1,6 @@
 <?php
 
 	define('DEVELOPER', true);
+	define('SANDBOX_URL', 'http://sandbox.hnsdev.gl/query');
 
 ?>
