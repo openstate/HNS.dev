@@ -86,7 +86,7 @@ class Project extends Record {
 		$user = $this->user->user_name;
 		$logo = $this->logo->getThumbnail(200);
 		$screenshot = $this->screenshot->getThumbnail(200);
-		$date = strftime($date_format, strtotime($this->date));
+		$date_str = strftime($date_format, strtotime($this->date));
 		
 		$change = strtolower($change);
 		
@@ -101,7 +101,7 @@ class Project extends Record {
 		}
 		$wiki .= "<guard user=\"".htmlspecialchars($user)."\"><div style=\"float: right;\">&#91;[[Redirect:/modules/projects/index/change/{$this->id}/|$change]]]</div>\n\n</guard>";
 		$wiki .= "* '''$owner''': [[User:$user|$user]] ([[User talk:$user|$talk]] • [[Special:Contributions/$user|$contribs]])''\n";
-		$wiki .= "* '''$date''': {$date}\n";
+		$wiki .= "* '''$date''': {$date_str}\n";
 		$wiki .= "* '''$website''': {$this->website}\n";
 		if ($this->rss)	$wiki .= "* '''$rss''': {$this->rss}\n";
 		$wiki .= "* '''$license''': {$this->license}\n\n";
