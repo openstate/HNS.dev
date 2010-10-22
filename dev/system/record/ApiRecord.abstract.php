@@ -13,6 +13,11 @@ abstract class ApiRecord extends Record {
 			throw new RecordException('Unknown record class '.$name);
 		return $obj;
 	}
+	
+	public function init() {
+		$this->registerPlugin('CreatedUpdatedBy');
+	}
+	
 }
 
 ?>
