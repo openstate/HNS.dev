@@ -44,7 +44,7 @@ class UsersIndexController extends Controller {
 	}
 
 	public function logoutAction() {
-		$destination = $this->request->getNamedParam('destination', '/admin/');
+		$destination = $this->request->getNamedParam('destination', '/');
 		if ($this->request->user) {
 			$this->request->user->removeCookie($this->request->getSite()->getTopDomain());
 			$this->request->user->logout();

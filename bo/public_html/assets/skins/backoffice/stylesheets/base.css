@@ -235,6 +235,10 @@ input.colorpicker {
 	border: 1px solid black;
 	cursor: default;
 }
+/* Filter
+	-------------------------------------------------------------------------------------------------------------------------------------	*/
+	#filter {border:1px solid #e2e1dd; border-top:0; margin-top: -10px;margin-bottom: 10px; padding: 5px;}
+	#filter table {margin-bottom:0;}
 /*	IE6 fixes
 	-------------------------------------------------------------------------------------------------------------------------------------	*/
 	* html .toolbar ul {height:35px;} /* or change the min-height on the ul to a height? */

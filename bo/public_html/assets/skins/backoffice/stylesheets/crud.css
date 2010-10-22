@@ -35,6 +35,8 @@
 .toolbar ul li a.csv:hover {background:transparent url(../images/icons/toolbar-csv.png) top center no-repeat;}
 .toolbar ul li a.photos, .toolbar ul li a.photos:visited {background:transparent url(../images/icons/photos.png) top center no-repeat;}
 .toolbar ul li a.photos:hover {background:transparent url(../images/icons/photos.png) top center no-repeat;}
+.toolbar ul li a.filter, .toolbar ul li a.filter:visited {background:transparent url(../images/icons/filter.png) top center no-repeat;}
+.toolbar ul li a.filter:hover {background:transparent url(../images/icons/filter.png) top center no-repeat;}
 /* Add the disabled icons */
 .toolbar ul li a.disabled.sort-up, .toolbar ul li a.disabled.sort-up:visited {background:transparent url(../images/icons/arrow_up.gray.png) center left no-repeat;display:block;float:left;padding:0;text-indent:-9999px;width:16px;margin-left:8px;}
 .toolbar ul li a.disabled.sort-up:hover {background:transparent url(../images/icons/arrow_up.gray.png) center left no-repeat;}

@@ -9,7 +9,7 @@ class AdminIndexController extends Controller {
 	}
 
 	public function setLanguageAction() {
-		$return = $this->request->getGet('return', '/admin/');
+		$return = $this->request->getGet('return', '/');
 		$locale = $this->request->getGet('locale', 'en_EN');
 		$this->request->getSite()->setLocale($locale);
 
