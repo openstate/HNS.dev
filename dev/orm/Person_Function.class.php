@@ -7,6 +7,7 @@ class Person_Function extends ApiRecord {
 	protected $config = array(
 		'person' => array('type' => self::RELATION, 'relation' => 'Person'),
 		'function' => array('type' => self::RELATION, 'relation' => 'Functie'),
+		'organization' => array('type' => self::RELATION, 'relation' => 'Organization'),
 		'start_date' => array('type' => self::DATE),
 		'end_date' => array('type' => self::DATE),
 	);
