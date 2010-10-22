@@ -740,7 +740,10 @@ class LoginForm {
 		$injected_html = '';
 		wfRunHooks('UserLoginComplete', array(&$wgUser, &$injected_html));
 
-		$this->displaySuccessfulLogin( 'welcomecreation', $injected_html );
+/* START USER ACCOUNT HACK -- Ralf 2009-08-28 */
+		//$this->displaySuccessfulLogin( 'welcomecreation', $injected_html );
+		$wgOut->redirect('/modules/users/index/create/');
+/* END USER ACCOUNT HACK */
 	}
 
 	/**
