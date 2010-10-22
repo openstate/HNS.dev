@@ -227,6 +227,15 @@ class MediaWiki {
 		} else if( NS_SPECIAL == $title->getNamespace() ) {
 			/* actions that need to be made when we have a special pages */
 			SpecialPage::executePath( $title );
+/* REDIRECT HACK -- Ralf 2009-07-07 */
+		} else if( NS_REDIRECT == $title->getNamespace() ) {
+			$url = $title->getText();
+			if ('/' != $url[0]) {
+				$title = SpecialPage::getTitleFor( 'Badtitle' );
+				throw new ErrorPageError( 'badtitle', 'badtitletext' );
+			}
+			$output->redirect($wgServer.$title->getText(), '301');
+/* END HACK */
 		} else {
 			/* No match to special cases */
 			wfProfileOut( __METHOD__ );

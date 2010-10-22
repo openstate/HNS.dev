@@ -74,6 +74,7 @@ class Layout implements Viewable {
 	}
 
 	public function render($template = '', $outerTemplate = '') {	 		
+		require_once('smarty_outputfilter_wiki_links.include.php');
 		if ($this->useOuter) {
 			ob_start();
 			if ($this->noRender) {
@@ -83,8 +84,10 @@ class Layout implements Viewable {
 				$content = ob_get_clean();			
 			}
 			$this->outerView->content = $content;
+			$this->view->getEngine()->register_outputfilter('smarty_outputfilter_wiki_links');
 			$this->outerView->render($outerTemplate);
 		} else {
+			$this->view->getEngine()->register_outputfilter('smarty_outputfilter_wiki_links');
 			$this->view->render($template);
 		}
 	}

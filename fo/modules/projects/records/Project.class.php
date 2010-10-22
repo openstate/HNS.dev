@@ -19,6 +19,15 @@ class Project extends Record {
 		'rights_write' => array(),
 		'key' => array(),
 		'published' => array(),
+		'user_id' => array(),
+	);
+	
+	protected $hasOneConfig = array(
+		'user' => array(
+			'class' => 'User',
+			'local' => 'user_id',
+			'foreign' => 'user_id',
+		),
 	);
 
 	protected $hasManyConfig = array(

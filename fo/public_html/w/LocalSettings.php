@@ -128,5 +128,8 @@ $wgDBname           = $dbSettings[0]['database'];
 $wgDBuser           = $dbSettings[0]['user'];
 $wgDBpassword       = $dbSettings[0]['pass'];
 
+define('NS_REDIRECT', 100);
+$wgExtraNamespaces[NS_REDIRECT] = 'Redirect';
+
 require_once("$IP/extensions/GeSHiCodeTag.php");
 

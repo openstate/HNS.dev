@@ -179,7 +179,8 @@ class User extends Record {
 		switch ($name) {
 			case 'loggedIn':
 				return $this->loggedIn;
-			break;
+			case 'id':
+				return $this->user_id;
 			default:
 				return parent::__get($name);
 		}

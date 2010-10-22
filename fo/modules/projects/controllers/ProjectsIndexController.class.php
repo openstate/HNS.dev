@@ -6,6 +6,10 @@ require_once('Project.class.php');
 require_once('ProjectFile.class.php');
 
 class ProjectsIndexController extends Controller {
+	protected function redirectLogin() {
+		$this->response->redirect('/wiki/Special:UserLogin');
+	}
+
 	public function saveProject($id, $values) {
 		$project = new Project();
 		if ($id) $project->load($id);

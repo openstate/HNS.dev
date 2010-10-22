@@ -32,17 +32,17 @@
 		<div class="pBody">
 			<ul>
 			{if $user->user_id}
-				<li id="pt-userpage"><a href="/wiki/Gebruiker:{$user->user_name|htmlspecialchars}" title="Uw gebruikerspagina [.]" accesskey=".">{$user->user_name|htmlspecialchars}</a></li>
-				<li id="pt-mytalk"><a href="/wiki/Overleg_gebruiker:{$user->user_name|htmlspecialchars}" title="Uw overlegpagina [n]" accesskey="n">Mijn overleg</a></li>
+				<li id="pt-userpage"><a href="/wiki/Gebruiker:{$user->user_name|htmlspecialchars}" title="Uw gebruikerspagina [.]" accesskey="." class="?new?">{$user->user_name|htmlspecialchars}</a></li>
+				<li id="pt-mytalk"><a href="/wiki/Overleg_gebruiker:{$user->user_name|htmlspecialchars}" title="Uw overlegpagina [n]" accesskey="n" class="?new?">Mijn overleg</a></li>
 
 				<li id="pt-preferences"><a href="/wiki/Speciaal:Voorkeuren" title="Mijn voorkeuren">Mijn voorkeuren</a></li>
 				<li id="pt-watchlist"><a href="/wiki/Speciaal:Volglijst" title="Pagina [l]" accesskey="l">Mijn volglijst</a></li>
 				<li id="pt-mycontris"><a href="/wiki/Speciaal:Bijdragen/{$user->user_name|htmlspecialchars}" title="Overzicht van uw bijdragen [y]" accesskey="y">Mijn bijdragen</a></li>
-				<li id="pt-logout"><a href="/w/index.php?title=Speciaal:Afmelden&amp;returnto=Hoofdpagina" title="Afmelden">Afmelden</a></li>
+				<li id="pt-logout"><a href="/w/index.php?title=Speciaal:Afmelden&amp;returnto=Redirect:{$smarty.server.REQUEST_URI|urlencode}" title="Afmelden">Afmelden</a></li>
 			{else}
-				<li id="pt-anonuserpage"><a href="/wiki/Gebruiker:{$smarty.server.REMOTE_ADDR}" title="Gebruikerspagina voor uw IP-adres [.]" accesskey=".">{$smarty.server.REMOTE_ADDR}</a></li>
-				<li id="pt-anontalk"><a href="/wiki/Overleg_gebruiker:{$smarty.server.REMOTE_ADDR}" title="Overlegpagina van de anonieme gebruiker van dit IP-adres [n]" accesskey="n">Overlegpagina voor dit IP-adres</a></li>
-				<li id="pt-anonlogin"><a href="/w/index.php?title=Speciaal:Aanmelden&amp;returnto=Hoofdpagina" title="U wordt van harte uitgenodigd om u aan te melden als gebruiker, maar dit is niet verplicht [o]" accesskey="o">Aanmelden / registreren</a></li>
+				<li id="pt-anonuserpage"><a href="/wiki/Gebruiker:{$smarty.server.REMOTE_ADDR}" title="Gebruikerspagina voor uw IP-adres [.]" accesskey="." class="?new?">{$smarty.server.REMOTE_ADDR}</a></li>
+				<li id="pt-anontalk"><a href="/wiki/Overleg_gebruiker:{$smarty.server.REMOTE_ADDR}" title="Overlegpagina van de anonieme gebruiker van dit IP-adres [n]" accesskey="n" class="?new?">Overlegpagina voor dit IP-adres</a></li>
+				<li id="pt-anonlogin"><a href="/w/index.php?title=Speciaal:Aanmelden&amp;returnto=Redirect:{$smarty.server.REQUEST_URI|urlencode}" title="U wordt van harte uitgenodigd om u aan te melden als gebruiker, maar dit is niet verplicht [o]" accesskey="o">Aanmelden / registreren</a></li>
 			{/if}
 			</ul>
 		</div>
