@@ -2,7 +2,7 @@
 
 class Functie extends ApiRecord {
 	protected $tableName = 'functions';
-	protected $softKeyDefinition = "person||':'||type";
+	protected $softKeyDefinition = "name";
 
 	protected $config = array(
 		'name' => array('type' => self::STRING, 'length' => 25),
