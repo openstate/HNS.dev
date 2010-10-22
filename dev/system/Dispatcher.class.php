@@ -87,14 +87,18 @@ class Dispatcher {
 			$stack = $xml->addChild('stack');
 			foreach($exception->getTrace() as $call){
 				$callElement = $stack->addChild('call');
-				foreach($call as $key => $value){
-					if(is_array($value)){
-						@$callElement->addChild($key, array_shift($value)); //TODO: Supressing warnings is questionable
-						continue;
-					}
-					//var_dump($value);
-					$callElement->addChild($key, $value);
-				}
+
+				$function = '';
+				if(isset($call['class'])) $function .= $call['class'];
+				if(isset($call['type']))  $function .= $call['type'];
+				$function .= $call['function'];
+				$callElement->addChild('function', $function);
+
+				$location =  '';
+				$location .= $call['file'];
+				$location .= ':';
+				$location .= $call['line'];
+				$callElement->addChild('location', $location);
 			}
 		}
 		else if($code == 500) {
