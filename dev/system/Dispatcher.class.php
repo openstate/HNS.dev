@@ -105,6 +105,7 @@ class Dispatcher {
 
 			if (is_a($exception, 'DatabaseQueryException')) {
 				$xml->addChild('sql', $exception->getSql());
+				$xml->addChild('dberror', $exception->getError());
 			}
 		}
 		else if($code == 500) {
