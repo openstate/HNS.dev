@@ -5,10 +5,10 @@
 */
 class QueryLexer {
 	protected static $tokens = array(
-		'and' => 'AND',
-		'or' => 'OR',
-		'not' => 'NOT',
-		'like' => 'LIKE',
+		'/^and\W/' => 'AND',
+		'/^or\W/' => 'OR',
+		'/^not\W/' => 'NOT',
+		'/^like\W/' => 'LIKE',
 		'=' => 'EQ',
 		'!=' => 'NE',
 		'>' => 'GT',
@@ -21,11 +21,11 @@ class QueryLexer {
 		'/' => 'DIV',
 		'^' => 'EXP',
 		'||' => 'CONCAT',
-		'mod' => 'MOD',
-		'in' => 'IN',
-		'elem' => 'ELEM',
-		'match' => 'MATCH',
-		'at' => 'AT',
+		'/^mod\W/' => 'MOD',
+		'/^in\W/' => 'IN',
+		'/^elem\W/' => 'ELEM',
+		'/^match\W/' => 'MATCH',
+		'/^at\W/' => 'AT',
 		'%' => 'PERCENT',
 		',' => 'COMMA',
 		'.' => 'DOT',
@@ -39,7 +39,7 @@ class QueryLexer {
 		"/^[0-9]+(\.[0-9]+)?/" => 'VALUE',
 		'/^\s+/' => 0,
 	);
-	
+
 	/* Tokenize an expression string */
 	public static function lex($s) {
 		$len = strlen($s);
@@ -74,6 +74,9 @@ class QueryLexer {
 			if (!$found)
 				throw new ParseException('Unknown token at position '.($len - strlen($lc) + 1));
 		}
+
+//var_dump($tokens); exit;
+
 		return $tokens;
 	}
 }

@@ -7,20 +7,20 @@ class QueryParser {
 	/* Parse an expression according to a root rule */
 	public static function parse($s, $root) {
 		$parser = new QueryParser($s);
-		
+
 		/* Parse the expression */
 		$result = $parser->$root();
-		
+
 		/* Verify all tokens have been consumed */
 		if ($parser->current)
 			throw new ParseException('EOL expected, '.$parser->current[0].' found');
 		return $result;
 	}
-	
+
 	protected function __construct($s) {
 		require_once('QueryLexer.class.php');
 		require_once('QueryExpression.class.php');
-		
+
 		/* Tokenize the expression */
 		$this->tokens = QueryLexer::lex($s);
 		$this->consume();
@@ -50,7 +50,7 @@ class QueryParser {
 			/* Not matched */
 			throw new ParseException($token.' expected, '.$this->current[0].' found');
 	}
-	
+
 	/* Match a token but don't fail if it isn't matched */
 	protected function accept($token) {
 		/* Not matched if we're at EOL */
@@ -65,7 +65,7 @@ class QueryParser {
 			/* Not matched */
 			return false;
 	}
-	
+
 	/* Look ahead to the nth next token */
 	protected function lookahead($count) {
 		if (!$count) return $this->current[0];
@@ -101,12 +101,12 @@ class QueryParser {
 	protected function disjunction() {
 		return $this->leftAssociative('conjunction', array('OR'));
 	}
-	
+
 	/* <conjunction> ::= <conditional> { "and" <conditional> } */
 	protected function conjunction() {
 		return $this->leftAssociative('conditional', array('AND'));
 	}
-	
+
 	/* <conditional> ::= "not" <conditional>
 	                   | "(" <disjunction> ")"
 	                   | "MATCH" ident "[" expression "]" [ "AT" value [ "%" ] ]
@@ -161,17 +161,17 @@ class QueryParser {
 				return $result;
 		}
 	}
-	
+
 	/* <expression> ::= <term> { ("+" | "-" | "||") <term> } */
 	protected function expression() {
 		return $this->leftAssociative('term', array('ADD', 'SUB', 'CONCAT'));
 	}
-	
+
 	/* <term> ::= <factor> { ("*" | "/" | "MOD") <factor> } */
 	protected function term() {
 		return $this->leftAssociative('factor', array('MUL', 'DIV', 'MOD'));
 	}
-	
+
 	/* <factor> ::= <terminal> [ "^" <factor> ] */
 	protected function factor() {
 		$base = $this->terminal();
@@ -181,7 +181,7 @@ class QueryParser {
 		} else
 			return $base;
 	}
-	
+
 	/* <terminal> ::= "-" <terminal>
 	                | "(" <expression> ")"
 	                | quoted-ident | value
@@ -208,7 +208,7 @@ class QueryParser {
 				return new QueryProperty($ident);
 		}
 	}
-	
+
 	/* <list> ::= "(" [ <expression> { "," <expression> } ] ")"
 	   <paramlist> ::= "(" [ (ident "=" value | <expression>) { "," (ident "=" value | <expression> } ] ")" */
 	protected function list_($isParamList) {
