@@ -1,0 +1,14 @@
+.CCode {
+    color: #606060;
+    background-color: #FAFAFA;
+    border: 1px solid #E0E0E0;
+    border-width: 1px 1px 1px 6px;
+    border-style: solid;
+    padding: 10px 15px;
+    margin: 15px 35px;
+    }
+
+p {
+	text-indent: 0;
+	margin-bottom: 1em;
+}

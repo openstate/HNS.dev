@@ -1,0 +1,12 @@
+Chapter: List of elements
+
+Section: Structural elements
+
+* <Field>
+
+Section: Input elements
+
+* <Text>
+* <Select>
+
+Additionally, template-only elements can be created. See <Simple elements>.

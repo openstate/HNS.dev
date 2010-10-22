@@ -1,0 +1,150 @@
+/* Calendar: a Javascript class for Mootools that adds accessible and unobtrusive date pickers to your form elements <http://electricprism.com/aeron/calendar> */
+/* Default CSS for Calendar (navigation: 1), Copyright (c) 2007 Aeron Glemann <http://electricprism.com/aeron>, MIT Style License. */
+
+input.calendar,
+select.calendar {
+	width: 99px;
+}
+
+button.calendar {
+	background: url('../images/calendar-icon.png');
+	border: 0;
+	cursor: pointer;
+	height: 16px;
+	margin-right: 6px;
+	margin-bottom: 5px;
+	width: 16px;
+}
+
+div.calendar * { line-height: normal; }
+
+div.calendar {
+	font-family: Lucida Grande, Arial; 
+	background: url('../images/calendar.png') !important; background: url('../images/calendar.gif');
+	height: 195px;
+	position: relative;
+	width: 165px;
+	color: #000;
+	padding: 0;
+	margin: 0;
+}	
+	div.calendar div {
+		position: absolute;
+		background: none !important;
+		height: 183px;
+		overflow: hidden;
+		width: 133px;
+		top: 6px;  _top: 29px; *top: 29px;
+		left: 20px;
+		margin: 0;
+		padding: 0;
+		text-align: left;
+	}	
+	
+	div.calendar caption {
+		position: absolute; 
+		right: 6px;
+		top: 6px;
+		width: 133px;
+		text-align: right;
+	}
+	div.calendar caption a {
+		cursor: pointer;
+		display: block;
+		height: 12px;
+		overflow: hidden;
+		position: absolute;
+		text-indent: -999em;
+		text-align: left;
+		width: 12px;
+		top: 2px;
+	}
+	div.calendar caption a.prev {
+		background-image: url('../images/calendar-prev.gif');
+		left: 6px;
+	}
+	div.calendar caption a.next {
+		background-image: url('../images/calendar-next.gif');
+		left: 20px;
+	}
+	div.calendar caption a:hover {
+		background-position: 0 12px;
+	}
+	div.calendar caption span {
+		padding-left: 2px;
+		height: 25px;
+	}
+	div.calendar caption span.month {
+		
+	}
+	
+	div.calendar caption span.year a {
+		display: none;
+	}
+	div.calendar caption span.month:after {
+		/* content: ''; */
+	}
+
+	div.calendar table {
+		border-collapse: separate; _border-collapse: collapse; 	*border-collapse: collapse; 
+		border: 0;
+		border-spacing: 0;
+		cursor: default;
+		position: absolute;
+		top : 0px;
+		width: 133px;
+	}
+
+	div.calendar thead {
+		position: absolute;
+		top : 35px;	
+	}
+
+	div.calendar tbody {
+		position: absolute;
+		top : 57px;	
+	}
+
+	div.calendar td,
+	div.calendar th {
+		background: none;
+		padding: 0;
+		border: none;
+		border-top: 4px #f7f7f7 solid;
+		color: #000000;
+		height: 16px;
+		line-height: 16px;
+		text-align: center;
+		width: 19px;
+		font-size: 11px;
+	}
+
+	div.calendar td {
+		/* background: url('../images/calendar-td.gif'); */ 
+		color: #999;
+		font-size: 9px;
+		
+	}
+	div.calendar td.invalid {
+		color: #999;
+	}
+	div.calendar td.valid {
+		/* background: url('../images/calendar-valid.gif'); */
+		color: #000;
+		cursor: pointer;
+	}
+	div.calendar td.inactive {
+		/* background: url('../images/calendar-td.gif') 0 100%; */
+		color: #000;
+	}
+	div.calendar td.active { 
+		background: #0f7ee6;
+		color: #FFF
+	}
+	
+	div.calendar td.hover {
+		/* background: url('../images/calendar-valid.gif') 0 100%; */
+		background: #a6a6a6; 
+		color: #FFF;
+		cursor: pointer;
+	}
