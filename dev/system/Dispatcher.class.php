@@ -49,15 +49,26 @@ class Dispatcher {
 					if (is_callable(array($obj, 'show')))
 						$obj->show();
 				} catch (Exception $e) {
-					if (DEVELOPER) {
-						ob_clean();
-						header('HTTP/1.1 500 Internal Server Error');
-						header('Content-Type: text/html');
-						echo('<html><body><h1>500 Internal Server Error</h1></body><pre>'.$e->__toString().'</pre></html>');
-						die;
-					} else {
-						mail('exceptions@accepte.nl', 'HNS-Dev exception', 'Request: '.$_SERVER['REQUEST_URI']."\n".$e->__toString());
-						self::error(500);
+					$type = get_class($e);
+
+					switch($type){
+						case 'DatabaseQueryException':
+							self::error(400, $e);
+							break;
+						case 'RecordException':
+							self::error(400, $e);
+							break;
+						case 'RecordNotFoundException':
+							self::error(400, $e);
+							break;
+						case 'ParseException':
+							self::error(400, $e);
+							break;
+						case 'RightsException':
+							self::error(403, $e);
+							break;
+						default:
+							self::error(500, $e);
 					}
 				}
 				break;
@@ -65,14 +76,33 @@ class Dispatcher {
 		}
 	}
 
-	public static function error($code) {
+	public static function error($code, $exception) {
 		$codes = require('httpcodes.include.php');
-		ob_clean();
-		header('HTTP/1.1 '.$code.' '.$codes[$code]);
-		header('Content-Type: text/html');
-		session_write_close();
-		echo('<html><body><h1>'.$code.' '.$codes[$code].'</h1></body></html>');
-		die;
+		$xml   = new SimpleXmlElement('<?xml version="1.0" encoding="UTF-8" ?><error></error>');
+		$xml->addChild('code', $code);
+		$xml->addChild('description', $codes[$code]);
+		$xml->addChild('message', $exception->getMessage());
+
+		if(DEVELOPER){
+			$stack = $xml->addChild('stack');
+			foreach($exception->getTrace() as $call){
+				$callElement = $stack->addChild('call');
+				foreach($call as $key => $value){
+					if(is_array($value)){
+						@$callElement->addChild($key, array_shift($value)); //TODO: Supressing warnings is questionable
+						continue;
+					}
+					//var_dump($value);
+					$callElement->addChild($key, $value);
+				}
+			}
+		}
+		else if($code == 500) {
+			mail('exceptions@accepte.nl', 'HNS-Dev exception', 'Request: '.$_SERVER['REQUEST_URI']."\n".$exception->__toString());
+		}
+
+		header('Content-Type: text/xml');
+		echo (str_replace('><', ">\n<", $xml->asXML()));
 	}
 
 	public static function redirect($url) {

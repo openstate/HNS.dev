@@ -6,25 +6,25 @@
 interface QueryExpression {
 	/* List of properties used in the expression */
 	public function propertyList();
-	
+
 	/* List of properties used in aggregates in the expression */
 	public function aggregatePropertyList();
 
 	/* List of properties used outside aggregates in the expression */
 	public function nonAggregatePropertyList();
-	
+
 	/* List of tables used in properties used in the expression */
 	public function tableReferenceList();
-	
+
 	/* Table in which the value is contained, raises an exception if more than one found */
 	public function containingTable($inAggregate = false);
-	
+
 	/* Set expression to render using literals as given instead of considering them table entries */
 	public function renderWithLiterals($literals = array());
-	
+
 	/* Set expression to render using column queries defined in ORM objects */
 	public function renderWithQueries($tables = array(), $joins = array());
-	
+
 	/* Return auxiliary join clauses for this expression */
 	public function joinClauses($from, $joins);
 
@@ -39,11 +39,11 @@ class QueryProperty implements QueryExpression {
 	public $property;
 	protected $isLiteral = false;
 	protected $columnQuery = false;
-	
+
 	public function __construct($property) {
 		$this->property = $property;
 	}
-	
+
 	public function __toString() {
 		if ($this->columnQuery)
 			return $this->columnQuery;
@@ -55,25 +55,25 @@ class QueryProperty implements QueryExpression {
 			return '"'.implode('::', $parts).($parts ? '' : 't1').'"."'.$last.'"';
 		}
 	}
-	
+
 	public function propertyList() {
 		return array($this);
 	}
-	
+
 	public function aggregatePropertyList() {
 		return array();
 	}
-	
+
 	public function nonAggregatePropertyList() {
 		return array($this);
 	}
-	
+
 	public function tableReferenceList() {
 		$parts = explode('.', $this->property);
 		array_pop($parts);
 		return $parts ? array(implode('::', $parts)) : array();
 	}
-	
+
 	public function containingTable($inAggregate = false) {
 		$parts = explode('.', $this->property);
 		array_pop($parts);
@@ -85,11 +85,11 @@ class QueryProperty implements QueryExpression {
 		}
 		return $parts ? implode('::', $parts) : null;
 	}
-	
+
 	public function renderWithLiterals($literals = array()) {
 		$this->isLiteral = in_array($this->property, $literals, true);
 	}
-	
+
 	public function renderWithQueries($tables = array(), $joins = array()) {
 		$parts = explode('.', $this->property);
 		$last = array_pop($parts);
@@ -105,7 +105,7 @@ class QueryProperty implements QueryExpression {
 			}
 		}
 	}
-	
+
 	public function joinClauses($from, $joins) {
 		return array();
 	}
@@ -120,31 +120,31 @@ class QueryProperty implements QueryExpression {
 */
 class QueryValue implements QueryExpression {
 	public $value;
-	
+
 	public function __construct($value) {
 		$this->value = $value;
 	}
-	
+
 	public function __toString() {
 		return (string) $this->value;
 	}
-	
+
 	public function propertyList() {
 		return array();
 	}
-	
+
 	public function aggregatePropertyList() {
 		return array();
 	}
-	
+
 	public function nonAggregatePropertyList() {
 		return array();
 	}
-	
+
 	public function tableReferenceList() {
 		return array();
 	}
-	
+
 	public function containingTable($inAggregate = false) {
 		return null;
 	}
@@ -156,7 +156,7 @@ class QueryValue implements QueryExpression {
 	public function renderWithQueries($tables = array(), $joins = array()) {
 		// empty
 	}
-	
+
 	public function joinClauses($from, $joins) {
 		return array();
 	}
@@ -172,20 +172,20 @@ class QueryValue implements QueryExpression {
 class QueryFunction implements QueryExpression {
 	public $function;
 	public $parameters;
-	
+
 	protected $matchAlias;
 	protected static $nextMatchAliasId = 1;
 	protected $tables;
 	protected $joins;
-	
+
 	public function __construct($function, $params) {
 		$this->function = $function;
 		$this->parameters = $params;
-		
+
 		/* Magical handling for match */
 		if ($this->function == 'match')
 			$this->matchAlias = 'match:'.self::$nextMatchAliasId++;
-		
+
 		/* Magical handling for count */
 		if ($this->function == 'count' && $this->parameters[0] instanceof QueryProperty)
 			$this->parameters[0] = new QueryProperty($this->parameters[0]->property.'.id');
@@ -194,23 +194,23 @@ class QueryFunction implements QueryExpression {
 	protected function and_($params) {
 		return '('.implode(' AND ', $params).')';
 	}
-	
+
 	protected function add($params) {
 		return '('.implode(' + ', $params).')';
 	}
-	
+
 	protected function concat($params) {
 		return '('.implode(' || ', $params).')';
 	}
-	
+
 	protected function count($params) {
 		return 'count(DISTINCT '.$params[0].')';
 	}
-	
+
 	protected function div($params) {
 		return '('.implode(' / ', $params).')';
 	}
-	
+
 	protected function eq($params) {
 		return '('.$params[0].' = '.$params[1].')';
 	}
@@ -224,7 +224,7 @@ class QueryFunction implements QueryExpression {
 		if (!$ids) return 'FALSE';
 		return 't1.id IN ('.implode(', ', array_map('intval', $ids)).')';
 	}
-	
+
 	protected function exp($params) {
 		return '('.$params[0].' ^ '.$params[1].')';
 	}
@@ -232,11 +232,11 @@ class QueryFunction implements QueryExpression {
 	protected function ge($params) {
 		return '('.$params[0].' <= '.$params[1].')';
 	}
-	
+
 	protected function gt($params) {
 		return '('.$params[0].' > '.$params[1].')';
 	}
-	
+
 	protected function in($params) {
 		if ($params[1] instanceof QueryProperty) {
 			$parts = explode('.', $params[1]->property);
@@ -273,52 +273,52 @@ class QueryFunction implements QueryExpression {
 		} else
 			return '('.$params[0].' IN ('.implode(', ', $params[1]).'))';
 	}
-	
+
 	protected function le($params) {
 		return '('.$params[0].' <= '.$params[1].')';
 	}
-	
+
 	protected function lt($params) {
 		return '('.$params[0].' < '.$params[1].')';
 	}
-	
+
 	protected function match($params) {
 		if (!$this->matchAlias)
 			throw new ParseException('Match only allowed in where clause');
 		if (array_key_exists('weight', $params))
 			if (!preg_match('/^[0-9]+(\.[0-9]+)?$/', $params['weight']))
-				throw new ParseExpression('Float expected and not found in match FROM value');
+				throw new ParseException('Float expected and not found in match FROM value');
 			else
 				$weight = (float) $params['weight'];
 		else
 			$weight = 0.75;
 		return 'coalesce("'.$this->matchAlias.'".value, 0) >= '.$weight;
 	}
-	
+
 	protected function mod($params) {
 		return '('.implode(' % ', $params).')';
 	}
-	
+
 	protected function mul($params) {
 		return '('.implode(' * ', $params).')';
 	}
-	
+
 	protected function ne($params) {
 		return '('.$params[0].' != '.$params[1].')';
 	}
-	
+
 	protected function neg($params) {
 		return '(-'.$params[0].')';
 	}
-	
+
 	protected function or_($params) {
 		return '('.implode(' OR ', $params).')';
 	}
-	
+
 	protected function sub($params) {
 		return '('.implode(' - ', $params).')';
 	}
-	
+
 	public function __toString() {
 	try{
 		if (method_exists($this, $fn = $this->function) || method_exists($this, $fn = $this->function.'_'))
@@ -354,9 +354,9 @@ class QueryFunction implements QueryExpression {
 	public function propertyList() {
 		return $this->recursiveCall('propertyList');
 	}
-	
+
 	protected $aggregateFunctions = array('count', 'sum', 'min', 'max', 'avg');
-	
+
 	public function aggregatePropertyList() {
 		if (in_array($this->function, $this->aggregateFunctions))
 			/* If this function is an aggregate, return all properties refered to within this function */
@@ -365,7 +365,7 @@ class QueryFunction implements QueryExpression {
 			/* Otherwise, delegate the call to the parameters */
 			return $this->recursiveCall('aggregatePropertyList');
 	}
-	
+
 	public function nonAggregatePropertyList() {
 		if (in_array($this->function, $this->aggregateFunctions))
 			/* If this function is an aggregate, return an empty list */
@@ -374,7 +374,7 @@ class QueryFunction implements QueryExpression {
 			/* Otherwise, delegate the call to the parameters */
 			return $this->recursiveCall('nonAggregatePropertyList');
 	}
-	
+
 	public function tableReferenceList() {
 		$result = $this->recursiveCall('tableReferenceList');
 /*		if ($this->function == 'in' && count($this->parameters[1]) == 1 && $this->parameters[1][0] instanceof QueryProperty) {
@@ -383,7 +383,7 @@ class QueryFunction implements QueryExpression {
 		}*/
 		return $result;
 	}
-	
+
 	protected function containingTableFinalFn($result) {
 		$result = array_unique(array_filter($result));
 		if (count($result) > 1)
@@ -391,7 +391,7 @@ class QueryFunction implements QueryExpression {
 			//TODO: accept parent tables
 		return $result ? reset($result) : null;
 	}
-	
+
 	public function containingTable($inAggregate = false) {
 		return $this->recursiveCall(
 			'containingTable', array(), create_function('$x,$y', '$x[] = $y; return $x;'), array($this, 'containingTableFinalFn'),
@@ -402,13 +402,13 @@ class QueryFunction implements QueryExpression {
 	public function renderWithLiterals($literals = array()) {
 		$this->recursiveCall('renderWithLiterals', null, null, null, $literals);
 	}
-	
+
 	public function renderWithQueries($tables = array(), $joins = array()) {
 		$this->tables = $tables;
 		$this->joins = $joins;
 		$this->recursiveCall('renderWithQueries', null, null, null, $tables);
 	}
-	
+
 	public function joinClauses($from, $joins) {
 		if ($this->function == 'match') {
 			$outTable = ApiRecord::getInstance($from)->getTableName();
@@ -439,36 +439,36 @@ class QueryFunction implements QueryExpression {
 class QueryOrder implements QueryExpression {
 	public $expression;
 	public $direction;
-	
+
 	public function __construct($expression, $direction) {
 		$this->expression = $expression;
 		$this->direction = $direction;
 	}
-	
+
 	public function __toString() {
 		return (string) $this->expression.' '.$this->direction;
 	}
-	
+
 	public function propertyList() {
 		return $this->expression->propertyList();
 	}
-	
+
 	public function aggregatePropertyList() {
 		return $this->expression->aggregatePropertyList();
 	}
-	
+
 	public function nonAggregatePropertyList() {
 		return $this->expression->nonAggregatePropertyList();
 	}
-	
+
 	public function tableReferenceList() {
 		return $this->expression->tableReferenceList();
 	}
-	
+
 	public function containingTable($inAggregate = false) {
 		return $this->expression->containingTable($inAggregate);
 	}
-	
+
 	public function renderWithLiterals($literals = array()) {
 		$this->expression->renderWithLiterals($literals);
 	}
@@ -476,7 +476,7 @@ class QueryOrder implements QueryExpression {
 	public function renderWithQueries($tables = array(), $joins = array()) {
 		$this->expression->renderWithQueries($tables);
 	}
-	
+
 	public function joinClauses($from, $joins) {
 		return $this->expression->joinClauses($from, $joins);
 	}
