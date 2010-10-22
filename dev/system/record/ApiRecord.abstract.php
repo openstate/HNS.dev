@@ -1,7 +1,6 @@
 <?php
 
 abstract class ApiRecord extends Record {
-	p
 
 	/* Get an instance of a record object by name */
 	public static function getInstance($name) {
