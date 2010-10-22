@@ -149,6 +149,8 @@ $wgGroupPermissions['sysop']['editissue'] = true;
 $wgNamespaceProtection[NS_HNS_PROJECT] = array('editproject');
 $wgGroupPermissions['sysop']['editproject'] = true;
 
+$wgGroupPermissions['*']['edit'] = false;
+$wgShowIPinHeader = false;
 
 require_once("$IP/extensions/GeSHiCodeTag.php");
 require_once("$IP/extensions/GuardTag.php");
