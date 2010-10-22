@@ -2,14 +2,14 @@
 	return array(
 		0 => array( /* SYSTEM */
 			'type' => 'pgsql',
-			'host' => '192.168.1.3',
+			'host' => '10.0.30.5',
 			'user' => 'hns-dev',
 			'pass' => 'PhlSmbh057eg2nCkficV',
 			'database' => 'hns-dev-fo'
 		),
 		1 => array( /* HNSDEV */
 			'type' => 'pgsql',
-			'host' => '192.168.1.3',
+			'host' => '10.0.30.5',
 			'user' => 'hns-dev',
 			'pass' => 'PhlSmbh057eg2nCkficV',
 			'database' => 'hns-dev'
