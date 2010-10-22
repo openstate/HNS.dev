@@ -168,4 +168,13 @@ function isValidPassword($password, &$result, $user) {
 
 $wgHooks['isValidPassword'][] = 'isValidPassword';
 
-$wgAllowExternalImagesFrom = array('http://wiki.hnsdev.gl/', 'http://wiki.hns-dev.accepteproject.nl/');
+$wgAllowExternalImagesFrom = array('http://wiki.hnsdev.gl/', 'http://www.hnsdev.nl.gl/', 'http://wiki.hns-dev.accepteproject.nl/');
+
+/**
+ * Should editors be required to have a validated e-mail
+ * address before being allowed to edit?
+ */
+$wgEmailConfirmToEdit=true;
+
+/** Whether or not to allow and use real name fields. Defaults to true. */
+$wgAllowRealName = true;
