@@ -4,6 +4,9 @@
 	Interface for query syntax tree elements
 */
 interface QueryExpression {
+	/* Alias table names in the expression */
+	public function alias($aliases);
+
 	/* List of properties used in the expression */
 	public function propertyList();
 	
@@ -23,6 +26,11 @@ class QueryProperty implements QueryExpression {
 	
 	public function __toString() {
 		return '"'.$this->property.'"';
+	}
+	
+	public function alias($aliases) {
+		$prefix = implode('.', array_slice(explode('.', $aliases), 0, -1));
+		return @$aliases[$prefix] ? $aliases[$prefix].substr((string) $this->value, strlen($prefix)) : (string) $this->value;
 	}
 	
 	public function propertyList() {
@@ -45,6 +53,10 @@ class QueryValue implements QueryExpression {
 	}
 	
 	public function __toString() {
+		return (string) $this->value;
+	}
+	
+	public function alias($aliases) {
 		return (string) $this->value;
 	}
 	
@@ -89,6 +101,9 @@ class QueryFunction implements QueryExpression {
 		return array_unique($result);
 	}
 
+	public function alias() {
+	}
+	
 	public function propertyList() {
 		return $this->recursiveCall('propertyList');
 	}

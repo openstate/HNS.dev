@@ -12,8 +12,6 @@
 
 	foreach($dirs as $dir) {
 		if (file_exists($file = $dir.'/'.$dir.'.includepath.php')) {
-			//echo($file.'<br/>');
-			//echo(getcwd());
 			$includePath = array_merge($includePath, require(getcwd().'/'.$file));
 		}
 	}
