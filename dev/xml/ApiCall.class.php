@@ -27,8 +27,9 @@ class ApiCall {
 				/* If the value is a string, we have a terminal node */
 				if (!is_array($value)) {
 					if (strpos($key, '/') === false) {
-						/* Regular node: ids are added as attribute, other keys as child */
-						$call = $key == 'id' ? 'addAttribute' : 'addChild';
+						/* Regular node: ids are added as attribute, other keys as child (# forces attribute) */
+						$call = $key == 'id' || $key[0] == '#' ? 'addAttribute' : 'addChild';
+						if ($key[0] == '#') $key = substr($key, 1);
 						$nodes[$key] = $node->$call($key, $value);
 						
 						/* If any deferred attributes (see below) are waiting, add them */
@@ -99,7 +100,7 @@ class ApiCall {
 			/* Fetch xml input */
 			$input = file_get_contents('php://input');
 			
-			if (trim(reset(explode("\n", $user->key)), "- \t\n") == 'BEGIN PUBLIC KEY') {
+			if (trim(reset(explode("\n", $user->key)), "- \t\r\n") == 'BEGIN PUBLIC KEY') {
 				/* Account has RSA key associated with it, verify the signature sent */
 				$pub = openssl_get_publickey($user->key);
 				$sig = pack('H*', $get['key']);
@@ -128,17 +129,19 @@ class ApiCall {
 			
 			/* Verify whether the query is already cached */
 			$cacheFile = $_SERVER['DOCUMENT_ROOT'].'/../'.self::$cacheDir.'/'.$hash.'.'.$user->id.'.xml';
+			if (0) {
 			if (file_exists($cacheFile) && filemtime($cacheFile) >= time() - self::$cacheDuration) {
 				/* Cache hit found, return it */
 				$this->xml = file_get_contents($cacheFile);
 				$this->log($input, $this->xml, $hash, null, null, null, null);
 				return;
 			}
+			}
 				
 			/* Create parser and parse xml */
 			$parser = XmlQuery::parse($input);
 			$query = $parser->parseXml();
-				
+			
 			/* If the query returns a string, it's a cache request, so return that file */
 			if (is_string($query)) {
 				$this->xml = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/../'.self::$cacheDir.'/'.$query.'.'.$user->id.'.xml');
@@ -152,11 +155,25 @@ class ApiCall {
 			/* Execute the query */
 			$content = $query->execute();
 			$selectQuery = $query instanceof SelectQuery;
+
+			/* __toString can't throw exceptions so use this as a workaround */
+			if (DataStore::exists('query_exception'))
+				throw DataStore::get('query_exception');
 		} catch (Exception $e) {
 			/* Error, get the error message and store the exception */
-			/* TODO: replace error messages where necessary */
 			$ex = $e;
-			$error = $e->getMessage();
+
+			/* Reraise if developer */
+			if (DEVELOPER)
+				throw $e;
+
+			/* Format error message */
+			if ($e instanceof RecordException || $e instanceof ParseException)
+				$error = $e->getMessage();
+			elseif ($e instanceof DatabaseQueryException)
+				$error = 'Unspecified query error';
+			else
+				$error = 'Internal server error';
 		}
 
 		/* Find the root tag for the return xml */

@@ -112,7 +112,8 @@ class QueryParser {
 	                   | "MATCH" ident "[" expression "]" [ "AT" value [ "%" ] ]
 	                   | "ELEM" ident "[" expression "]" "." ident
 	                   | <expression> ("=" | "!=" | ">" | "<" | ">=" | "<=" | "LIKE") <expression>
-	                   | <expression> "IN" <list> */
+	                   | <expression> "IN" <list>
+	                   | <expression> "IN" ident */
 	protected function conditional() {
 		if ($this->accept('NOT'))
 			return new QueryFunction('not', array($this->conditional()));
@@ -149,8 +150,13 @@ class QueryParser {
 				return new QueryFunction(strtolower($op), array($result, $term));
 			} elseif ($op == 'IN') {
 				$this->consume();
-				$list = $this->list_(false);
-				return new QueryFunction(strtolower($op), array($result, $list));
+				if ($this->lookahead(0) == 'PAREN_OPEN') {
+					$list = $this->list_(false);
+					return new QueryFunction(strtolower($op), array($result, $list));
+				} else {
+					$ident = $this->expect('IDENT');
+					return new QueryFunction(strtolower($op), array($result, new QueryProperty($ident)));
+				}
 			} else
 				return $result;
 		}

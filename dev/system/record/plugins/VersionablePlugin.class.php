@@ -50,7 +50,7 @@ class VersionablePlugin extends RecordPlugin {
 	}
 	
 	public function postSave(RecordEvent $event) {
-		$this->db->query('BEGIN ISOLATION LEVEL SERIALIZABLE');
+		$this->db->query('BEGIN');
 		try {
 			$this->record->getDatabase()->query('
 				UPDATE %t SET updated = now(), updated_by = %, revision = revision + 1 WHERE %l = %',

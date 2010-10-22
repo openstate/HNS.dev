@@ -190,7 +190,7 @@ class SelectQuery implements Query {
 		$extraJoins = array();
 		$extraOrders = array();
 		foreach ($this->where as $where) {
-			$where->renderWithQueries($tableInstances);
+			$where->renderWithQueries($tableInstances, $this->joins);
 			$extraJoins = array_merge($extraJoins, $where->joinClauses($this->from, $this->joins));
 			$extraOrders = array_merge($extraOrders, $where->orderClauses($this->order));
 		}
@@ -370,7 +370,8 @@ class SelectQuery implements Query {
 						$oneConfig = $obj->getHasOneConfig($table[$i]);
 						if (!$oneConfig)
 							/* Relation doesn't exist */
-							throw new ParseException('No relation configuration found for '.$obj->getClassName().'.'.$table[i]);
+							die;
+							//throw new ParseException('No relation configuration found for '.get_class($obj).'.'.$table[i]);
 						/* Has one type relation, join it */
 						$obj = ApiRecord::getInstance($oneConfig['class']);
 						$joins[$alias] = array(
@@ -472,10 +473,7 @@ class InsertQuery implements Query {
 	}
 
 	public function execute() {
-		/* Check table access */
 		$rights = new Rights(DataStore::get('api_user'));
-		if (!$rights->tableAccess($table = ApiRecord::getInstance($this->table)->getTableName(), Rights::INSERT))
-			throw new RightsException('No INSERT access on '.$table);
 		
 		$data = $this->query ? $this->query->getRaw() : array(array_map('unwrapValue', $this->fields));
 		$result = array();
@@ -488,11 +486,17 @@ class InsertQuery implements Query {
 				$manyConfig = ApiRecord::getInstance($table)->getHasManyConfig($subtable);
 				if ($manyConfig) {
 					/* There is, check if there's a many-to-many relation */
-					if (array_key_exists('table', $manyConfig))
+					if (array_key_exists('table', $manyConfig)) {
 						/* It is, so we're inserting a row in the junction table */
+						/* Check table access */
+						if (!$rights->tableAccess($tbl = ApiRecord::getInstance($manyConfig['table']['class'])->getTableName(), Rights::INSERT))
+							throw new RightsException('No INSERT access on '.$tbl);
 						$obj = ApiRecord::getInstance($manyConfig['table']['class']);
-					else {
+					} else {
 						/* It's not, so we're updating the foreign object */
+						/* Check table access */
+						if (!$rights->tableAccess($tbl = ApiRecord::getInstance($manyConfig['class'])->getTableName(), Rights::UPDATE))
+							throw new RightsException('No UPDATE access on '.$tbl);
 						$field = $manyConfig['foreign'];
 						$obj = ApiRecord::getInstance($manyConfig['class']);
 						$obj->load($row['foreign_id']);
@@ -505,6 +509,9 @@ class InsertQuery implements Query {
 					$oneConfig = ApiRecord::getInstance($table)->getHasOneConfig($subtable);
 					if (!$oneConfig)
 						throw new ParseException('No relation '.$subtable.' exists in record '.ucfirst($table));
+					/* Check table access */
+					if (!$rights->tableAccess($tbl = ApiRecord::getInstance($table)->getTableName(), Rights::UPDATE))
+						throw new RightsException('No UPDATE access on '.$tbl);
 					$field = $oneConfig['local'];
 					$obj = ApiRecord::getInstance($table);
 					$obj->load($row['local_id']);
@@ -513,6 +520,9 @@ class InsertQuery implements Query {
 					continue;
 				}
 			} else {
+				/* Check table access */
+				if (!$rights->tableAccess($tbl = ApiRecord::getInstance($table)->getTableName(), Rights::INSERT))
+					throw new RightsException('No INSERT access on '.$tbl);
 				$obj = ApiRecord::getInstance($table);
 				$manyConfig = false;
 			}
@@ -605,7 +615,7 @@ class UpdateQuery implements Query {
 class DeleteQuery implements Query {
 	public $table = null;
 	public $where = array();
-	public $subqueries = array();
+	public $query = array();
 	
 	public function toSql() {
 		return 'DELETE FROM '.$this->table.' WHERE ('.implode(') AND (', $this->where).')'.
@@ -613,40 +623,97 @@ class DeleteQuery implements Query {
 	}
 	
 	public function execute() {
-		/* Check table access */
 		$rights = new Rights(DataStore::get('api_user'));
-		if (!$rights->tableAccess($table = ApiRecord::getInstance($this->table)->getTableName(), Rights::DELETE))
-			throw new RightsException('No DELETE access on '.$table);
-		
-		$obj = ApiRecord::getInstance($this->table);
-		$select = new SelectQuery();
-		$select->from = $this->table;
-		$select->where = $this->where;
-		
-		$query = $select->getRecordQuery();
-		/* Fetch subquery ids */
-		foreach ($this->subqueries as $key => $subquery) {
-			$subids = array_map(create_function('$x', 'return $x["'.$key.'"];'), $subquery->getRaw());
-			if ($subids)
-				$query->where('%t IN (%l)', $key, implode(', ', $subids));
-			else
-				return array();
-		}
-		/* Fetch delete ids */
-		$ids = array_map('reset', $query->get());
-		
-		/* Check rights */
-		$ids = $rights->idListFilter($obj->getTableName(), $ids, Rights::DELETE);
-		if (!$ids) return array();
-		
-		/* Get objects to delete */
-		$list = $obj->select()->where('id IN (%l)', implode(', ', $ids))->get();
-		
-		$result = array();
-		foreach ($list as $obj) {
-			/* Delete objects */
-			$result[] = array(strtolower(get_class($obj)), array('id' => $obj->id), $obj->softKey());
-			$obj->delete();
+		if ($this->query) {
+			$data = $this->query->getRaw();
+			$result = array();
+			foreach ($data as $row) {
+				/* If the table name contains colons, it refers to a foreign relation
+				The first part will be the parent table, the second part the name of the relation in that table */
+				list($table, $subtable) = strpos($this->table, '::') !== false ? explode('::', $this->table, 2) : array($this->table, null);
+				/* Check if there's a one-to-many or many-to-many relation */
+				$manyConfig = ApiRecord::getInstance($table)->getHasManyConfig($subtable);
+				if ($manyConfig) {
+					/* There is, check if there's a many-to-many relation */
+					if (array_key_exists('table', $manyConfig)) {
+						/* It is, so we're inserting a row in the junction table */
+						/* Check table access */
+						if (!$rights->tableAccess($tbl = ApiRecord::getInstance($manyConfig['table']['class'])->getTableName(), Rights::DELETE))
+							throw new RightsException('No DELETE access on '.$tbl);
+						$obj = ApiRecord::getInstance($manyConfig['table']['class']);
+						$obj = $obj->select()->where(
+							'%t = % AND %t = %',
+							$manyConfig['table']['local'], $row['local_id'],
+							$manyConfig['table']['foreign'], $row['foreign_id']
+							)->get()->first();
+						$result[] = array(strtolower(get_class($obj)), array('id' => $obj->id, '#delete' => 'delete'), $obj->softKey());
+						$obj->delete();
+					} else {
+						/* It's not, so we're updating the foreign object */
+						/* Check table access */
+						if (!$rights->tableAccess($tbl = ApiRecord::getInstance($manyConfig['class'])->getTableName(), Rights::UPDATE))
+							throw new RightsException('No UPDATE access on '.$tbl);
+						$field = $manyConfig['foreign'];
+						$obj = ApiRecord::getInstance($manyConfig['class']);
+						$obj->load($row['foreign_id']);
+						$obj->$field = null;
+						$obj->save();
+						continue;
+					}
+				} else {
+					/* There's not, so we're updating the local object */
+					$oneConfig = ApiRecord::getInstance($table)->getHasOneConfig($subtable);
+					if (!$oneConfig)
+						throw new ParseException('No relation '.$subtable.' exists in record '.ucfirst($table));
+					/* Check table access */
+					if (!$rights->tableAccess($tbl = ApiRecord::getInstance($table)->getTableName(), Rights::UPDATE))
+						throw new RightsException('No UPDATE access on '.$tbl);
+					$field = $oneConfig['local'];
+					$obj = ApiRecord::getInstance($table);
+					$obj->load($row['local_id']);
+					$obj->$field = null;
+					$obj->save();
+					continue;
+				}
+			}
+		} else {
+			/* Check table access */
+			if (!$rights->tableAccess($table = ApiRecord::getInstance($this->table)->getTableName(), Rights::DELETE))
+				throw new RightsException('No DELETE access on '.$table);
+			
+			$obj = ApiRecord::getInstance($this->table);
+			$select = new SelectQuery();
+			$select->from = $this->table;
+			$select->where = $this->where;
+			
+			$query = $select->getRecordQuery();
+
+
+			/* Fetch subquery ids */
+/*			foreach ($this->subqueries as $key => $subquery) {
+				$subids = array_map(create_function('$x', 'return $x["'.$key.'"];'), $subquery->getRaw());
+				if ($subids)
+					$query = $query->where('%t IN (%l)', $key, implode(', ', $subids));
+				else
+					return array();
+			}*/
+
+			/* Fetch delete ids */
+			$ids = array_map('reset', $query->get());
+			
+			/* Check rights */
+			$ids = $rights->idListFilter($obj->getTableName(), $ids, Rights::DELETE);
+			if (!$ids) return array();
+			
+			/* Get objects to delete */
+			$list = $obj->select()->where('id IN (%l)', implode(', ', $ids))->get();
+			
+			$result = array();
+			foreach ($list as $obj) {
+				/* Delete objects */
+				$result[] = array(strtolower(get_class($obj)), array('id' => $obj->id), $obj->softKey());
+				$obj->delete();
+			}
 		}
 		return $result;
 	}

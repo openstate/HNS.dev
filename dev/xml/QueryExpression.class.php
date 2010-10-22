@@ -23,7 +23,7 @@ interface QueryExpression {
 	public function renderWithLiterals($literals = array());
 	
 	/* Set expression to render using column queries defined in ORM objects */
-	public function renderWithQueries($tables = array());
+	public function renderWithQueries($tables = array(), $joins = array());
 	
 	/* Return auxiliary join clauses for this expression */
 	public function joinClauses($from, $joins);
@@ -90,7 +90,7 @@ class QueryProperty implements QueryExpression {
 		$this->isLiteral = in_array($this->property, $literals, true);
 	}
 	
-	public function renderWithQueries($tables = array()) {
+	public function renderWithQueries($tables = array(), $joins = array()) {
 		$parts = explode('.', $this->property);
 		$last = array_pop($parts);
 		$prefix = implode('::', $parts);
@@ -153,7 +153,7 @@ class QueryValue implements QueryExpression {
 		// empty
 	}
 
-	public function renderWithQueries($tables = array()) {
+	public function renderWithQueries($tables = array(), $joins = array()) {
 		// empty
 	}
 	
@@ -175,6 +175,8 @@ class QueryFunction implements QueryExpression {
 	
 	protected $matchAlias;
 	protected static $nextMatchAliasId = 1;
+	protected $tables;
+	protected $joins;
 	
 	public function __construct($function, $params) {
 		$this->function = $function;
@@ -236,7 +238,40 @@ class QueryFunction implements QueryExpression {
 	}
 	
 	protected function in($params) {
-		return '('.$params[0].' IN ('.implode(', ', $params[1]).'))';
+		if ($params[1] instanceof QueryProperty) {
+			$parts = explode('.', $params[1]->property);
+			$last = array_pop($parts);
+			$prefix = implode('::', $parts);
+			if (array_key_exists($prefix, $this->tables)) {
+				$many = $this->tables[$prefix]->getHasManyConfig($last);
+				if ($many) {
+					if ($subquery = @$many['query']) {
+						$cond = $many['foreign'].' = '.new QueryProperty(($prefix ? $prefix : 't1').'.'.$many['local']);
+						if (strpos($subquery, 'WHERE') === false)
+							$subquery = preg_replace('/(?=$| ORDER | GROUP )/', ' WHERE '.$cond, $subquery, 1);
+						else
+							$subquery = str_replace(' WHERE ', ' WHERE '.$cond.' AND ', $subquery);
+						$rhs = preg_replace('/SELECT .*? FROM/', 'SELECT '.$many['soft_key'].' FROM', $subquery);
+					} elseif ($junction = @$many['table']) {
+						$jnc = ApiRecord::getInstance($junction['class']);
+						$obj = ApiRecord::getInstance($many['class']);
+						$rhs = 'SELECT '.$obj->getSoftKeyDefinition().' FROM '.$obj->getTableName().' __tbl'.
+							' JOIN '.$jnc->getTableName().' __jnc ON __jnc.'.$junction['foreign'].' = __tbl.'.$many['foreign'].
+							' WHERE __jnc.'.$junction['local'].' = '.new QueryProperty(($prefix ? $prefix : 't1').'.'.$many['local']);
+					} else {
+						$obj = ApiRecord::getInstance($many['class']);
+						$rhs = 'SELECT '.$obj->getSoftKeyDefinition().' FROM '.$obj->getTableName().' __tbl'.
+							' WHERE __tbl.'.$many['foreign'].' = '.new QueryProperty(($prefix ? $prefix : 't1').'.'.$many['local']);
+					}
+					if ($rhs)
+						return '('.$params[0].' IN ('.$rhs.'))';
+				}
+			}
+			require_once('DataStore.class.php');
+			DataStore::set('query_exception', new ParseException('Illegal right-hand side for IN'));
+			return 'FALSE';
+		} else
+			return '('.$params[0].' IN ('.implode(', ', $params[1]).'))';
 	}
 	
 	protected function le($params) {
@@ -285,12 +320,14 @@ class QueryFunction implements QueryExpression {
 	}
 	
 	public function __toString() {
+	try{
 		if (method_exists($this, $fn = $this->function) || method_exists($this, $fn = $this->function.'_'))
 			return $this->$fn($this->parameters);
 		else
 			return $this->function.'('.implode(', ', array_map(create_function('$k,$v',
 				'return (is_int($k) ? "" : $k."=").(is_array($v) ? "(".implode(", ", $v).")" : $v);'),
 				array_keys($this->parameters), $this->parameters)).')';
+	} catch (Exception $e) { var_dump($e);die;}
 	}
 
 	/* Recursively call a method on the function parameters */
@@ -339,7 +376,12 @@ class QueryFunction implements QueryExpression {
 	}
 	
 	public function tableReferenceList() {
-		return $this->recursiveCall('tableReferenceList');
+		$result = $this->recursiveCall('tableReferenceList');
+/*		if ($this->function == 'in' && count($this->parameters[1]) == 1 && $this->parameters[1][0] instanceof QueryProperty) {
+			$prop = new QueryProperty($this->parameters[1][0]->property.'.id');
+			$result = array_unique(array_merge($result, $prop->tableReferenceList()));
+		}*/
+		return $result;
 	}
 	
 	protected function containingTableFinalFn($result) {
@@ -361,7 +403,9 @@ class QueryFunction implements QueryExpression {
 		$this->recursiveCall('renderWithLiterals', null, null, null, $literals);
 	}
 	
-	public function renderWithQueries($tables = array()) {
+	public function renderWithQueries($tables = array(), $joins = array()) {
+		$this->tables = $tables;
+		$this->joins = $joins;
 		$this->recursiveCall('renderWithQueries', null, null, null, $tables);
 	}
 	
@@ -429,7 +473,7 @@ class QueryOrder implements QueryExpression {
 		$this->expression->renderWithLiterals($literals);
 	}
 
-	public function renderWithQueries($tables = array()) {
+	public function renderWithQueries($tables = array(), $joins = array()) {
 		$this->expression->renderWithQueries($tables);
 	}
 	

@@ -198,7 +198,7 @@ class XmlQuery {
 								/* Reference is marked to be deleted, create a delete query */
 								$junction = new DeleteQuery();
 								$junction->table = $query->table.'::'.$key;
-								$junction->subqueries['local_id'] = $subquery;
+								$junction->query = $subquery;
 								
 								/* Deleting a reference is always based on id */
 								$id = (string) $item['id'];
@@ -206,10 +206,7 @@ class XmlQuery {
 									throw new ParseException('Id is required for delete');
 								
 								/* Generate junction table where clause to match on id */
-								$junction->where = array(new QueryFunction('eq', array(
-									new QueryProperty('foreign_id'),
-									new QueryValue($this->parseValue($id))
-								)));
+								$junction->query->select['foreign_id'] = new QueryValue($this->parseValue($id));
 							} else {
 								/* Add foreign reference */
 								$junction = new InsertQuery();
@@ -267,6 +264,9 @@ class XmlQuery {
 		/* Otherwise, parse the where clause from the attributes */
 		if (!$query->where)
 			$query->where[] = $this->attributeConjunction($xml);
+			
+		if (!$query->where)
+			throw new ParseException('No where clause found in delete query');
 			
 		return $query;
 	}

@@ -1,8 +1,8 @@
 <?php
 
-class Author extends ApiRecord {
-	protected $tableName = 'authors';
-	protected $softKeyDefinition = 'document';
+class Vote extends ApiRecord {
+	protected $tableName = 'votes';
+	protected $softKeyDefinition = 'vote';
 
 	protected $config = array(
 		'person' => array('type' => self::RELATION, 'relation' => 'Person'),

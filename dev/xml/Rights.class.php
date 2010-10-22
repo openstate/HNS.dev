@@ -107,9 +107,14 @@ class Rights {
 	
 	/* Remove ids the user doesn't have access to from a list ids */
 	public function idListFilter($table, $idList, $access) {
-		return array_intersect($idList,
-			call_user_func_array('array_merge', array_map(create_function('$r', 'return $r["ids"];'),
-				$this->filter(array('table' => $table, 'access' => $access)))));
+		$list = array_map(create_function('$r', 'return $r["ids"];'),
+				$this->filter(array('table' => $table, 'access' => $access)));
+		$result = array();
+		foreach ($list as $l) {
+			if ($l === null) return $idList;
+			$result = array_merge($result, array_map('intval', explode(',', substr($l, 1, -1))));
+		}
+		return array_intersect($idList, $result);
 	}
 
 	/* Filters a result set as given by the query class to remove values the user doesn't have access to */
@@ -139,7 +144,7 @@ class Rights {
 					if (strpos($property, '/') !== false) {
 						/* The property contains a /, it represents a has-one relation so verify access to the row */
 						list($prop, $tbl) = explode('/', $property);
-						if (!$this->rowAccess(ApiRecord::getInstance($tbl)->getTableName(), $row[$property], $access)) {
+						if ($prop != $tbl && !$this->rowAccess(ApiRecord::getInstance($tbl)->getTableName(), $row[$prop], $access)) {
 							unset($row[$property]);
 							unset($row[$prop]);
 						}

@@ -20,6 +20,11 @@ abstract class ApiRecord extends Record {
 		return $this->db->query('SELECT %l FROM %t WHERE id = %', $this->softKeyDefinition, $this->tableName, $this->id)->fetchCell();
 	}
 	
+	/* Get the soft key definition for this record */
+	public function getSoftKeyDefinition() {
+		return $this->softKeyDefinition;
+	}
+	
 	/* Register the taggle plugin and set the tag owner to the api developer id */
 	protected function registerTaggablePlugin() {
 		try {
@@ -32,6 +37,7 @@ abstract class ApiRecord extends Record {
 				'SELECT name, SUM(weight) AS weight, object_id, MIN(id) AS id FROM tags '.
 				'WHERE object_table = % GROUP BY name, object_id',
 				$this->tableName),
+			'soft_key' => 'name',
 			'select_all' => array('name', 'weight'),
 			'order' => 'weight',
 			'direction' => 'desc',
