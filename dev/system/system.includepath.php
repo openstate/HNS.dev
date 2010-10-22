@@ -3,7 +3,7 @@
 		'system/',
 		'system/database/',
 		'system/record/',
-		'system/record/objects/'
-		'system/record/plugins/'
+		'system/record/objects/',
+		'system/record/plugins/',
 	);
 ?>
