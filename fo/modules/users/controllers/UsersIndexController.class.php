@@ -70,11 +70,14 @@ class UsersIndexController extends Controller {
 			$user->photo = $values['photo'];
 
 		$user->organization = $values['organization'];
+		$user->position = $values['position'];
 		$user->postalcode = $values['postalcode'];
 		$user->phone = $values['phone'];
 		$user->twitter = $values['twitter'];
+		$user->linkedin = $values['linkedin'];
 		$user->skype = $values['skype'];
 		$user->shortbio = $values['shortbio'];
+		$user->accept_terms = $values['accept_terms'];
 		if (!$id) {
 			$user->rights_read = 1;
 			$user->rights_write = 0;

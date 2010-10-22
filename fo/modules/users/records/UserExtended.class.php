@@ -69,9 +69,11 @@ class UserExtended extends Record {
 		$wiki .= "* '''$name''': {$this->user->user_real_name}\n";
 		$wiki .= "* '''$email''': {$this->user->user_email}\n";
 		$wiki .= "* '''$organization''': {$this->organization}\n";
+		$wiki .= "* '''$position''': {$this->position}\n";
 		$wiki .= "* '''$postalcode''': {$this->postalcode}\n";
 		$wiki .= "* '''$phone''': {$this->phone}\n";
 		$wiki .= "* '''$twitter''': {$this->twitter}\n";
+		$wiki .= "* '''$linkedin''': {$this->linkedin}\n";
 		$wiki .= "* '''$skype''': {$this->skype}\n\n";
 		$wiki .= "=== $shortbio ===\n\n".str_replace("\n", "\n\n", trim($this->shortbio))."\n\n";
 		$wiki .= "[[Category:Users|{$this->user->user_name}]]\n";
