@@ -15,5 +15,6 @@ ALTER TABLE persons_functions ADD COLUMN organization INTEGER, ADD CONSTRAINT or
 
 DROP TABLE parties_functions;
 
--- Create column documents.code
+-- Create additional columns for documents
 ALTER TABLE documents ADD code text;
+ALTER TABLE documents ADD parent int4;

@@ -14,6 +14,7 @@ class Document extends ApiRecord {
 		'summary' => array('type' => self::STRING, 'length' => 250),
 		'type' => array('type' => self::LOOKUP, 'lookup' => 'doc_types'),
 		'result' => array('type' => self::LOOKUP, 'lookup' => 'doc_results'),
+		'parent' => array('type' => self::RELATION, 'relation' => 'Document'),
 		'submitter_organization' => array('type' => self::RELATION, 'relation' => 'Organization'),
 		'submitter_person' => array('type' => self::RELATION, 'relation' => 'Person'),
 		'category' => array('type' => self::LOOKUP, 'lookup' => 'doc_categories'),
