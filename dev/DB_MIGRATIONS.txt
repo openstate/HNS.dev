@@ -18,3 +18,8 @@ DROP TABLE parties_functions;
 -- Create additional columns for documents
 ALTER TABLE documents ADD code text;
 ALTER TABLE documents ADD parent int4;
+
+-- Create document vote results
+INSERT INTO doc_results (name) VALUES ('Aangenomen');
+INSERT INTO doc_results (name) VALUES ('Afgewezen');
+INSERT INTO doc_results (name) VALUES ('In Behandeling');
