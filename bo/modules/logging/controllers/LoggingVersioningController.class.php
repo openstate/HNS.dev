@@ -8,9 +8,17 @@ class LoggingVersioningController extends Controller {
 	protected $limit = 100;
 
 	protected $tables = array(
+		'authors' => 'Auteur',
+		'citations' => 'Citaat',
 		'documents' => 'Document',
-		'organisations' => 'Organisatie',
+		'functions' => 'Functie',
+		'organizations' => 'Organisatie',
+		'parties' => 'Partij',
 		'persons' => 'Persoon',
+		'persons_functions' => 'Persoon-functie',
+		'petitions' => 'Petitie',
+		'resumes' => 'Resume',
+		'votes' => 'Stem',
 	);
 	
 	protected function formatDate($date) {

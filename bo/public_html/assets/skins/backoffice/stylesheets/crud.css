@@ -103,9 +103,11 @@ div.indent div.level       { background-image: url(../images/crud/indent.level.p
 div.indent div.close       { background-image: url(../images/crud/indent.close.png); }
 div.indent div.close_first { background-image: url(../images/crud/indent.close.first.png); }
 div.indent div.close_last  { background-image: url(../images/crud/indent.close.last.png); }
+div.indent div.close_only  { background-image: url(../images/crud/indent.close.only.png); }
 div.indent div.open        { background-image: url(../images/crud/indent.open.png); }
 div.indent div.open_first  { background-image: url(../images/crud/indent.open.first.png); }
 div.indent div.open_last   { background-image: url(../images/crud/indent.open.last.png); }
+div.indent div.open_only   { background-image: url(../images/crud/indent.open.only.png); }
 div.indent div.leaf        { background-image: url(../images/crud/indent.leaf.png); }
 div.indent div.leaf_first  { background-image: url(../images/crud/indent.leaf.first.png); }
 div.indent div.leaf_last   { background-image: url(../images/crud/indent.leaf.last.png); }
