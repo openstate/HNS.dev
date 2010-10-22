@@ -4,7 +4,7 @@ class User extends Record {
 	protected $tableName = 'usr_users';
 	protected $hitsTableName = 'usr_user_hits';
 	
-	protected $ratePeriod = '60 seconds';
+	protected $ratePeriod = '60 minutes';
 
 	protected $config = array(
 		'name' => array(),

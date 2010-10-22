@@ -1,18 +1,23 @@
 <?php
+	if (array_key_exists('HTTP_HOST', $_SERVER) && reset(explode('.', $_SERVER['HTTP_HOST'])) == 'sandbox')
+		$prefix = 'hns-dev-sandbox';
+	else
+		$prefix = 'hns-dev';
+
 	return array(
 		DBs::SYSTEM => array(
 			'type' => 'pgsql',
 			'host' => '192.168.1.3',
 			'user' => 'hns-dev',
 			'pass' => 'PhlSmbh057eg2nCkficV',
-			'database' => 'hns-dev'
+			'database' => $prefix
 		),
 		DBs::LOGGING => array(
 			'type' => 'pgsql',
 			'host' => '192.168.1.3',
 			'user' => 'hns-dev',
 			'pass' => 'PhlSmbh057eg2nCkficV',
-			'database' => 'hns-dev-logging'
+			'database' => $prefix.'-logging'
 		)
 	);
 ?>
