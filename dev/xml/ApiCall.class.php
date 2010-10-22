@@ -19,9 +19,7 @@ class ApiCall {
 				if (!DEVELOPER) continue;
 			}
 			/* Generate a node with text content if any was supplied */
-			// Workaround: addChild($key, $value) does not escape $value!
-			$node = $xml->addChild($name);
-			$node[0] = $string;
+			$node = $xml->addChild($name, htmlspecialchars($string, ENT_QUOTES, 'UTF-8'));
 
 			$nodes = array();
 			$defer = array();
@@ -42,9 +40,7 @@ class ApiCall {
 
 						$nodes[$key] = $node->addAttribute($key, $value);
 					} else {
-						// Workaround: addChild($key, $value) does not escape $value!
-						$nodes[$key] = $node->addChild($key);
-						$nodes[$key][0] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+						$nodes[$key] = $node->addChild($key, htmlspecialchars($value, ENT_QUOTES, 'UTF-8'));
 					}
 
 					/* If any deferred attributes (see below) are waiting, add them */
