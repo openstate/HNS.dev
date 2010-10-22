@@ -354,8 +354,9 @@ abstract class Database {
 		$end = microtime(true);
 		$this->queryArray[]= array($sql, $end-$start);
 		
-		if (is_string($result))
+		if (is_string($result)) {
 			throw new DatabaseQueryException('An error occured while executing a query.', $result, $sql);
+		}
 
 		return $result;
 	}
