@@ -58,9 +58,9 @@ class ImageObject extends FileObject {
 		$this->originalValue = $this->value;
 	}
 
-	public function getLink() {
+	public function getLink($useDefault = false) {
 		if (!$this->value)
-			return '';
+			return $useDefault ? $this->config['path'].$this->config['default'] : '';
 
 		$pathInfo = pathinfo($this->value);
 		return $this->config['path'].$pathInfo['filename'].'.'.$pathInfo['extension'];

@@ -32,7 +32,9 @@ class ObjectablePlugin extends RecordPlugin {
 
 	public function __set($name, $value) {
 		$this->initObject($name);
-		$this->objects[$name]->set($value);
+		$b = $this->objects[$name]->set($value);
+		if (!$b && @$this->options[$name]['args']['throw_exception'])
+			throw new Exception($name.': set failed');
 	}
 
 	public function preSave(RecordEvent $event) {

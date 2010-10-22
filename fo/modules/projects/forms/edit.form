@@ -1,0 +1,99 @@
+<form>
+	<table>
+		<tbody>
+			<e:field>
+				<label>##project.name##:</label>
+				<content>
+					<e:text name="name" maxlength="100">
+						<c:required />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##project.logo##:</label>
+				<content>
+					{if $has_logo}
+					<e:img name="logo_img" alt="##project.logo##" /><br />
+					<label><e:checkbox name="clear_logo" /> ##project.clear##</label><br />
+					{/if}
+					<e:file name="logo">
+						<c:server>
+							<p:callback>isValidImage</p:callback>
+							<msg>##project.error.imageformat##</msg>
+						</c:server>
+					</e:file>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##project.screenshot##:</label>
+				<content>
+					{if $has_screenshot}
+					<e:img name="screenshot_img" alt="##project.screenshot##" /><br />
+					<label><e:checkbox name="clear_screenshot" /> ##project.clear##</label><br />
+					{/if}
+					<e:file name="screenshot">
+						<c:server>
+							<p:callback>isValidImage</p:callback>
+							<msg>##project.error.imageformat##</msg>
+						</c:server>
+					</e:file>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##project.date##:</label>
+				<content>
+					<e:datetime name="date">
+						<c:required />
+					</e:datetime>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##project.website##:</label>
+				<content>
+					<e:text name="website">
+						<c:required />
+						<c:url />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##project.description##:</label>
+				<content>
+					<e:textarea name="description">
+						<c:required />
+					</e:textarea>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##project.rss##:</label>
+				<content>
+					<e:text name="rss">
+						<c:url />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##project.license##:</label>
+				<content>
+					<e:text name="license">
+						<c:required />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label />
+				<content>
+					<input type="submit" value="##project.save##" />
+				</content>
+			</e:field>
+		</tbody>
+	</table>
+</form>

@@ -1,0 +1,57 @@
+<form>
+	<table>
+		<tbody>
+			<e:field>
+				<label>##project.upload.file##:</label>
+				<content>
+					<e:file name="file">
+						<c:server>
+							<p:callback>isValidFile</p:callback>
+							<msg>##project.error.fileformat##</msg>
+						</c:server>
+						<c:required />
+					</e:file>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##project.upload.version##:</label>
+				<content>
+					<e:text name="version" maxlength="100">
+						<c:required />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##project.upload.description##:</label>
+				<content>
+					<e:textarea name="description">
+						<c:required />
+					</e:textarea>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##project.upload.language##:</label>
+				<content>
+					<e:text name="language" maxlength="100">
+						<c:required />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label />
+				<content>
+					<input type="submit" name="more" value="##project.upload.more##" />
+					{if $newProject}
+					<input type="submit" value="##project.next##" />
+					{else}
+					<input type="submit" value="##project.save##" />
+					{/if}
+				</content>
+			</e:field>
+		</tbody>
+	</table>
+</form>

@@ -1,0 +1,35 @@
+<table>
+<tr><th>##project.name##</th><td>{$project->name|htmlspecialchars}</td></tr>
+<tr><th>##project.logo##</th><td><img src="{$project->logo->getLink()|htmlspecialchars}" alt="##project.logo##" /></td></tr>
+<tr><th>##project.screenshot##</th><td><img src="{$project->screenshot->getLink()|htmlspecialchars}" alt="##project.screenshot##" /></td></tr>
+<tr><th>##project.date##</th><td>{$project->date|htmlspecialchars}</td></tr>
+<tr><th>##project.website##</th><td><a href="{$project->website|htmlspecialchars}">{$project->website|htmlspecialchars}</a></td></tr>
+<tr><th>##project.description##</th><td>{$project->description|htmlspecialchars|nl2br}</td></tr>
+<tr><th>##project.rss##</th><td>{if $project->rss}<a href="{$project->rss|htmlspecialchars}">{$project->rss|htmlspecialchars}</a>{/if}</td></tr>
+<tr><th>##project.license##</th><td>{$project->license|htmlspecialchars}</td></tr>
+</table>
+
+<a href="{'/projects/index/change/'|cat:$id|route}">##project.change##</a>
+
+<table>
+<tr>
+	<th>##project.upload.file##</th>
+	<th>##project.upload.version##</th>
+	<th>##project.upload.language##</th>
+	<th>##project.publish##</th>
+</tr>
+<form method="post" action="">
+{foreach from=$files item=file key=id}
+<tr>
+	<td><a href="{'/projects/index/download/'|cat:$id|route}">{$file->filename|htmlspecialchars}</a></td>
+	<td>{$file->version|htmlspecialchars}</td>
+	<td>{$file->language|htmlspecialchars}</td>
+	<td>
+		<label><input type="radio" name="publish[{$id}]" value="1"{if $file->published} checked="checked"{/if} /> ##project.publish.yes##</label>
+		<label><input type="radio" name="publish[{$id}]" value="0"{if !$file->published} checked="checked"{/if} /> ##project.publish.no##</label>
+	</td>
+</tr>
+{/foreach}
+<tr><td colspan="4" style="text-align:right;"><input type="submit" value="##project.save##" /></td></tr>
+</form>
+</table>

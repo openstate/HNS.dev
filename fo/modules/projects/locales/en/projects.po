@@ -1,0 +1,110 @@
+msgid "project.name"
+msgstr "Project name"
+
+msgid "project.logo"
+msgstr "Logo"
+
+msgid "project.screenshot"
+msgstr "Screen shot"
+
+msgid "project.date"
+msgstr "Starting date"
+
+msgid "project.website"
+msgstr "Website"
+
+msgid "project.description"
+msgstr "Description"
+
+msgid "project.rss"
+msgstr "RSS feed"
+
+msgid "project.license"
+msgstr "License"
+
+msgid "project.next"
+msgstr "Next"
+
+msgid "project.save"
+msgstr "Save"
+
+msgid "project.rights"
+msgstr "Rights?"
+
+msgid "project.rights.read"
+msgstr "Read"
+
+msgid "project.rights.write"
+msgstr "Write"
+
+msgid "project.key"
+msgstr "Public key"
+
+msgid "project.key.current"
+msgstr "Current key"
+
+msgid "project.key.upload"
+msgstr "Upload key file"
+
+msgid "project.key.generate"
+msgstr "Generate key pair"
+
+msgid "project.key.generate.private"
+msgstr "Private key"
+
+msgid "project.key.generate.public"
+msgstr "Public key"
+
+msgid "project.key.generate.button"
+msgstr "Generate"
+
+msgid "project.upload.file"
+msgstr "File"
+
+msgid "project.upload.version"
+msgstr "Version"
+
+msgid "project.upload.description"
+msgstr "Description"
+
+msgid "project.upload.language"
+msgstr "Language"
+
+msgid "project.upload.more"
+msgstr "Upload more"
+
+msgid "project.publish"
+msgstr "Publish"
+
+msgid "project.unpublish"
+msgstr "Unpublish"
+
+msgid "project.publish.yes"
+msgstr "Yes"
+
+msgid "project.publish.no"
+msgstr "No"
+
+msgid "project.error.imageformat"
+msgstr "Unknown image format"
+
+msgid "project.error.fileformat"
+msgstr "Unknown file format"
+
+msgid "project.change.edit"
+msgstr "Edit project"
+
+msgid "project.change.credentials"
+msgstr "Edit credentials"
+
+msgid "project.change.publish"
+msgstr "Publish/unpublish"
+
+msgid "project.change.view"
+msgstr "View"
+
+msgid "project.change"
+msgstr "Modify project"
+
+msgid "project.clear"
+msgstr "Clear image"

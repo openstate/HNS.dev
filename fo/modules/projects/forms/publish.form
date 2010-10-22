@@ -1,0 +1,29 @@
+<form>
+	<table>
+		<tbody>
+			<e:field>
+				<label>##project.publish##:</label>
+				<content>
+					<e:radio name="publish">
+						<values>
+							<value value="1">##project.publish.yes##</value>
+							<value value="0">##project.publish.no##</value>
+						</values>
+						<c:required />
+					</e:radio>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label />
+				<content>
+					{if $newProject}
+					<input type="submit" value="##project.next##" />
+					{else}
+					<input type="submit" value="##project.save##" />
+					{/if}
+				</content>
+			</e:field>
+		</tbody>
+	</table>
+</form>

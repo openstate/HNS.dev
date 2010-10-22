@@ -26,7 +26,7 @@ class PgDatabase extends Database {
 	}
 	
 	public function formatIdentifier($identifier) {
-		return '"'.$identifier.'"';
+		return '"'.str_replace('.', '"."', $identifier).'"';
 	}
 	
 	public function concat() {

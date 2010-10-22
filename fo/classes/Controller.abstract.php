@@ -42,6 +42,7 @@ abstract class Controller {
 		$destination = $request->getDestination();
 
 		$this->view = $response->createView();
+		$this->response->getLayout()->user = $request->user;
 		$this->view->setTranslater(new Translater($request->getSite()->getLocale(), $destination->module, null));
 		$this->addPoFile('form.po', $_SERVER['DOCUMENT_ROOT'].'/../locales/');
 		$this->setViewTemplatePath($request);
