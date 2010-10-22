@@ -70,7 +70,8 @@ abstract class ApiRecord extends Record {
 
 	/* Get an instance of a record object by name */
 	public static function getInstance($name) {
-		$name = ucfirst(strtolower($name));
+		// Convert SOME_Record_TYPE to Some_Record_Type
+		$name = implode('_', array_map('ucfirst', explode('_', strtolower($name))));
 		ob_start();
 		include_once($name.'.class.php');
 		$ob = ob_get_clean();
