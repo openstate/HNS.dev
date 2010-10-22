@@ -29,8 +29,8 @@ abstract class ApiRecord extends Record {
 		}
 		$this->hasManyConfig['tags'] = array(
 			'query' => $this->db->formatQuery(
-				'SELECT name, SUM(weight) AS weight, object_id, id FROM tags '.
-				'WHERE object_table = % GROUP BY name, object_id, id',
+				'SELECT name, SUM(weight) AS weight, object_id, MIN(id) AS id FROM tags '.
+				'WHERE object_table = % GROUP BY name, object_id',
 				$this->tableName),
 			'select_all' => array('name', 'weight'),
 			'order' => 'weight',
