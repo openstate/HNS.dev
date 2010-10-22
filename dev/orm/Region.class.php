@@ -32,8 +32,10 @@ class Region extends ApiRecord {
 	 * (non-PHPdoc)
 	 * @see system/record/Record#save()
 	 */
-	public function save(){
+	public function save() {
 		throw new RightsException('Regions cannot be saved.');
+
+		return parent::save();
 	}
 
 	/**
