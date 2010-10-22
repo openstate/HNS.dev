@@ -28,7 +28,7 @@ class Dispatcher {
 				if (!file_exists($call))
 					self::error(404);
 				if (pathinfo($call, PATHINFO_EXTENSION) != 'php') {
-					header('Content-Type: '.content_type($call));
+					header('Content-Type: '.mime_content_type($call));
 					header('Content-Length: '.filesize($call));
 					readfile($call);
 					die;

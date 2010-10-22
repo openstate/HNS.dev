@@ -31,7 +31,8 @@ abstract class Record extends RecordBase {
 	const STRING = 'string';
 	const DATE = 'date';
 	const LOOKUP = 'lookup';
-	const CALLBACK = 'callback'
+	const CALLBACK = 'callback';
+	const RELATION = 'relation';
 
 	/*
 		Holds column settings for this table
@@ -52,6 +53,7 @@ abstract class Record extends RecordBase {
 			- self::FLOAT			Accepts floats, ints and strings formatted as either
 			- self::INT				Accepts ints and strings formatted as ints
 			- self::STRING			Accepts strings
+									Optinal 'length' parameter defines the maximum string length
 									Optional 'regex' parameter defines a regular expression to match
 			- self::DATE			Accepts ints representing timestamps and strings formatted as dates
 			- self::LOOKUP			Accepts values as they are found in a lookup table (either the id or the name)
@@ -59,6 +61,8 @@ abstract class Record extends RecordBase {
 			- self::CALLBACK		Defers type checking to a callback function, which should return the (transformed) value
 									or raise a RecordException if the value is not allowed
 									Mandatory 'callback' parameter defines the callback function name
+			- self::RELATION		Uses the field as a has-one relation
+									Mandatory 'relation' parameter defines the class of the far side of the relation
 									
 	*/
 	protected $config = array();
@@ -134,6 +138,20 @@ abstract class Record extends RecordBase {
 
 	public function __construct() {
 		$this->db = DBs::inst(DBs::SYSTEM);
+		if (!array_key_exists($this->pkColumn, $this->config))
+			$this->config[$this->pkColumn] = array();
+		foreach ($this->config as $key => &$conf)
+			if (@$conf['type'] == self::RELATION && $class = @$conf['relation']) {
+				$this->hasOneConfig[$key] = array('class' => $class, 'local' => $key, 'foreign' => 'id');
+				unset($conf['type']);
+				unset($conf['relation']);
+			}
+		unset($conf);
+		foreach ($this->hasManyConfig as &$conf) {
+			if (!@$conf['local']) $conf['local'] = 'id';
+			if (!@$conf['foreign']) $conf['foreign'] = 'id';
+		}
+		unset($conf);
 		$this->data[$this->pkColumn] = false;
 		$this->init();
 	}
@@ -632,7 +650,11 @@ abstract class Record extends RecordBase {
 				throw new RecordException('Attempt to write has one relation "'.$name.'" with invalid class expected instance of "'.$this->hasOneConfig[$name]['class'].'"');
 			}
 		} elseif (isset($this->config[$name]) && (!isset($this->config[$name]['writability']) || $this->config[$name]['writability'] == self::NORMAL)) {
-			if ($check = @$this->config[$name]['check']) {
+			if (isset($this->hasOneConfig[$name]) && !(is_int($value) || ctype_digit($value))) {
+				$obj = Record::getInstance($this->hasOneConfig[$name]['class']);
+				$obj->loadBySoftKey($value);
+				$value = $obj->id;
+			} elseif ($value !== null && $check = @$this->config[$name]['type']) {
 				if ($check == self::INT && !(is_int($value) || ctype_digit($value)))
 					throw new RecordException('INT expected but not found for '.get_class($this).'.'.$name);
 				elseif ($check == self::FLOAT && !(is_float($value) || is_int($value) || preg_match('/^[0-9]+(\.[0-9]+)?$/', $value)))
@@ -640,22 +662,20 @@ abstract class Record extends RecordBase {
 				elseif ($check == self::DATE) {
 					if (!is_int($value))
 						$value = strtotime($value);
-					if (!is_int($value)
+					if (!is_int($value))
 						throw new RecordException('DATE expected but not found for '.get_class($this).'.'.$name);
-					$value = strftime('%Y-%m-%d %H:%M:%S', $value)
-				} elseif ($check == self::STRING && $regex = @$this->config[$name]['regex'] && !preg_match($pattern, $value))
-						throw new RecordException('STRING expected but not found for '.get_class($this).'.'.$name);
+					$value = strftime('%Y-%m-%d %H:%M:%S', $value);
+				} elseif ($check == self::STRING) {
+					if (($length = @$this->config[$name]['length']) && strlen($value) > $length)
+						throw new RecordException('STRING too long for '.get_class($this).'.'.$name);
+					if (($regex = @$this->config[$name]['regex']) && !preg_match($regex, $value))
+						throw new RecordException('STRING incorrectly formatted for '.get_class($this).'.'.$name);
 				} elseif ($check == self::LOOKUP && $lookup = @$this->config[$name]['lookup']) {
-					$value = $this->db->query('SELECT id FROM %t WHERE id = % OR name = %2', $lookup, $value)->fetchCell();
+					$value = $this->db->query('SELECT id FROM %t WHERE %t = %', $lookup, is_int($value) || ctype_digit($value) ? 'id' : 'name', $value)->fetchCell();
 					if (!$value)
-						throw new RecordException('LOOKUP expected but not found for '.get_class($this).'.'.$name);
+						throw new RecordException('LOOKUP value unknown for '.get_class($this).'.'.$name);
 				} elseif ($check == self::CALLBACK && $callback = @$this->config[$name]['callback'])
 					$value = $this->$callback($value);
-			}
-			if (isset($this->hasOneConfig[$name]) && !(is_int($value) || ctype_digit($value))) {
-				$obj = Record::getInstance($this->hasOneConfig[$name]['class']);
-				$obj->loadBySoftKey($value);
-				$value = $obj->id;
 			}
 			$this->data[$name] = $value;
 			if (!isset($this->config[$name]['relations'])) {

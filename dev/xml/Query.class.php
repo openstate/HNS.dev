@@ -27,7 +27,7 @@ class CompositeQuery implements Query {
 	
 	/* Execute all queries */
 	public function execute() {
-		var_dump($this->toSql());
+		//var_dump($this->toSql());
 		$result = array();
 		foreach ($this->queries as $query)
 			$result = array_merge($result, $query->execute());
@@ -194,12 +194,12 @@ class InsertQuery implements Query {
 						continue;
 					}
 				} else {
-					var_dump($row, $this->toSql());
+					//var_dump($row, $this->toSql());
 					/* There's not, so we're updating the local object */
 					$oneConfig = Record::getInstance($table)->getHasOneConfig($subtable);
 					$field = $oneConfig['local'];
 					$obj = Record::getInstance($table);
-					var_dump(get_class($obj));
+					//var_dump(get_class($obj));
 					$obj->load($row['local_id']);
 					$obj->$field = $row['foreign_id'];
 					$obj->save();
@@ -219,7 +219,7 @@ class InsertQuery implements Query {
 			if (!$this->query)
 				$this->id = $obj->id;
 			$result[] = array(strtolower(get_class($obj)), array('id' => $obj->id), $obj->softKey());
-			var_dump(array($table, array('id' => $obj->id)));
+			//var_dump(array($table, array('id' => $obj->id)));
 		}
 		return $result;
 	}
