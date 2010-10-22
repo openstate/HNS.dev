@@ -62,7 +62,8 @@ abstract class Controller {
 			throw new NoRouteException(get_class($this).' couldn\'t route request ' . $response->getViewHelper()->reverseRoute($request->getDestination()->toUrlString()));
 		}
 
-		$this->response->getLayout()->title = $this->getTitle();
+		if (!$this->request->isBlock)
+			$this->response->getLayout()->title = $this->getTitle();
 
 		if (method_exists($this, 'preDispatch')) {
 			$this->preDispatch();
@@ -105,6 +106,7 @@ abstract class Controller {
 	}
 	
 	protected function displayLogin() {
+		if ($this->request->isBlock) return;
 		$locale = substr($this->request->user->getLocale(), 0, 2);
 		$tr = new GettextPO($_SERVER['DOCUMENT_ROOT'].'/../locales/'.$locale.'/login.po');
 		$this->response->getLayout()->title = $tr->getMsgstr('login.title');
@@ -116,6 +118,7 @@ abstract class Controller {
 	}
 	
 	protected function displayForbidden() {
+		if ($this->request->isBlock) return;
 		$locale = substr($this->request->user->getLocale(), 0, 2);
 		$tr = new GettextPO($_SERVER['DOCUMENT_ROOT'].'/../locales/'.$locale.'/login.po');
 		$this->response->getLayout()->title = $tr->getMsgstr('forbidden.title');

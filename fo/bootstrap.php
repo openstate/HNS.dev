@@ -46,6 +46,7 @@ require_once 'Router.class.php';
 require_once 'HttpRequest.class.php';
 require_once 'HttpResponse.class.php';
 require_once 'Layout.class.php';
+require_once 'strftime.include.php';
 
 // create the request and response
 $request = new HttpRequest($site);

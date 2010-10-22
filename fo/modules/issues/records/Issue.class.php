@@ -48,11 +48,11 @@ class Issue extends Record {
 
 		$wiki = '';
 		if ($this->status != 'closed') {
-			$wiki .= "<div style=\"float: right;\">&#91;";
+			$wiki .= "<guard group=\"sysop\"><div style=\"float: right;\">&#91;";
 			if ($this->status == 'new')
 				$wiki .= "[[Redirect:/modules/issues/index/progress/{$this->id}/|$progress]] | ";
 			$wiki .= "[[Redirect:/modules/issues/index/close/{$this->id}/|$close]]";
-			$wiki .= "]</div>\n\n";
+			$wiki .= "]</div>\n\n</guard>";
 		}
 		$wiki .= "''$submitted_by [[User:$user|$user]] ([[User talk:$user|$talk]] • [[Special:Contributions/$user|$contribs]])''\n\n";
 		$wiki .= "* '''$category''': $cat\n* '''$priority''': {$this->priority}. $pri\n* '''$url''': {$this->url}\n* '''$status''': $sta\n";

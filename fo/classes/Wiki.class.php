@@ -72,6 +72,15 @@ class Wiki {
 			));
 	}
 
+	public function exists($title) {
+		$query = $this->request('GET', array(
+			'action' => 'query',
+			'titles' => $titles
+		));
+		
+		return reset(array_keys($query['pages']['pages'])) >= 0;
+	}
+
 	public function edit($title, $content, array $options = array()) {
 		$this->login();
 		
@@ -117,7 +126,7 @@ class Wiki {
 		));
 
 		$query = reset($query['query']['pages']);
-
+		
 		$this->request('POST', array(
 			'action' => 'delete',
 			'title' => $title,
@@ -166,6 +175,9 @@ class Wiki {
 		) + $data);
 	}
 	
+	public function redirect($title) {
+		return '/wiki/'.$title;
+	}
 	
 }
 

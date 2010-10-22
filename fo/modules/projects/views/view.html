@@ -1,54 +1,22 @@
-<table>
-<tr><th>##project.name##</th><td>{$project->name|htmlspecialchars}</td></tr>
-<tr><th>##project.logo##</th><td><img src="{$project->logo->getLink()|htmlspecialchars}" alt="##project.logo##" /></td></tr>
-<tr><th>##project.screenshot##</th><td><img src="{$project->screenshot->getLink()|htmlspecialchars}" alt="##project.screenshot##" /></td></tr>
-<tr><th>##project.date##</th><td>{$project->date|htmlspecialchars}</td></tr>
-<tr><th>##project.website##</th><td><a href="{$project->website|htmlspecialchars}">{$project->website|htmlspecialchars}</a></td></tr>
-<tr><th>##project.description##</th><td>{$project->description|htmlspecialchars|nl2br}</td></tr>
-<tr><th>##project.rss##</th><td>{if $project->rss}<a href="{$project->rss|htmlspecialchars}">{$project->rss|htmlspecialchars}</a>{/if}</td></tr>
-<tr><th>##project.license##</th><td>{$project->license|htmlspecialchars}</td></tr>
-</table>
+{pofile wiki}
+{assign var=logo value=$project->logo->getThumbnail(200)}
+{assign var=screenshot value=$project->screenshot->getThumbnail(200)}
+{if $logo || $screenshot}<div style="float:right;">
+{if $logo}<div style="margin: 5px; padding: 5px; border: 1px solid black;"><img src="http{if $smarty.server.HTTPS}s{/if}://{$smarty.server.HTTP_HOST}{$logo}" alt="{$logo|basename}" /></div>{/if}
+{if $screenshot}<div style="margin: 5px; padding: 5px; border: 1px solid black;"><img src="http{if $smarty.server.HTTPS}s{/if}://{$smarty.server.HTTP_HOST}{$screenshot}" alt="{$screenshot|basename}" /></div>{/if}
+</div>{/if}
+<div style="float: right;">[<a href="{'/projects/index/publish/'|cat:$project->id|route}">##project.publish##</a>]</div>
+<p><em>##project.notpublished##</em></p>
+<div style="float: right;">[<a href="{'/projects/index/change/'|cat:$project->id|route}">##project.change##</a>]</div>
+<ul><li><b>##project.owner##</b>: <a href="##wiki.path##/User:{$project->user->user_name|htmlspecialchars}" class="?new?" title="User:{$project->user->user_name|htmlspecialchars}">{$project->user->user_name|htmlspecialchars}</a> (<a href="##wiki.path##/User_talk:{$project->user->user_name|htmlspecialchars}" class="?new?" title="User talk:{$project->user->user_name|htmlspecialchars}">##project.talk##</a> • <a href="##wiki.path##/Special:Contributions/{$project->user->user_name|htmlspecialchars}">##project.contribs##</a>)</li>
+{assign var=date value=$project->date|strtotime}<li><b>##project.date##</b>: {'##project.date_format##'|strftime2:$date}</li>
+<li><b>##project.website##</b>: <a href="{$project->website|htmlspecialchars}" class="external free" title="{$project->website|htmlspecialchars}" rel="nofollow">{$project->website|htmlspecialchars}</a></li>
+{if $project->rss}<li><b>##project.rss##</b>: <a href="{$project->rss|htmlspecialchars}" class="external free" href="{$project->rss|htmlspecialchars}" rel="nofollow">{$project->rss|htmlspecialchars}</a></li>{/if}
+<li><b>##project.license##</b>: {$project->license|htmlspecialchars}</li></ul>
 
-{if $loggedIn}
-<a href="{'/projects/index/change/'|cat:$id|route}">##project.change##</a>
-{/if}
+<a name="##project.description##"></a><h3><span class="mw-headline"> ##project.description## </span></h3>
+<p>{$project->description|htmlspecialchars|replace:"\n":"</p><p>"}</p>
 
-{if $loggedIn}
-<form method="post" action="">
-{/if}
-<table>
-<tr>
-	<th>##project.upload.file##</th>
-	<th>##project.upload.version##</th>
-	<th>##project.upload.language##</th>
-{if $loggedIn}
-	<th>##project.publish##</th>
-{/if}
-</tr>
-{assign var=filesPublished value=0}
-{foreach from=$files item=file key=id}
-{if $loggedIn || $file->published}
-{assign var=filesPublished value=1}
-<tr>
-	<td><a href="{'/projects/index/download/'|cat:$id|route}">{$file->filename|htmlspecialchars}</a></td>
-	<td>{$file->version|htmlspecialchars}</td>
-	<td>{$file->language|htmlspecialchars}</td>
-{if $loggedIn}
-	<td>
-		<label><input type="radio" name="publish[{$id}]" value="1"{if $file->published} checked="checked"{/if} /> ##project.publish.yes##</label>
-		<label><input type="radio" name="publish[{$id}]" value="0"{if !$file->published} checked="checked"{/if} /> ##project.publish.no##</label>
-	</td>
-{/if}
-</tr>
-{/if}
-{/foreach}
-{if !$filesPublished}
-<tr><td colspan="4"><em>##project.nofiles##</em></td></tr>
-{/if}
-{if $loggedIn}
-<tr><td colspan="4" style="text-align:right;"><input type="submit" value="##project.save##" /></td></tr>
-{/if}
-</table>
-{if $loggedIn}
-</form>
-{/if}
+<a name="##project.files##"></a><h3><span class="mw-headline"> ##project.files## </span></h3>
+{render url='/projects/index/filelist/'|cat:$project->id}
+

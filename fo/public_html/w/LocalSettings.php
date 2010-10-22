@@ -132,13 +132,26 @@ define('NS_REDIRECT', 100);
 define('NS_ISSUE', 102);
 define('NS_ISSUE_TALK', 103);
 define('NS_TRANSCLUDE', 104);
+define('NS_HNS_PROJECT', 106);
+define('NS_HNS_PROJECT_TALK', 107);
 
 $wgExtraNamespaces[NS_REDIRECT] = 'Redirect';
 $wgExtraNamespaces[NS_ISSUE] = 'Issue';
 $wgExtraNamespaces[NS_ISSUE_TALK] = 'Issue_talk';
 $wgExtraNamespaces[NS_TRANSCLUDE] = 'Transclude';
+$wgExtraNamespaces[NS_HNS_PROJECT] = 'Project';
+$wgExtraNamespaces[NS_HNS_PROJECT_TALK] = 'Project_talk';
+
+$wgNamespaceProtection[NS_ISSUE] = array('editissue');
+$wgGroupPermissions['sysop']['editissue'] = true;
+
+$wgNamespaceProtection[NS_HNS_PROJECT] = array('editproject');
+$wgGroupPermissions['sysop']['editproject'] = true;
+
 
 require_once("$IP/extensions/GeSHiCodeTag.php");
+require_once("$IP/extensions/GuardTag.php");
+
 require_once( "$IP/extensions/UnblockUser/UnblockUser.php" );
 require_once( "$IP/extensions/DeleteUser/DeleteUser.php" );
 require_once( "$IP/extensions/Transclude/Transclude.php" );
@@ -154,3 +167,5 @@ function isValidPassword($password, &$result, $user) {
 }
 
 $wgHooks['isValidPassword'][] = 'isValidPassword';
+
+$wgAllowExternalImagesFrom = array('http://wiki.hnsdev.gl/');

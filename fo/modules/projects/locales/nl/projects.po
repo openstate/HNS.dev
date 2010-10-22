@@ -120,3 +120,21 @@ msgstr "Sleutel verwijderen"
 
 msgid "project.nofiles"
 msgstr "Geen bestanden beschikbaar"
+
+msgid "project.files"
+msgstr "Bestanden"
+
+msgid "project.owner"
+msgstr "Eigenaar"
+
+msgid "project.talk"
+msgstr "overleg"
+
+msgid "project.contribs"
+msgstr "bijdragen"
+
+msgid "project.date_format"
+msgstr "%e %B %Y"
+
+msgid "project.notpublished"
+msgstr "Dit project is niet gepubliceerd."

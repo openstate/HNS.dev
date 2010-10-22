@@ -17,7 +17,7 @@ msgid "title.projects.index.publish"
 msgstr "%s publiceren"
 
 msgid "title.projects.index.view"
-msgstr "%s"
+msgstr "Project:%s"
 
 msgid "title.projects.index.change"
 msgstr "%s aanpassen"

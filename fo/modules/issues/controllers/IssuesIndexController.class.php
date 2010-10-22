@@ -19,7 +19,6 @@ class IssuesIndexController extends Controller {
 		
 		require_once('Wiki.class.php');
 		Wiki::inst()->create($issue->getWikiTitle(), $issue->getWikiContent());
-		Wiki::inst()->protect($issue->getWikiTitle());
 		
 		return $issue;
 	}
@@ -37,7 +36,8 @@ class IssuesIndexController extends Controller {
 			$form->setPostData($this->request->getPost(), $this->request->getFiles());
 			if ($form->isValid()) {
 				$issue = $this->saveIssue($form->getValues());
-				$this->response->redirect('/wiki/'.$issue->getWikiTitle());
+				require_once('Wiki.class.php');
+				$this->response->redirect(Wiki::inst()->redirect($issue->getWikiTitle()));
 			}
 		} else {
 			$form->setRawdata(array('priority' => 3));
@@ -81,7 +81,8 @@ class IssuesIndexController extends Controller {
 		require_once('Wiki.class.php');
 		Wiki::inst()->edit($issue->getWikiTitle(), $issue->getWikiContent());
 		
-		$this->response->redirect('/wiki/'.$issue->getWikiTitle());
+		require_once('Wiki.class.php');
+		$this->response->redirect(Wiki::inst()->redirect($issue->getWikiTitle()));
 	}
 }
 

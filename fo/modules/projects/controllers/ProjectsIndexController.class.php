@@ -9,9 +9,10 @@ class ProjectsIndexController extends Controller {
 	protected function getTitle($request = null) {
 		try {
 			$project = new Project();
+			$title = parent::getTitle($request);
 			$request = $request ? $request : $this->request;
 			$project->load((int) $request->getParam(0));
-			return sprintf(parent::getTitle($request), htmlspecialchars($project->name));
+			return sprintf($title, htmlspecialchars($project->name));
 		} catch (Exception $e) {
 			return parent::getTitle($request);
 		}
@@ -45,6 +46,10 @@ class ProjectsIndexController extends Controller {
 		$project->user_id = $this->request->user->user_id;
 		$project->save();
 		
+		require_once('Wiki.class.php');
+		if ($project->published)
+			Wiki::inst()->edit($project->getWikiTitle(), $project->getWikiContent());
+
 		return $project->id;
 	}
 	
@@ -135,8 +140,16 @@ class ProjectsIndexController extends Controller {
 		$project = new Project();
 		$project->load($id);
 
+		$published = $project->published;
+
 		$project->published = (int) $values['publish'];
 		$project->save();
+
+		require_once('Wiki.class.php');
+		if ($project->published)
+			Wiki::inst()->edit($project->getWikiTitle(), $project->getWikiContent());
+		elseif ($published)
+			Wiki::inst()->delete($project->getWikiTitle());
 
 		return $project->published;
 	}
@@ -149,7 +162,10 @@ class ProjectsIndexController extends Controller {
 	
 		$form = new FormInstance(dirname(__FILE__).'/../forms/create.form');
 		$form->addCallback('isValidImage', array($this, 'isValidImage'));
+		$form->addCallback('isValidTitle', array($this, 'isValidTitle'));
 		
+		$this->checkProject = new Project();
+	
 		if ($this->request->isPost()) {
 			$form->setPostData($this->request->getPost(), $this->request->getFiles());
 			if ($form->isValid()) {
@@ -173,6 +189,7 @@ class ProjectsIndexController extends Controller {
 	
 		$form = new FormInstance(dirname(__FILE__).'/../forms/edit.form');
 		$form->addCallback('isValidImage', array($this, 'isValidImage'));
+		$form->addCallback('isValidTitle', array($this, 'isValidTitle'));
 		
 		$id = $this->request->getParam(0);
 		if (!ctype_digit($id)) throw new NoRouteException();
@@ -187,6 +204,8 @@ class ProjectsIndexController extends Controller {
 			$this->displayLogin();
 			return;
 		}
+		
+		$this->checkProject = $project;
 	
 		if ($this->request->isPost()) {
 			$form->setPostData($this->request->getPost(), $this->request->getFiles());
@@ -381,7 +400,13 @@ class ProjectsIndexController extends Controller {
 			throw new NoRouteException();
 		}
 
-		if ($this->request->user->user_id != $project->user_id && !$project->published) {
+		if ($project->published) {
+			require_once('Wiki.class.php');
+			$this->response->redirect(Wiki::inst()->redirect($project->getWikiTitle()));
+			return;
+		}
+
+		if ($this->request->user->user_id != $project->user_id) {
 			$this->displayLogin();
 			return;
 		}
@@ -398,7 +423,6 @@ class ProjectsIndexController extends Controller {
 		$this->view->id = $id;
 		$this->view->project = $project;
 		$this->view->files = $files;
-		$this->view->loggedIn = $this->request->user->user_id == $project->user_id;
 		$this->addPoFile('projects.po');
 		$this->view->render('view.html');
 	}
@@ -420,12 +444,14 @@ class ProjectsIndexController extends Controller {
 	
 		$files = $this->listFiles($id);
 		
-		if ($this->request->isPost() && $this->request->user->user_id == $project->user_id)
+		if ($this->request->isPost() && $this->request->user->user_id == $project->user_id) {
 			foreach ($this->request->getPost('publish', array()) as $key => $value)
 				if (isset($files[$key])) {
 					$files[$key]->published = (int) (boolean) $value;
 					$files[$key]->save();
 				}
+			$this->redirect('/projects/index/view/'.$project->id);
+		}
 
 		$this->view->id = $id;
 		$this->view->project = $project;
@@ -494,6 +520,12 @@ class ProjectsIndexController extends Controller {
 		$obj = new FileObject(null, null, array('reverseTypes' => true, 'path' => ''));
 		$obj->init();
 		return $obj->checkValue($values['key_file']) && (boolean) openssl_get_publickey(file_get_contents($values['key_file']['tmp_name']));
+	}
+	
+	protected $checkProject = null;
+	
+	public function isValidTitle($values) {
+		return $this->checkProject->isValidTitle(reset($values));
 	}
 
 }

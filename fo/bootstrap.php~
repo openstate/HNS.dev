@@ -70,7 +70,6 @@ $layout = new Layout($response->createView($request, 'Smarty'));
 $layout->setTemplatePath(realpath('../templates/').'/');
 if ($request->getGet('transclude', false)) {
 	$layout->setTemplate('transcludeTemplate.html');
-	var_dump($_COOKIE);
 } else {
 	$layout->setTemplate($site->template);
 	$layout->setOuterTemplate('outerTemplates/frontoffice.html');
