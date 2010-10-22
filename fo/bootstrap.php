@@ -5,6 +5,7 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/../privates/settings.private.php';
 set_include_path(
 	'../library/'.PATH_SEPARATOR.
 	'../classes'.PATH_SEPARATOR.
+	'../includes'.PATH_SEPARATOR.
 	'../classes/database'.PATH_SEPARATOR.
 	get_include_path()
 );
@@ -65,10 +66,14 @@ $response->setViewHelper($helper);
 $router = new Router($site->getTopDomain());
 
 // initialize the layout
-$layout = new Layout($response->createView('Smarty'));
+$layout = new Layout($response->createView($request, 'Smarty'));
 $layout->setTemplatePath(realpath('../templates/').'/');
-$layout->setTemplate($site->template);
-$layout->setOuterTemplate('outerTemplates/frontoffice.html');
+if ($request->getGet('transclude', false)) {
+	$layout->setTemplate('transcludeTemplate.html');
+} else {
+	$layout->setTemplate($site->template);
+	$layout->setOuterTemplate('outerTemplates/frontoffice.html');
+}
 $router->addRoute('module', new NamedRoute('/modules/:module/:controller/:action/*'));
 $router->addRoute('named', new NamedRoute('/:action/*', array('module' => 'default', 'controller' => 'index', 'action' => 'index'), array('action' => '^(?!modules).*$')));
 $router->addRoute('antispam', new AntiSpamRoute());

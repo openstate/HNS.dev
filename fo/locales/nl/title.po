@@ -1,0 +1,26 @@
+msgid "title.untitled"
+msgstr "Geen titel"
+
+msgid "title.projects.index.create"
+msgstr "Nieuw project"
+
+msgid "title.projects.index.edit"
+msgstr "%s bewerken"
+
+msgid "title.projects.index.credentials"
+msgstr "Rechten voor %s"
+
+msgid "title.projects.index.files"
+msgstr "Bestanden toevoegen voor %s"
+
+msgid "title.projects.index.publish"
+msgstr "%s publiceren"
+
+msgid "title.projects.index.view"
+msgstr "%s"
+
+msgid "title.projects.index.change"
+msgstr "%s aanpassen"
+
+msgid "title.issues.index.create"
+msgstr "Nieuw probleem"

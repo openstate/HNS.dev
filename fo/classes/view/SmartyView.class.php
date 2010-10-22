@@ -14,8 +14,8 @@ class SmartyView implements Viewable {
 	protected $locale;
 	protected $translater;
 
-	public function __construct() {
-		$this->locale = isset($_COOKIE['locale']) ? $_COOKIE['locale'] : 'nl_NL';
+	public function __construct($request = null) {
+		$this->locale = $request ? $request->user->getLocale() : 'en_EN';
 		$this->smarty = new CustomSmarty($this->locale);
 		$this->smarty->template_dir = $_SERVER['DOCUMENT_ROOT'].'/../templates/';
 	}

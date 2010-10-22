@@ -27,11 +27,11 @@ abstract class Response {
 		return $this->layout;
 	}
 
-	public function createView($type = 'smarty') { // TODO, aparte factory class??
+	public function createView($request = null, $type = 'smarty') { // TODO, aparte factory class??
 		$type = ucfirst($type);
 		require_once 'view/'.$type.'View.class.php'; // TODO exception als de class niet gevonden kan worden?
 		$viewClass = $type.'View';
-		$view = new $viewClass();
+		$view = new $viewClass($request);
 		if($this->viewHelper)
 			$view->setViewHelper($this->viewHelper);
 		return $view;

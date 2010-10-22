@@ -128,12 +128,16 @@ abstract class Request {
 		switch ($name) {
 			case 'locale':
 				if ($this->zend_locale === null) {
-					$this->zend_locale = new Zend_Locale($this->getSite()->getLocale());
+					$this->zend_locale = new Zend_Locale($this->user->getLocale());
 				}
 				return $this->zend_locale;
 			break;
 			case 'user':
 				$this->loadUserFromSession();
+				if (!is_object($this->user)) {
+					$this->user = new User();
+					$this->user->load(0);
+				}
 				return $this->user;
 			break;
 

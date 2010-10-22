@@ -143,6 +143,14 @@ class User extends Record {
 	public function inGroup($group) {
 		return (boolean) $this->db->query('SELECT 1 FROM mediawiki.user_groups WHERE ug_user = % AND ug_group = %', $this->user_id, $group)->fetchCell();
 	}
+	
+	public function getLocale() {
+		if (preg_match('/^language=(.+?)$/m', $this->user_options, $match))
+			$language = $match[1];
+		else
+			$language = 'en';
+		return strtolower($language).'_'.strtoupper($language);
+	}
 
 	/*
 		Method: cookieLogin

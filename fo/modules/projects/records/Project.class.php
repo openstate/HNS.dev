@@ -59,7 +59,25 @@ class Project extends Record {
 		));
 	}
 	
-	public function getWikiCode() {
+	public function getWikiTitle() {
+		return 'Issue:'.$this->id.' '.preg_replace('![]#<>|{}/?+[]!', '', $this->title);
+	}
+	
+	public function getWikiContent() {
+		$strings = array(
+			'owner', 'talk', 'contribs', 'category', 'priority', 'url', 'status',
+			'to_new', 'to_progress', 'to_closed', 'description', 'time_format', 'progress', 'close');
+
+		$tr = new GettextPO(dirname(__FILE__).'/../locales/en/projects.po');
+		foreach ($strings as $s)
+			$$s = $tr->getMsgstr('project.'.$s);
+		
+		$wiki = ''
+		$wiki .= "* '''$name''': {$this->name}\n* '''$date''': {$this->date}
+		
+		
+		
+		
 		$domain = 'http'.(@$_SERVER['HTTPS'] ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
 	
 		return <<<EOF

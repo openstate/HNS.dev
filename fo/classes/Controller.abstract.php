@@ -38,7 +38,7 @@ abstract class Controller {
 
 	protected function getTitle($request = null) {
 		$request = $request ? $request : $this->request;
-		$locale = substr($request->getSite()->getLocale(), 0, 2);
+		$locale = substr($request->user->getLocale(), 0, 2);
 		$destination = $request->getDestination();
 		$tr = new GettextPO($_SERVER['DOCUMENT_ROOT'].'/../locales/'.$locale.'/title.po');
 		return $tr->getMsgstr('title.'.$destination->module.'.'.$destination->controller.'.'.$destination->action);
@@ -49,9 +49,9 @@ abstract class Controller {
 		$this->response = $response;
 		$destination = $request->getDestination();
 
-		$this->view = $response->createView();
+		$this->view = $response->createView($request);
 		$this->response->getLayout()->user = $request->user;
-		$this->view->setTranslater(new Translater($request->getSite()->getLocale(), $destination->module, null));
+		$this->view->setTranslater(new Translater($request->user->getLocale(), $destination->module, null));
 		$this->addPoFile('form.po', $_SERVER['DOCUMENT_ROOT'].'/../locales/');
 		$this->setViewTemplatePath($request);
 		if (!empty($destination->action) && array_key_exists(strtolower($destination->action), $this->actions)) {
@@ -105,7 +105,7 @@ abstract class Controller {
 	}
 	
 	protected function displayLogin() {
-		$locale = substr($this->request->getSite()->getLocale(), 0, 2);
+		$locale = substr($this->request->user->getLocale(), 0, 2);
 		$tr = new GettextPO($_SERVER['DOCUMENT_ROOT'].'/../locales/'.$locale.'/login.po');
 		$this->response->getLayout()->title = $tr->getMsgstr('login.title');
 		echo(
@@ -116,7 +116,7 @@ abstract class Controller {
 	}
 	
 	protected function displayForbidden() {
-		$locale = substr($this->request->getSite()->getLocale(), 0, 2);
+		$locale = substr($this->request->user->getLocale(), 0, 2);
 		$tr = new GettextPO($_SERVER['DOCUMENT_ROOT'].'/../locales/'.$locale.'/login.po');
 		$this->response->getLayout()->title = $tr->getMsgstr('forbidden.title');
 		echo(

@@ -1,122 +1,122 @@
 msgid "project.name"
-msgstr "Project name"
+msgstr "Projectnaam"
 
 msgid "project.logo"
 msgstr "Logo"
 
 msgid "project.screenshot"
-msgstr "Screen shot"
+msgstr "Schermafbeelding"
 
 msgid "project.date"
-msgstr "Starting date"
+msgstr "Begindatum"
 
 msgid "project.website"
 msgstr "Website"
 
 msgid "project.description"
-msgstr "Description"
+msgstr "Beschrijving"
 
 msgid "project.rss"
-msgstr "RSS feed"
+msgstr "RSS-feed"
 
 msgid "project.license"
-msgstr "License"
+msgstr "Licentie"
 
 msgid "project.next"
-msgstr "Next"
+msgstr "Volgende"
 
 msgid "project.save"
-msgstr "Save"
+msgstr "Opslaan"
 
 msgid "project.rights"
-msgstr "Required rights"
+msgstr "Benodigde rechten"
 
 msgid "project.rights.read"
-msgstr "Read"
+msgstr "Leesrechten"
 
 msgid "project.rights.write"
-msgstr "Write"
+msgstr "Schrijfrechten"
 
 msgid "project.key"
-msgstr "Public key"
+msgstr "Publieke sleutel"
 
 msgid "project.key.current"
-msgstr "Current key"
+msgstr "Huidige sleutel"
 
 msgid "project.key.upload"
-msgstr "Upload key file"
+msgstr "Sleutelbestand uploaden"
 
 msgid "project.key.generate"
-msgstr "Generate key pair"
+msgstr "Sleutelpaar genereren"
 
 msgid "project.key.generate.description"
-msgstr "Save the generated private key, you will need this to access the system."
+msgstr "Bewaar de gegenereerde priv&eacute;sleutel, deze heeft u nodig om het systeem aan te roepen."
 
 msgid "project.key.generate.private"
-msgstr "Private key"
+msgstr "Priv&eacute;sleutel"
 
 msgid "project.key.generate.public"
-msgstr "Public key"
+msgstr "Publieke sleutel"
 
 msgid "project.key.generate.button"
-msgstr "Generate"
+msgstr "Genereren"
 
 msgid "project.upload.file"
-msgstr "File"
+msgstr "Bestand"
 
 msgid "project.upload.version"
-msgstr "Version"
+msgstr "Versie"
 
 msgid "project.upload.description"
-msgstr "Description"
+msgstr "Beschrijving"
 
 msgid "project.upload.language"
-msgstr "Language"
+msgstr "Taal"
 
 msgid "project.upload.more"
-msgstr "Upload more"
+msgstr "Meer uploaden"
 
 msgid "project.publish"
-msgstr "Publish"
+msgstr "Publiceren"
 
 msgid "project.unpublish"
-msgstr "Unpublish"
+msgstr "Depubliceren"
 
 msgid "project.publish.yes"
-msgstr "Yes"
+msgstr "Ja"
 
 msgid "project.publish.no"
-msgstr "No"
+msgstr "Nee"
 
 msgid "project.error.imageformat"
-msgstr "Unknown image format"
+msgstr "Onbekend afbeeldingsformaat"
 
 msgid "project.error.fileformat"
-msgstr "Unknown file format"
+msgstr "Onbekend bestandsformaat"
 
 msgid "project.error.keyformat"
-msgstr "Invalid key"
+msgstr "Ongeldige sleutel"
 
 msgid "project.change.edit"
-msgstr "Edit project"
+msgstr "Project bewerken"
 
 msgid "project.change.credentials"
-msgstr "Edit credentials"
+msgstr "Rechten bewerken"
 
 msgid "project.change.publish"
-msgstr "Publish/unpublish"
+msgstr "Publiceren/depubliceren"
 
 msgid "project.change.view"
-msgstr "View"
+msgstr "Bekijken"
 
 msgid "project.change"
-msgstr "Modify project"
+msgstr "Project wijzigen"
 
 msgid "project.clear"
-msgstr "Clear image"
+msgstr "Afbeelding verwijderen"
 
 msgid "project.clearkey"
-msgstr "Clear key"
+msgstr "Sleutel verwijderen"
 
 msgid "project.nofiles"
-msgstr "No files available"
+msgstr "Geen bestanden beschikbaar"

@@ -71,15 +71,17 @@ class ProjectsIndexController extends Controller {
 		$project->rights_read = (int) @$values['read'];
 		$project->rights_write = (int) @$values['write'];
 		
-		$key = '';
-		if ($values['key'])
-			$key = $values['key'];
-		elseif ($values['key_file']['error'] != UPLOAD_ERR_NO_FILE)
-			$key = file_get_contents($values['key']['tmp_name']);
-			
-		if ($key) {
-			//test key
-			$project->key = $key;
+		if ($this->request->getPost('clear_key', false))
+			$project->key = null;
+		else {
+			$key = '';
+			if ($values['key'])
+				$key = $values['key'];
+			elseif ($values['key_file']['error'] != UPLOAD_ERR_NO_FILE)
+				$key = file_get_contents($values['key']['tmp_name']);
+				
+			if ($key)
+				$project->key = $key;
 		}
 		
 		$project->save();
@@ -212,6 +214,8 @@ class ProjectsIndexController extends Controller {
 		}
 	
 		$form = new FormInstance(dirname(__FILE__).'/../forms/credentials.form');
+		$form->addCallback('isValidKey', array($this, 'isValidKey'));
+		$form->addCallback('isValidKeyFile', array($this, 'isValidKeyFile'));
 
 		$id = $this->request->getParam(0);
 		if (!ctype_digit($id)) throw new NoRouteException();
@@ -243,6 +247,7 @@ class ProjectsIndexController extends Controller {
 
 		$this->view->form = $form;
 		$this->view->newProject = $newProject;
+		$this->view->current_key = $project->key;
 		$this->addPoFile('projects.po');
 		$this->addPoFile('form.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
 		$this->addPoFile('crud.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
@@ -398,6 +403,38 @@ class ProjectsIndexController extends Controller {
 		$this->view->render('view.html');
 	}
 
+	public function filelistAction() {
+		$id = $this->request->getParam(0);
+		if (!ctype_digit($id)) throw new NoRouteException();
+		$project = new Project();
+		try {
+			$project->load($id);
+		} catch (RecordNotFoundException $e) {
+			throw new NoRouteException();
+		}
+
+		if ($this->request->user->user_id != $project->user_id && !$project->published) {
+			$this->displayLogin();
+			return;
+		}
+	
+		$files = $this->listFiles($id);
+		
+		if ($this->request->isPost() && $this->request->user->user_id == $project->user_id)
+			foreach ($this->request->getPost('publish', array()) as $key => $value)
+				if (isset($files[$key])) {
+					$files[$key]->published = (int) (boolean) $value;
+					$files[$key]->save();
+				}
+
+		$this->view->id = $id;
+		$this->view->project = $project;
+		$this->view->files = $files;
+		$this->view->loggedIn = $this->request->user->user_id == $project->user_id;
+		$this->addPoFile('projects.po');
+		$this->view->render('filelist.html');
+	}
+
 	public function generateAction() {
 		$key = openssl_pkey_new();
 	    openssl_pkey_export($key, $priv);
@@ -442,7 +479,23 @@ class ProjectsIndexController extends Controller {
 		$obj->init();
 		return $obj->checkValue($value);
 	}
-	
+
+	protected $keyCheck = null;
+
+	public function isValidKey($values) {
+		$result = (boolean) openssl_get_publickey($values['key']);
+		$this->keyCheck = $result;
+		return $result;
+	}
+		
+	public function isValidKeyFile($values) {
+		if ($this->keyCheck !== null) return true;
+		require_once('record/objects/FileObject.class.php');
+		$obj = new FileObject(null, null, array('reverseTypes' => true, 'path' => ''));
+		$obj->init();
+		return $obj->checkValue($values['key_file']) && (boolean) openssl_get_publickey(file_get_contents($values['key_file']['tmp_name']));
+	}
+
 }
 
 ?>

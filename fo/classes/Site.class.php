@@ -64,6 +64,7 @@ class Site {
 	}
 
 	public function getLocale() {
+		try {throw new Exception(); }catch(Exception $e) { echo($e);}
 		return $_COOKIE['locale'];
 	}
 

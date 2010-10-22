@@ -1,0 +1,77 @@
+msgid "issue.title"
+msgstr "Titel"
+
+msgid "issue.description"
+msgstr "Beschrijving"
+
+msgid "issue.category"
+msgstr "Categorie"
+
+msgid "issue.category.bug"
+msgstr "Fout"
+
+msgid "issue.category.suggestion"
+msgstr "Suggestie"
+
+msgid "issue.category.question"
+msgstr "Vraag"
+
+msgid "issue.priority"
+msgstr "Prioriteit"
+
+msgid "issue.priority.1"
+msgstr "Heel hoog"
+
+msgid "issue.priority.2"
+msgstr "Hoog"
+
+msgid "issue.priority.3"
+msgstr "Normaal"
+
+msgid "issue.priority.4"
+msgstr "Laag"
+
+msgid "issue.priority.5"
+msgstr "Heel laag"
+
+msgid "issue.url"
+msgstr "URL-referentie"
+
+msgid "issue.status"
+msgstr "Status"
+
+msgid "issue.status.new"
+msgstr "Nieuw"
+
+msgid "issue.status.progress"
+msgstr "In bewerking"
+
+msgid "issue.status.closed"
+msgstr "Gesloten"
+
+msgid "issue.progress"
+msgstr "markeer als in bewerking"
+
+msgid "issue.close"
+msgstr "markeer als gesloten"
+
+msgid "issue.submitted_by"
+msgstr "Ingestuurd door"
+
+msgid "issue.talk"
+msgstr "overleg"
+
+msgid "issue.contribs"
+msgstr "bijdragen"
+
+msgid "issue.to_new"
+msgstr "Geopend"
+
+msgid "issue.to_progress"
+msgstr "In bewerking"
+
+msgid "issue.to_closed"
+msgstr "Gesloten"
+
+msgid "issue.time_format"
+msgstr "%e %b %Y %H:%M (%Z)"
