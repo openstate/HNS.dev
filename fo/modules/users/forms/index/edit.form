@@ -41,6 +41,15 @@
 			</e:field>
 
 			<e:field>
+				<label>##user.position##:</label>
+				<content>
+					<e:text name="position">
+						<c:required />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
 				<label>##user.shortbio##</label>
 				<content>
 					<e:textarea r:class="text-input" name="shortbio" />

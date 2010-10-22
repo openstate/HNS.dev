@@ -25,6 +25,9 @@ msgstr "Pasfoto"
 msgid "user.organization"
 msgstr "Organisatie"
 
+msgid "user.position"
+msgstr "Functie"
+
 msgid "user.shortbio"
 msgstr "Korte Bio"
 

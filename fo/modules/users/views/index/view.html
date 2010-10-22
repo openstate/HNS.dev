@@ -6,6 +6,7 @@
 <div style="float: right;">[<a href="{'/users/index/change/'|cat:$user->getPk()|route}">{'##user.change##'|strtolower}</a>]</div>
 <ul>
 <li><b>##user.organization##</b>: {$user->organization|htmlspecialchars}</li>
+<li><b>##user.position##</b>: {$user->position|htmlspecialchars}</li>
 <li><b>##user.postalcode##</b>: {$user->postalcode|htmlspecialchars}</li>
 <li><b>##user.phone##</b>: {$user->phone|htmlspecialchars}</li>
 <li><b>##user.twitter##</b>: {$user->twitter|htmlspecialchars}</li>

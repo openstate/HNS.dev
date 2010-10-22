@@ -25,6 +25,9 @@ msgstr "Photo"
 msgid "user.organization"
 msgstr "Organization"
 
+msgid "user.position"
+msgstr "Position"
+
 msgid "user.shortbio"
 msgstr "Short Bio"
 
