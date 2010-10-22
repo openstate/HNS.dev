@@ -1,0 +1,28 @@
+<style type="text/css">{literal}input[type="text"] { width: 40px; }{/literal}</style>
+<div class="toolbar">
+	<h4>Toolbar {$toolbar_id}</h4>
+	<ul class="toolbar">
+		<li><a href="?filter={if $filter}0{else}1{/if}" title="Zoeken" class="filter" onclick="$('filter').style.display = $('filter').style.display == 'none' ? '': 'none'; return false;">Zoeken</a></li>
+	</ul>
+</div>
+<div id="filter" class="open"{if !$filter} style="display: none;"{/if}>
+<form method="post" action="">
+{$form->html()|eval}
+</form>
+</div>
+{if !$has_filter}<script type="text/javascript">$('filter').style.display = 'none';</script>{/if}
+{if $count}<h3>{$count} {if $count == 1}resultaat{else}resultaten{/if}{if $count > $limit} ({$limit} getoond){/if}</h3>{/if}
+<table class="list">
+<tr><th>Object</th><th>Revisie</th><th>Datum</th><th>Gebruiker</th><th>Acties</th></tr>
+{foreach from=$data item=row}
+<tr>
+<td>{assign var=tbl value=$row.object_table}{if $tables.$tbl}{$tables.$tbl|htmlspecialchars}{else}{$tbl|ucfirst|htmlspecialchars}{/if}&nbsp;
+#{$row.object_id|htmlspecialchars}</td>
+<td>{$row.revision|htmlspecialchars}</td><td>{$row.timestamp|date_format}</td>
+<td>{assign var=uid value=$row.user_id}{$users.$uid|htmlspecialchars}</td>
+<td><a href="{'/logging/versioning/detail/'|cat:$row.object_table|cat:'/'|cat:$row.object_id|cat:'/'|cat:$row.revision|route}" title="Details" class="entry-view">Details</a></td>
+</tr>
+{foreachelse}
+<tr><td colspan="5">Geen resultaten gevonden</td></tr>
+{/foreach}
+</table>

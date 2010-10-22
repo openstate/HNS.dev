@@ -1,0 +1,44 @@
+<form>
+	<table>		
+		<e:field>
+			<label>Object</label>
+			<content>
+				<e:select name="object_table" values="$tables" />
+				&nbsp;#<e:text name="object_id" maxlength="10" />
+			</content>
+		</e:field>
+		
+		<e:field>
+			<label>Revisie</label>
+			<content>
+				<e:text name="rev_from" maxlength="10" />
+				&nbsp;tot en met&nbsp;
+				<e:text name="rev_to" maxlength="10" />
+			</content>
+		</e:field>
+		
+		<e:field>
+			<label>Datum</label>
+			<content>
+				<e:datetime name="start" start_year="-5" end_year="+0" reverse_years="true" fields="DMY" year_empty="" month_empty="" day_empty=""/>
+				&nbsp;tot&nbsp;
+				<e:datetime name="end" start_year="-5" end_year="+0" reverse_years="true" fields="DMY" year_empty="" month_empty="" day_empty=""/>
+			</content>
+		</e:field>
+		
+		<e:field>
+			<label>Gebruiker</label>
+			<content>
+				<e:select name="user_id" values="$users" />
+			</content>
+		</e:field>
+		
+		<e:field>
+			<label />
+			<content>
+				<input type="submit" value="Zoeken" />
+				<input type="submit" name="reset" value="Filter verwijderen" />
+			</content>
+		</e:field>
+	</table>
+</form>

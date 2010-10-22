@@ -7,5 +7,8 @@
 			<a{if $active eq "users"} class="active"{/if} href="{'/users/list'|route}" title="##nav.users##" style="background-image: url(/assets/skins/backoffice/images/icons/group.png);">##nav.users##</a>
 		</li>				
 		{/if}
+		<li>
+			<a{if $active eq "logging"} class="active"{/if} href="{'/logging/logging/index'|route}" title="Logs" style="background-image: url(/assets/skins/backoffice/images/icons/pages.png);">Logs</a>
+		</li>				
 	</ul>
 </div>

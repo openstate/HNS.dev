@@ -12,7 +12,17 @@
 {/script}
 {pofile applications}
 <div id="context-nav">
-	{if $section eq 'cms'}
+	{if $section eq 'logging'}
+		<h3>Logs</h3>
+		<ul>			
+			<li>
+				<a{if $active eq 'logging'} class="active"{/if} href="{'/logging/logging/index'|route}" title="Logs" style="background-image: url('/assets/skins/backoffice/images/icons/pages.png');">Toegangslogs</a>
+			</li>
+			<li>
+				<a{if $active eq 'versioning'} class="active"{/if} href="{'/logging/versioning/index'|route}" title="Revisies" style="background-image: url('/assets/skins/backoffice/images/icons/pages.png');">Revisies</a>
+			</li>
+		</ul>
+	{elseif $section eq 'cms'}
 		<h3>##app.contents##</h3>
 		<ul>			
 			<li>
