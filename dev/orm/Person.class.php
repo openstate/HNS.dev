@@ -55,28 +55,6 @@ class Person extends Record {
 			'foreign'	=> 'person',
 		),
 	);
-	
-	public function __set($pField, $pValue) {
-		if (array_key_exists($pField, $this->config)) {
-			switch ($this->config[$pField]['type']) {
-				case self::STRING:
-					break;
-				case self::INT:
-					if (is_numeric($pValue))
-						$this->data[$pField] = $pValue;
-					else
-						throw new InvalidValueException('Field '.$pField.' cannot contain value: '. $pValue);
-					break;
-				case self::DATE:
-					break;
-				case self::LOOKUP:
-					break;
-				default:
-					break;
-			}	
-		} else 
-			throw new InvalidFieldException();
-	}
 }
 
 ?>
