@@ -12,3 +12,60 @@ msgstr "E-mailadres"
 
 msgid "users.created"
 msgstr "Aanmaakdatum"
+
+msgid "user.name"
+msgstr "Volledige naam"
+
+msgid "user.email"
+msgstr "E-mailadres"
+
+msgid "user.photo"
+msgstr "Pasfoto"
+
+msgid "user.organization"
+msgstr "Organisatie"
+
+msgid "user.shortbio"
+msgstr "Korte Bio"
+
+msgid "user.postalcode"
+msgstr "Postcode"
+
+msgid "user.phone"
+msgstr "Telefoon"
+
+msgid "user.twitter"
+msgstr "Twitter"
+
+msgid "user.skype"
+msgstr "Skype"
+
+msgid "user.clear"
+msgstr "Verwijder foto"
+
+msgid "user.error.imageformat"
+msgstr "Onbekend foto formaat"
+
+msgid "user.save"
+msgstr "Opslaan"
+
+msgid "user.change"
+msgstr "Wijzig profiel"
+
+msgid "user.rights"
+msgstr "Rechten"
+
+msgid "user.rights.read"
+msgstr "Lezen"
+
+msgid "user.rights.write"
+msgstr "Schrijven"
+
+msgid "users.change.edit"
+msgstr "Wijzig profiel"
+
+msgid "users.change.credentials"
+msgstr "Wijzig rechten"
+
+msgid "users.change.view"
+msgstr "Bekijk"

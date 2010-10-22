@@ -1,0 +1,92 @@
+<form>
+	<table>
+		<tbody>
+			<e:field>
+				<label>##user.name##:</label>
+				<content>
+					<e:static name="user_real_name" />
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##user.email##:</label>
+				<content>
+					<e:static name="user_email" />
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##user.photo##:</label>
+				<content>
+					{if $has_photo}
+					<e:img name="photo_img" alt="##user.photo##" /><br />
+					<label><e:checkbox name="clear_photo" /> ##user.clear##</label><br />
+					{/if}
+					<e:file name="photo">
+						<c:server>
+							<p:callback>isValidImage</p:callback>
+							<msg>##user.error.imageformat##</msg>
+						</c:server>
+					</e:file>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##user.organization##:</label>
+				<content>
+					<e:text name="organization">
+						<c:required />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##user.shortbio##</label>
+				<content>
+					<e:textarea r:class="text-input" name="shortbio" />
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##user.postalcode##:</label>
+				<content>
+					<e:text name="postalcode">
+						<c:required />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##user.phone##:</label>
+				<content>
+					<e:text name="phone">
+						<c:required />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##user.twitter##:</label>
+				<content>
+					<e:text name="twitter">
+						<c:url />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>##user.skype##:</label>
+				<content>
+					<e:text name="skype" />
+				</content>
+			</e:field>
+
+			<e:field>
+				<label />
+				<content>
+					<input type="submit" value="##user.save##" />
+				</content>
+			</e:field>
+		</tbody>
+	</table>
+</form>

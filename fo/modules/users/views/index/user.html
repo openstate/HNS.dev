@@ -1,0 +1,12 @@
+<form id="form" method="post" action="" enctype="multipart/form-data">
+{$form->html()|eval}
+</form>
+
+{script}
+	window.addEvent('domready', function() {
+		var form = $('form');
+		{{capture name=js assign=js}}{literal}{{$form->js()}}{/literal}{{/capture}}
+		{{$js|eval}}
+		new Form(form, checks, events);
+	});
+{/script}

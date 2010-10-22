@@ -1,0 +1,18 @@
+{pofile wiki}
+{assign var=photo value=$user->photo->getThumbnail(200)}
+{if $photo}<div style="float:right;">
+<div style="margin: 5px; padding: 5px; border: 1px solid black;"><img src="http{if $smarty.server.HTTPS}s{/if}://{$smarty.server.HTTP_HOST}{$photo}" alt="{$photo|basename}" /></div>
+</div>{/if}
+<div style="float: right;">[<a href="{'/users/index/change/'|cat:$user->getPk()|route}">{'##user.change##'|strtolower}</a>]</div>
+<ul>
+<li><b>##user.organization##</b>: {$user->organization|htmlspecialchars}</li>
+<li><b>##user.postalcode##</b>: {$user->postalcode|htmlspecialchars}</li>
+<li><b>##user.phone##</b>: {$user->phone|htmlspecialchars}</li>
+<li><b>##user.twitter##</b>: {$user->twitter|htmlspecialchars}</li>
+<li><b>##user.skype##</b>: {$user->skype|htmlspecialchars}</li>
+</ul>
+
+<a name="##user.shortbio##"></a><h3><span class="mw-headline"> ##user.shortbio## </span></h3>
+<p>{$user->shortbio|htmlspecialchars|replace:"\n":"</p><p>"}</p>
+
+

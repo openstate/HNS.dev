@@ -4,7 +4,7 @@ require_once 'Module.abstract.php';
 
 class UsersModule extends Module {
 	public function loadControllers() {
-		//$this->addController('index', dirname(__FILE__) . '/controllers/UsersIndexController.class.php');
+		$this->addController('index', dirname(__FILE__) . '/controllers/UsersIndexController.class.php');
 		//$this->addController('password', dirname(__FILE__) . '/controllers/UsersPasswordController.class.php');
 		//$this->addController('activation', dirname(__FILE__) . '/controllers/UsersActivationController.class.php');
 	}	

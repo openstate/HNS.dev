@@ -12,3 +12,60 @@ msgstr "Emailaddress"
 
 msgid "users.created"
 msgstr "Creation date"
+
+msgid "user.name"
+msgstr "Full name"
+
+msgid "user.email"
+msgstr "E-mailadres"
+
+msgid "user.photo"
+msgstr "Photo"
+
+msgid "user.organization"
+msgstr "Organization"
+
+msgid "user.shortbio"
+msgstr "Short Bio"
+
+msgid "user.postalcode"
+msgstr "Postal code"
+
+msgid "user.phone"
+msgstr "Phone"
+
+msgid "user.twitter"
+msgstr "Twitter"
+
+msgid "user.skype"
+msgstr "Skype"
+
+msgid "user.clear"
+msgstr "Clear photo"
+
+msgid "user.error.imageformat"
+msgstr "Unknown image format"
+
+msgid "user.save"
+msgstr "Save"
+
+msgid "user.change"
+msgstr "Change profile"
+
+msgid "user.rights"
+msgstr "Required rights"
+
+msgid "user.rights.read"
+msgstr "Read"
+
+msgid "user.rights.write"
+msgstr "Write"
+
+msgid "users.change.edit"
+msgstr "Edit profile"
+
+msgid "users.change.credentials"
+msgstr "Edit credentials"
+
+msgid "users.change.view"
+msgstr "View"
