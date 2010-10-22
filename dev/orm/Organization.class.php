@@ -7,13 +7,13 @@ class Organization extends ApiRecord {
 	protected $config = array(
 		'name' => array('type' => self::STRING, 'length' => 50),
 		'type' => array('type' => self::LOOKUP, 'lookup' => 'org_types'),
-		'area' => array('type' => self::LOOKUP, 'lookup' => 'sys_regions'),
+		'area' => array('type' => self::RELATION, 'relation' => 'Region'),
 		'description' => array('type' => self::STRING, 'length' => 250),
 		'orientation' => array('type' => self::LOOKUP, 'lookup' => 'org_orientation'),
 		'child' => array('type' => self::RELATION, 'relation' => 'Organization'),
 		'mother' => array('type' => self::RELATION, 'relation' => 'Organization'),
 	);
-	
+
 	protected $hasManyConfig = array(
 		'children' => array(
 			'class' 	=> 'Organization',
@@ -40,7 +40,7 @@ class Organization extends ApiRecord {
 			'foreign'	=> 'organization',
 		),
 	);
-	
+
 	public function init() {
 		$this->registerTaggablePlugin();
 		parent::init();
