@@ -9,7 +9,7 @@
 	.login #content table.form td input[type="password"] {font-size:12px;padding:2px;}
 	.login #content p {padding-top: 10px; margin-bottom:0px !important;}
 	.login #content p a, .login #content p a:visited {color:#5c6e44;margin-left:138px;}
-	.login #content .branding {background:#fff;border:1px solid #ccc;float:left;height:40px;margin-right:20px;padding:3px;width:200px;}
+	.login #content .branding {background:#fff;border:1px solid #ccc;float:left;height:45px;margin-right:20px;padding:3px;width:200px;text-align:center;}
 	.login #content h2 {display:none;height:0;}
 	.login #content .loginform {border-left:1px solid #ccc;margin-left:228px;padding-left:20px;height:270px;}
 	.login #content .loginform h2 {display:block;color:#89c23e;font-size:13px;padding-bottom:20px;}
