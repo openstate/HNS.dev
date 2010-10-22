@@ -6,13 +6,13 @@
 }
 
 {if {$display_hours} || {$display_minutes} || {$display_seconds}}
-{html_select_time prefix='' field_array='{$name}' time='{$value}'
+{html_select_time prefix='' field_array='{$name}' time='{$time_value}'
  display_seconds={$display_seconds} second_interval={$second_interval}
  display_minutes={$display_minutes} minute_interval={$minute_interval}
  display_hours={$display_hours}
  hour_extra='class="date_hour"'
- minute_extra='class="date_minute"'
- second_extra='class="date_second"'
+ minute_extra='class="date_minute"' {$sm_hour_empty}
+ second_extra='class="date_second"' {$sm_minute_empty}
  all_extra='{$attributes}'
 }
 {/if}

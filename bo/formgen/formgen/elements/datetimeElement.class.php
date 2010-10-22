@@ -15,6 +15,8 @@ class datetimeElement extends InputElement {
 		'year_empty'      => null,
 		'month_empty'     => null,
 		'day_empty'       => null,
+		'hour_empty'      => null,
+		'minute_empty'    => null,
 
 		'minute_interval' => 1,
 		'second_interval' => 1,
@@ -47,6 +49,13 @@ class datetimeElement extends InputElement {
 						$this->value['Year'], $this->value['Month'], $this->value['Day'],
 						$this->value['Hour'], $this->value['Minute'], $this->value['Second']
 					),
+					'time_value' => $this->value['Hour'] === 0 || $this->value['Hour'] ||
+                                     $this->value['Minute'] === 0 || $this->value['Minute'] ||
+                                     $this->value['Second'] === 0 || $this->value['Second'] ? sprintf(
+						'%d-%d-%d %d:%d:%d',
+						$this->value['Year'], $this->value['Month'], $this->value['Day'],
+						$this->value['Hour'], $this->value['Minute'], $this->value['Second']
+					) : '',
 					'display_days'    => $bool[strpos($this->opts['fields'], 'D') !== false],
 					'display_months'  => $bool[strpos($this->opts['fields'], 'M') !== false],
 					'display_years'   => $bool[strpos($this->opts['fields'], 'Y') !== false],
@@ -57,10 +66,14 @@ class datetimeElement extends InputElement {
 					'year_empty'      => $this->opts['year_empty']  === null ? 'null' : '\''.$this->opts['year_empty'].'\'',
 					'month_empty'     => $this->opts['month_empty'] === null ? 'null' : '\''.$this->opts['month_empty'].'\'',
 					'day_empty'       => $this->opts['day_empty']   === null ? 'null' : '\''.$this->opts['day_empty'].'\'',
+					'hour_empty'      => $this->opts['hour_empty']  === null ? 'null' : '\''.$this->opts['hour_empty'].'\'',
+					'minute_empty'    => $this->opts['minute_empty']=== null ? 'null' : '\''.$this->opts['minute_empty'].'\'',
 
 					'sm_year_empty'      => $this->opts['year_empty']  === null ? '' : 'year_empty=\''. $this->opts['year_empty'].'\'',
 					'sm_month_empty'     => $this->opts['month_empty'] === null ? '' : 'month_empty=\''.$this->opts['month_empty'].'\'',
 					'sm_day_empty'       => $this->opts['day_empty']   === null ? '' : 'day_empty=\''.  $this->opts['day_empty'].'\'',
+					'sm_hour_empty'      => $this->opts['hour_empty']  === null ? '' : 'hour_empty=\''. $this->opts['hour_empty'].'\'',
+					'sm_minute_empty'    => $this->opts['minute_empty']=== null ? '' : 'minute_empty=\''.$this->opts['minute_empty'].'\'',
 				)
 			),
 			$context);

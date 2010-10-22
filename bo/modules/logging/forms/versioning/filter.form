@@ -20,9 +20,9 @@
 		<e:field>
 			<label>Datum</label>
 			<content>
-				<e:datetime name="start" start_year="-5" end_year="+0" reverse_years="true" fields="DMY" year_empty="" month_empty="" day_empty=""/>
+				<e:datetime name="start" start_year="-5" end_year="+0" reverse_years="true" fields="DMYhm" year_empty="" month_empty="" day_empty="" hour_empty="" minute_empty="" minute_interval="5" />
 				&nbsp;tot&nbsp;
-				<e:datetime name="end" start_year="-5" end_year="+0" reverse_years="true" fields="DMY" year_empty="" month_empty="" day_empty=""/>
+				<e:datetime name="end" start_year="-5" end_year="+0" reverse_years="true" fields="DMYhm" year_empty="" month_empty="" day_empty="" hour_empty="" minute_empty="" minute_interval="5"  />
 			</content>
 		</e:field>
 		

@@ -18,7 +18,7 @@
 <tr>
 <td>{assign var=tbl value=$row.object_table}{if $tables.$tbl}{$tables.$tbl|htmlspecialchars}{else}{$tbl|ucfirst|htmlspecialchars}{/if}&nbsp;
 #{$row.object_id|htmlspecialchars}</td>
-<td>{$row.revision|htmlspecialchars}</td><td>{$row.timestamp|date_format}</td>
+<td>{$row.revision|htmlspecialchars}</td><td>{$row.timestamp|date_format:'d MMMM Y HH:mm:ss'}</td>
 <td>{assign var=uid value=$row.user_id}{$users.$uid|htmlspecialchars}</td>
 <td><a href="{'/logging/versioning/detail/'|cat:$row.object_table|cat:'/'|cat:$row.object_id|cat:'/'|cat:$row.revision|route}" title="Details" class="entry-view">Details</a></td>
 </tr>

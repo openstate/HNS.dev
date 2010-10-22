@@ -15,7 +15,7 @@
 <tr><th>Gebruiker</th><th>Datum</th><th>Hash</th><th>Acties</th></tr>
 {foreach from=$data item=row}
 <tr><td>{assign var=uid value=$row.user_id}{$users.$uid|htmlspecialchars}</td>
-<td>{$row.timestamp|date_format}</td><td>{$row.hash|htmlspecialchars}</td>
+<td>{$row.timestamp|date_format:'d MMMM Y HH:mm:ss'}</td><td>{$row.hash|htmlspecialchars}</td>
 <td><a href="{'/logging/logging/detail/'|cat:$row.id|route}" title="Details" class="entry-view">Details</a></td>
 </tr>
 {foreachelse}

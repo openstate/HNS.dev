@@ -27,9 +27,11 @@ function smarty_function_html_select_time($params, &$smarty)
     require_once $smarty->_get_plugin_filepath('function','html_options');
     /* Default values. */
     $prefix             = "Time_";
-    $time               = time();
+    $time               = null;
     $display_hours      = true;
     $display_minutes    = true;
+    $display_seconds    = true;
+    $display_meridian   = true;
     $display_seconds    = true;
     $display_meridian   = true;
     $use_24_hours       = true;
@@ -45,6 +47,9 @@ function smarty_function_html_select_time($params, &$smarty)
     $minute_extra       = null;
     $second_extra       = null;
     $meridian_extra     = null;
+    $hour_empty         = null;
+    $second_empty       = null;
+    $minute_empty       = null;
 
     foreach ($params as $_key=>$_value) {
         switch ($_key) {
@@ -56,6 +61,9 @@ function smarty_function_html_select_time($params, &$smarty)
             case 'minute_extra':
             case 'second_extra':
             case 'meridian_extra':
+            case 'hour_empty':
+            case 'minute_empty':
+            case 'second_empty':
                 $$_key = (string)$_value;
                 break;
 
@@ -77,15 +85,20 @@ function smarty_function_html_select_time($params, &$smarty)
         }
     }
 
-    $time = smarty_make_timestamp($time);
+    if ($time)
+        $time = smarty_make_timestamp($time);
 
     $html_result = '';
 
     if ($display_hours) {
-        $hours       = $use_24_hours ? range(0, 23) : range(1, 12);
+        $hours_      = $use_24_hours ? range(0, 23) : range(1, 12);
         $hour_fmt = $use_24_hours ? '%H' : '%I';
-        for ($i = 0, $for_max = count($hours); $i < $for_max; $i++)
-            $hours[$i] = sprintf('%02d', $hours[$i]);
+        $hours = array();
+        if(isset($hour_empty)) {
+            $hours[''] = $hour_empty;
+        }
+        for ($i = 0, $for_max = count($hours_); $i < $for_max; $i++)
+            $hours[$i] = sprintf('%02d', $hours_[$i]);
         $html_result .= '<select name=';
         if (null !== $field_array) {
             $html_result .= '"' . $field_array . '[' . $prefix . 'Hour]"';
@@ -101,7 +114,7 @@ function smarty_function_html_select_time($params, &$smarty)
         $html_result .= '>'."\n";
         $html_result .= smarty_function_html_options(array('output'          => $hours,
                                                            'values'          => $hours,
-                                                           'selected'      => strftime($hour_fmt, $time),
+                                                           'selected'      => $time ? strftime($hour_fmt, $time) : null,
                                                            'print_result' => false),
                                                      $smarty);
         $html_result .= "</select>\n";
@@ -109,9 +122,13 @@ function smarty_function_html_select_time($params, &$smarty)
 
     if ($display_minutes) {
         $all_minutes = range(0, 59);
+        $minutes = array();
+        if(isset($minute_empty)) {
+            $minutes[''] = $minute_empty;
+        }
         for ($i = 0, $for_max = count($all_minutes); $i < $for_max; $i+= $minute_interval)
-            $minutes[] = sprintf('%02d', $all_minutes[$i]);
-        $selected = intval(floor(strftime('%M', $time) / $minute_interval) * $minute_interval);
+            $minutes[$i] = sprintf('%02d', $all_minutes[$i]);
+        $selected = $time ? intval(floor(strftime('%M', $time) / $minute_interval) * $minute_interval) : null;
         $html_result .= '<select name=';
         if (null !== $field_array) {
             $html_result .= '"' . $field_array . '[' . $prefix . 'Minute]"';
@@ -136,9 +153,13 @@ function smarty_function_html_select_time($params, &$smarty)
 
     if ($display_seconds) {
         $all_seconds = range(0, 59);
+        $seconds = array();
+        if(isset($second_empty)) {
+            $seconds[''] = $second_empty;
+        }
         for ($i = 0, $for_max = count($all_seconds); $i < $for_max; $i+= $second_interval)
-            $seconds[] = sprintf('%02d', $all_seconds[$i]);
-        $selected = intval(floor(strftime('%S', $time) / $second_interval) * $second_interval);
+            $seconds[$i] = sprintf('%02d', $all_seconds[$i]);
+        $selected = $time ? intval(floor(strftime('%S', $time) / $second_interval) * $second_interval) : null;
         $html_result .= '<select name=';
         if (null !== $field_array) {
             $html_result .= '"' . $field_array . '[' . $prefix . 'Second]"';
