@@ -62,6 +62,10 @@ class Person extends ApiRecord {
 			'class' 	=> 'Petition',
 			'foreign'	=> 'person',
 		),
+		'votes' => array(
+			'class' 	=> 'Vote',
+			'foreign'	=> 'person',
+		),
 	);
 	
 	public function init() {

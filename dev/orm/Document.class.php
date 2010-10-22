@@ -29,6 +29,19 @@ class Document extends ApiRecord {
 				'foreign'	=> 'person',
 			),
 		),
+		'voters' => array(
+			'class' 	=> 'Person',
+			'table' 	=> array(
+				'class'		=> 'Vote',
+				'name'		=> 'votes',
+				'local'		=> 'document',
+				'foreign'	=> 'person',
+			),
+		),
+		'votes' => array(
+			'class' 	=> 'Vote',
+			'foreign'	=> 'document',
+		),
 		'citations' => array(
 			'class' 	=> 'Citation',
 			'foreign'	=> 'document',
