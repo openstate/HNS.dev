@@ -102,6 +102,10 @@ class Dispatcher {
 				$location .= $call['line'];
 				$callElement->addChild('location', $location);
 			}
+
+			if (is_a($exception, 'DatabaseQueryException')) {
+				$xml->addChild('sql', $exception->getSql());
+			}
 		}
 		else if($code == 500) {
 			mail('exceptions@accepte.nl', 'HNS-Dev exception', 'Request: '.$_SERVER['REQUEST_URI']."\n".$exception->__toString());
