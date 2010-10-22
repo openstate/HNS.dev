@@ -2,5 +2,6 @@
 
 	define('DEVELOPER', true);
 	define('SANDBOX_URL', 'http://sandbox.hnsdev.gl/query');
+	define('MAGIC', '/usr/share/misc/magic');
 
 ?>

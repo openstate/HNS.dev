@@ -513,7 +513,7 @@ class ProjectsIndexController extends Controller {
 			return;
 		}
 	
-		$finfo = finfo_open(FILEINFO_MIME);
+		$finfo = finfo_open(FILEINFO_MIME, MAGIC);
 		if (!$finfo)
 			$mime = 'application/octet-stream';
 		else {
@@ -575,7 +575,7 @@ class ProjectsIndexController extends Controller {
 	
 	public function recentAction() {
 		$project = new Project();
-		$this->view->projects = $project->select()->order('created DESC')->limit(5)->get();
+		$this->view->projects = $project->select()->where('published = 1')->order('created DESC')->limit(5)->get();
 		$this->addPoFile('projects.po');
 		$this->view->render('recent.html');
 	}
