@@ -59,12 +59,7 @@ class IssuesIndexController extends Controller {
 	}
 	
 	protected function changeStatus($status) {
-		if (!$this->request->user->loggedIn) {
-			$this->displayLogin();
-			return;
-		}
-	
-		if (!$this->request->user->inGroup('sysop')) {
+		if (!$this->request->user->loggedIn || !$this->request->user->inGroup('sysop')) {
 			$this->displayForbidden();
 			return;
 		}
