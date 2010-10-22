@@ -13,7 +13,7 @@ class UsersIndexController extends RecordCrudController {
 	protected $form = 'index/apiuser.form';
 	
 	protected function preCreateForm() {
-		$this->view->affiliates = array(0 => '') +
+		$this->view->affiliates = array('' => '') +
 			DBs::inst(DBs::HNSDEV)->query('SELECT name, id FROM usr_affiliates ORDER BY name')->fetchAllCells('id');
 	}
 	
