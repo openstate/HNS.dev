@@ -362,8 +362,8 @@ class GuMaxTemplate extends QuickTemplate {
 
 </div></div>
 <div class="gumax-rbbot"><div><div></div></div></div></div>
-<div class="special_bottom_acc">&copy; 2009 - Stichting Het Nieuwe Stemmen</div>
-<div class="special_participation_acc"><a href="http://www.http://www.digitalepioniers.nl/"><img src="/w/skins/common/images/dplogo.gif" style="float:right;padding-left:10px;" /></a>DE ONTWIKKELING VAN HNS.DEV IS MOGELIJK GEMAAKT DOOR EEN BIJDRAGE VAN KENNISLAND IN DE REGELING DIGITALE PIONIERSRONDE EPARTICIPATIE (DIE DOOR HET MINISTERIE VAN BINNENLANDSE ZAKEN EN KONINKRIJKSRELATIES GE&Iuml;NITIEERD IS). DIGITALE PIONIERS GEEFT FINANCI&Euml;LE EN ORGANISATORISCHE ONDERSTEUNING AAN INNOVATIEVE INTERNETINITIATIEVEN.</div>
+<div class="special_bottom_acc"><div style="float:right;"><a style="color:#fff;" href="<?php echo str_replace('$1', 'Contact_Us', $this->data['articlepath']); ?>">Contact us</a> | <a href="<?php echo str_replace('$1', 'Terms', $this->data['articlepath']); ?>" style="color:#fff;">Terms and conditions</a></div>&copy; 2009 - <a style="color:#fff;" href="http://www.hetnieuwestemmen.nl">Stichting Het Nieuwe Stemmen</a></div>
+<div class="special_participation_acc"><a href="http://www.digitalepioniers.nl/"><img src="/w/skins/common/images/dplogo.gif" style="float:right;padding-left:10px;" /></a>DE ONTWIKKELING VAN HNS.DEV IS MOGELIJK GEMAAKT DOOR EEN BIJDRAGE VAN KENNISLAND IN DE REGELING DIGITALE PIONIERSRONDE EPARTICIPATIE (DIE DOOR HET MINISTERIE VAN BINNENLANDSE ZAKEN EN KONINKRIJKSRELATIES GE&Iuml;NITIEERD IS). DIGITALE PIONIERS GEEFT FINANCI&Euml;LE EN ORGANISATORISCHE ONDERSTEUNING AAN INNOVATIEVE INTERNETINITIATIEVEN.</div>
 </div>
 
 <div class="gumax_foot_acc"></div>
