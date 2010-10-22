@@ -5,10 +5,10 @@
 */
 class QueryLexer {
 	protected static $tokens = array(
-		'/^and\W/' => 'AND',
-		'/^or\W/' => 'OR',
-		'/^not\W/' => 'NOT',
-		'/^like\W/' => 'LIKE',
+		'/^and(?=\W)/' => 'AND',
+		'/^or(?=\W)/' => 'OR',
+		'/^not(?=\W)/' => 'NOT',
+		'/^like(?=\W)/' => 'LIKE',
 		'=' => 'EQ',
 		'!=' => 'NE',
 		'>' => 'GT',
@@ -21,11 +21,11 @@ class QueryLexer {
 		'/' => 'DIV',
 		'^' => 'EXP',
 		'||' => 'CONCAT',
-		'/^mod\W/' => 'MOD',
-		'/^in\W/' => 'IN',
-		'/^elem\W/' => 'ELEM',
-		'/^match\W/' => 'MATCH',
-		'/^at\W/' => 'AT',
+		'/^mod(?=\W)/' => 'MOD',
+		'/^in(?=\W)/' => 'IN',
+		'/^elem(?=\W)/' => 'ELEM',
+		'/^match(?=\W)/' => 'MATCH',
+		'/^at(?=\W)/' => 'AT',
 		'%' => 'PERCENT',
 		',' => 'COMMA',
 		'.' => 'DOT',
@@ -71,8 +71,9 @@ class QueryLexer {
 					}
 				}
 			}
-			if (!$found)
+			if (!$found) {
 				throw new ParseException('Unknown token at position '.($len - strlen($lc) + 1));
+			}
 		}
 
 //var_dump($tokens); exit;
