@@ -16,6 +16,8 @@ class Dispatcher {
 		return self::$inst;
 	}
 
+	protected function __construct() { }
+
 	public function dispatch() {
 		$url = $_SERVER['SCRIPT_URL'];
 		foreach ($this->urls as $pattern => $call) {

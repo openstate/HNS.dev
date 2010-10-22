@@ -253,6 +253,11 @@ abstract class Record extends RecordBase {
 	}
 
 	protected function loadFromArray($data, $withHasOne = self::LOAD_DEFAULT) {
+		$event = new RecordEvent();
+		$this->notifyListeners('preLoad', $event);
+		if ($event->skip)
+			return;
+		
 		if ($this->getPk() !== false) {
 			throw new RecordException('Trying to load a record with data that is already loaded with primary key: "'.$this->getPk().'"');
 		}
@@ -272,6 +277,8 @@ abstract class Record extends RecordBase {
 		}
 		RecordCache::add(get_class($this), $this->pkColumn, $this->data);
 		$this->dirty = false;
+		
+		$this->notifyListeners('postLoad', $event);
 	}
 
 	public function delete() {
@@ -773,21 +780,6 @@ abstract class Record extends RecordBase {
 		return $result;
 	}
 
-	protected $softKeyDefinition = 'id';
-
-	public function loadBySoftKey($key) {
-		$rows = $this->db->query('SELECT id FROM %t WHERE %l = % LIMIT 2', $this->tableName, $this->softKeyDefinition, $key)->fetchAllCells();
-		if (!count($rows))
-			throw new RecordException('Soft key \''.$key.'\' in record '.get_class($this).' not found');
-		elseif (count($rows) > 1)
-			throw new RecordException('Soft key \''.$key.'\' in record '.get_class($this).' not unique');
-		$this->load($rows[0]);
-	}
-	
-	public function softKey() {
-		return $this->db->query('SELECT %l FROM %t WHERE id = %', $this->softKeyDefinition, $this->tableName, $this->id)->fetchCell();
-	}
-	
 	public function has($key, $config) { $this->config[$key] = $config; }
 	public function hasOne($key, $config) { $this->hasOneConfig[$key] = $config; }
 	public function hasMany($key, $config) { $this->hasManyConfig[$key] = $config; }

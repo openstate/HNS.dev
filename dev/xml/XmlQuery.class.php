@@ -6,12 +6,14 @@
 class XmlQuery {
 	protected $xml = null;
 	protected $sql = null;
+	
+	public $rootTag = 'query';
 
 	/* Parse a query in XML format into a <Query> object */
 	public static function parse($xml) {
 		require_once('Query.class.php');
 		$parser = new XmlQuery($xml);
-		return $parser->parseXml();
+		return $parser;
 	}
 
 	protected function __construct($xml) {
@@ -19,10 +21,14 @@ class XmlQuery {
 	}
 
 	/* Delegate parsing to the appropriate function */
-	protected function parseXml() {
+	public function parseXml() {
 		$xml = new SimpleXmlElement($this->xml);
 		$func = 'parse'.ucfirst($xml->getName());
-		return $this->$func($xml);
+		if (method_exists($this, $func)) {
+			$this->rootTag = $xml->getName();
+			return $this->$func($xml);
+		} else
+			throw new ParseException('Unknown command '.$xml->getName());
 	}
 
 	/* Return the first child of an xml node or its contents if it is a terminal node */
@@ -230,7 +236,7 @@ class XmlQuery {
 		}
 		/* Add the top-level query and the junction table queries */
 		$composite->add($query);
-		$composite->merge($junctions->queries);
+		$composite->merge($junctions);
 		return $composite;
 	}
 	
@@ -263,6 +269,17 @@ class XmlQuery {
 
 	/* Parse a select query */
 	protected function parseQuery($xml) {
+		/* If we have a hash tag, check cache file existance and return file hash */
+		foreach ($xml->xpath('hash') as $hash) {
+			$hash = (string) $hash;
+			$cacheFile = $_SERVER['DOCUMENT_ROOT'].'/../'.ApiCall::$cacheDir.'/'.$hash.'.xml';
+			if (!file_exists($cacheFile))
+				throw new ParseException('Cached query not found');
+			if (filemtime($cacheFile) < time() - ApiCall::$cacheDuration)
+				throw new ParseException('Cached query expired');
+			return $hash;
+		}
+
 		$query = new SelectQuery();
 
 		/* If we have a select all tag, use that and ignore other select tags */
@@ -295,10 +312,20 @@ class XmlQuery {
 			$query->where[] = $this->parseExpressionTree($where, 'disjunction');
 		
 		/* Parse order expressions */
+		require_once('QueryExpression.class.php');
 		foreach ($xml->xpath('order') as $order) {
 			$dir = (string) $order['dir'];
-			$query->order[] = $this->parseExpressionTree($order, 'expression').($dir ? ' '.$dir : '');
+			if (!$dir) $dir = 'asc';
+			if (!in_array(strtolower($dir), array('asc', 'desc')))
+				throw new ParseExpression('Invalid direction attribute \''.$dir.'\' in order clause');
+			$query->order[] = new QueryOrder($this->parseExpressionTree($order, 'expression'), $dir);
 		}
+		
+		/* Parse limit and offset */
+		foreach ($xml->xpath('limit') as $limit)
+			$query->limit = (int) (string) $limit;
+		foreach ($xml->xpath('offset') as $offset)
+			$query->offset = (int) (string) $offset;
 		
 		return $query;
 	}
@@ -382,10 +409,15 @@ class XmlQuery {
 		foreach ($xml->attributes() as $key => $param)
 			$keywordSql[] = $key.'='.$this->parseValue($param);
 		
-		if (in_array($func, array('and', 'or', 'in')))
-			/* And, or and in are tokens and the parser will choke if these are left as function names.
+		if (in_array($func, array('and', 'or', 'in', 'mod', 'like')))
+			/* And, or, in and mod are tokens and the parser will choke if these are left as function names.
 			   So, render them as the equivalent infix notation */
 			return '('.implode(' '.$func.' ', $paramSql).')';
+		elseif ($func == 'match')
+			/* Match is a token as well */
+			return $func.($paramSql ? ' '.$paramSql[0] : '').(array_key_exists('weight', $keywordSql) ? ' AT '.$keywordSql['weight'] : '');
+		elseif ($func == 'elem')
+			return $func.($paramSql ? ' '.$paramSql[0] : '');
 		else
 			/* Return the function's string representation */
 			return $func.'('.implode(', ', array_merge($paramSql, $keywordSql)).')';

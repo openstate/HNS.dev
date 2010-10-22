@@ -9,7 +9,7 @@ class Organization extends ApiRecord {
 		'type' => array('type' => self::LOOKUP, 'lookup' => 'org_types'),
 		'area' => array('type' => self::LOOKUP, 'lookup' => 'sys_regions'),
 		'description' => array('type' => self::STRING, 'length' => 250),
-		'orientation' => array('type' => self::LOOKUP, 'lookup' => 'org_orientations'),
+		'orientation' => array('type' => self::LOOKUP, 'lookup' => 'org_orientation'),
 		'child' => array('type' => self::RELATION, 'relation' => 'Organization'),
 		'mother' => array('type' => self::RELATION, 'relation' => 'Organization'),
 	);
@@ -40,6 +40,11 @@ class Organization extends ApiRecord {
 			'foreign'	=> 'organization',
 		),
 	);
+	
+	public function init() {
+		$this->registerTaggablePlugin();
+		parent::init();
+	}
 }
 
 ?>

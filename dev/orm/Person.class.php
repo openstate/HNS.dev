@@ -63,6 +63,12 @@ class Person extends ApiRecord {
 			'foreign'	=> 'person',
 		),
 	);
+	
+	public function init() {
+		$this->registerTaggablePlugin();
+		parent::init();
+	}
+
 }
 
 ?>

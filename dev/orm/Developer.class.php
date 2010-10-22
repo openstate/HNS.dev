@@ -1,8 +1,7 @@
 <?php
 
-class Developer extends ApiRecord {
+class Developer extends Record {
 	protected $tableName = 'developer';
-	protected $softKeyDefinition = "usualname||' '||surname";
 
 	protected $config = array(
 		'initials' => array('type' => self::STRING, 'length' => 10),

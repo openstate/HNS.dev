@@ -45,6 +45,9 @@ abstract class RecordBase {
 
 	public function init() {}
 
+	public function preLoad(RecordEvent $event) {}
+	public function postLoad(RecordEvent $event) {}
+
 	public function preSave(RecordEvent $event) {}
 	public function postSave(RecordEvent $event) {}
 

@@ -21,7 +21,7 @@ class Document extends ApiRecord {
 	
 	protected $hasManyConfig = array(
 		'authors' => array(
-			'class' 	=> 'Persons',
+			'class' 	=> 'Person',
 			'table' 	=> array(
 				'class'		=> 'Author',
 				'name'		=> 'authors',
@@ -38,7 +38,11 @@ class Document extends ApiRecord {
 			'foreign'	=> 'document',
 		),
 	);
-		
+	
+	public function init() {
+		$this->registerTaggablePlugin();
+		parent::init();
+	}
 }
 
 ?>

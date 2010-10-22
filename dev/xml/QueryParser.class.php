@@ -109,7 +109,9 @@ class QueryParser {
 	
 	/* <conditional> ::= "not" <conditional>
 	                   | "(" <disjunction> ")"
-	                   | <expression> ("=" | "!=" | ">" | "<" | ">=" | "<=") <expression>
+	                   | "MATCH" ident "[" expression "]" [ "AT" value [ "%" ] ]
+	                   | "ELEM" ident "[" expression "]" "." ident
+	                   | <expression> ("=" | "!=" | ">" | "<" | ">=" | "<=" | "LIKE") <expression>
 	                   | <expression> "IN" <list> */
 	protected function conditional() {
 		if ($this->accept('NOT'))
@@ -118,10 +120,30 @@ class QueryParser {
 			$result = $this->disjunction();
 			$this->expect('PAREN_CLOSE');
 			return $result;
+		} elseif ($this->accept('MATCH')) {
+			$table = $this->expect('IDENT');
+			$this->expect('BRACKET_OPEN');
+			$index = $this->expression();
+			$this->expect('BRACKET_CLOSE');
+			$weight = null;
+			if ($this->accept('AT')) {
+				$weight = $this->expect('VALUE');
+				if ($this->accept('PERCENT'))
+					$weight /= 100.0;
+			}
+			return new QueryFunction('match', array($table, $index) + ($weight !== null ? array('weight' => $weight) : array()));
+		} elseif ($this->accept('ELEM')) {
+			$table = $this->expect('IDENT');
+			$this->expect('BRACKET_OPEN');
+			$index = $this->expression();
+			$this->expect('BRACKET_CLOSE');
+			$this->expect('DOT');
+			$key = $this->expect('IDENT');
+			return new QueryFunction('elem', array($table, $index, $key));
 		} else {
 			$result = $this->expression();
 			$op = $this->lookahead(0);
-			if (in_array($op, array('EQ', 'NE', 'GT', 'LT', 'GE', 'LE'), true)) {
+			if (in_array($op, array('EQ', 'NE', 'GT', 'LT', 'GE', 'LE', 'LIKE'), true)) {
 				$this->consume();
 				$term = $this->expression();
 				return new QueryFunction(strtolower($op), array($result, $term));
@@ -139,7 +161,7 @@ class QueryParser {
 		return $this->leftAssociative('term', array('ADD', 'SUB', 'CONCAT'));
 	}
 	
-	/* <term> ::= <factor> { ("*" | "/" | "%") <factor> } */
+	/* <term> ::= <factor> { ("*" | "/" | "MOD") <factor> } */
 	protected function term() {
 		return $this->leftAssociative('factor', array('MUL', 'DIV', 'MOD'));
 	}
@@ -160,7 +182,7 @@ class QueryParser {
 	                | ident [ <paramlist> ] */
 	protected function terminal() {
 		if ($this->accept('SUB'))
-			return new QueryFunction('min', array($this->terminal()));
+			return new QueryFunction('neg', array($this->terminal()));
 		elseif ($this->accept('PAREN_OPEN')) {
 			$result = $this->expression();
 			$this->expect('PAREN_CLOSE');
