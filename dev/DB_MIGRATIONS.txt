@@ -23,3 +23,10 @@ ALTER TABLE documents ADD parent int4;
 INSERT INTO doc_results (name) VALUES ('Aangenomen');
 INSERT INTO doc_results (name) VALUES ('Afgewezen');
 INSERT INTO doc_results (name) VALUES ('In Behandeling');
+
+-- Increase usualname and lastname sizes
+ALTER TABLE persons ALTER COLUMN usualname TYPE CHARACTER VARYING(48);
+ALTER TABLE persons ALTER COLUMN lastname TYPE CHARACTER VARYING(64);
+
+
+UPDATE sys_regions SET name = 'Fryslân' WHERE id = 5;

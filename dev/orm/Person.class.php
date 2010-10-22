@@ -6,8 +6,8 @@ class Person extends ApiRecord {
 
 	protected $config = array(
 		'initials' => array('type' => self::STRING, 'length' => 10),
-		'usualname' => array('type' => self::STRING, 'length' => 25),
-		'lastname' => array('type' => self::STRING, 'length' => 25),
+		'usualname' => array('type' => self::STRING, 'length' => 48),
+		'lastname' => array('type' => self::STRING, 'length' => 64),
 		'gender' => array('type' => self::STRING, 'length' => 1, 'regex' => '!^(m|f)$!'),
 		'date_birth' => array('type' => self::DATE),
 		'nationality' => array('type' => self::LOOKUP, 'lookup' => 'sys_nationalities'),
