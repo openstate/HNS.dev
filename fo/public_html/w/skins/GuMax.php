@@ -365,7 +365,7 @@ class GuMaxTemplate extends QuickTemplate {
 
 </div></div>
 <div class="gumax-rbbot"><div><div></div></div></div></div>
-<div class="special_bottom_acc"><div style="float:right;"><a style="color:#fff;" href="http://en.hetnieuwestemmen.nl/modules/forms/contact">contact us</a> | <a href="<?php echo str_replace('$1', 'Terms', $this->data['articlepath']); ?>" style="color:#fff;">terms and conditions</a></div>&copy; 2009 - <a style="color:#fff;" href="http://en.hetnieuwestemmen.nl">Stichting Het Nieuwe Stemmen</a></div>
+<div class="special_bottom_acc"><div style="float:right;"><a style="color:#fff;" href="http://en.hetnieuwestemmen.nl/modules/forms/contact">contact us</a> | terms and conditions <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/nl/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/nl/80x15.png" /></a></div>&copy; 2009 - <a style="color:#fff;" href="http://en.hetnieuwestemmen.nl">Stichting Het Nieuwe Stemmen</a></div>
 <div class="special_participation_acc"><a href="http://www.digitalepioniers.nl/"><img src="/w/skins/common/images/dplogo.gif" style="float:right;padding-left:10px;" /></a>THE DEVELOPMENT OF HNS.DEV WAS MADE POSSIBLE BY A CONTRIBUTION OF KNOWLEDGELAND THROUGH THE DIGITAL PIONEERS EPARTICIPATION ROUND REGULATION (WHICH WAS INITIATED BY THE MINISTRY OF THE INTERIOR AND KINGDOM RELATIONS). DIGITAL PIONIEERS GIVES FINANCIAL AND ORGANISATORIAL SUPPORT TO INNOVATIVE INTERNET INITIATIVES.</div>
 </div>
 
