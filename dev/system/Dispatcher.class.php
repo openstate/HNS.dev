@@ -28,7 +28,7 @@ class Dispatcher {
 				}
 				$call = realpath($_SERVER['DOCUMENT_ROOT'].'/../'.$call);
 				if (!file_exists($call))
-					self::error(404);
+					self::error(404, new Exception($call.' not found'));
 				if (pathinfo($call, PATHINFO_EXTENSION) != 'php') {
 					header('Content-Type: '.mime_content_type($call));
 					header('Content-Length: '.filesize($call));
@@ -39,7 +39,7 @@ class Dispatcher {
 					require_once($call);
 					$class = basename($call, '.class.php');
 					if (!class_exists($class, false))
-						self::error(404);
+						self::error(404, new Exception($call.'.class.php not found'));
 					$obj = new $class();
 					session_start();
 					if ($_POST && is_callable(array($obj, 'processPost')))
