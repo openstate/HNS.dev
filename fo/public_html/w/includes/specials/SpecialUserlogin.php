@@ -464,6 +464,10 @@ class LoginForm {
 				$retval = self::RESET_PASS;
 			} else {
 				$retval = '' == $this->mPassword ? self::EMPTY_PASS : self::WRONG_PASS;
+/* LOGIN SECURITY -- Ralf 2009-07-07 */
+				if (self::WRONG_PASS == $retval)
+					$u->passwordFailed();
+/* END LOGIN SECURITY */
 			}
 		} else {
 			$wgAuth->updateUser( $u );
@@ -607,7 +611,7 @@ class LoginForm {
 			$this->mainLoginForm( wfMsg( 'resetpass_forbidden' ) );
 			return;
 		}
-
+		
 		# Check against blocked IPs
 		# fixme -- should we not?
 		if( $wgUser->isBlocked() ) {
@@ -630,6 +634,13 @@ class LoginForm {
 			$this->mainLoginForm( wfMsg( 'noname' ) );
 			return;
 		}
+/* LOGIN SECURITY -- Ralf 2009-07-07 */
+		$u->load();
+		if ( $u->mForcedResets == 4 ) {
+			$this->mainLoginForm( wfMsg( 'accountblockedreset') );
+			return;
+		}
+/* END LOGIN SECURITY */
 		if ( 0 == $u->getID() ) {
 			$this->mainLoginForm( wfMsgWikiHtml( 'nosuchuser', htmlspecialchars( $u->getName() ) ) );
 			return;

@@ -132,4 +132,16 @@ define('NS_REDIRECT', 100);
 $wgExtraNamespaces[NS_REDIRECT] = 'Redirect';
 
 require_once("$IP/extensions/GeSHiCodeTag.php");
+require_once( "$IP/extensions/UnblockUser/UnblockUser.php" );
 
+$wgxAdminUser = 'Admin';
+
+$wgMinimalPasswordLength = 15;
+
+function isValidPassword($password, &$result, $user) {
+	global $wgMinimalPasswordLength;
+	$result = strlen($password) >= $wgMinimalPasswordLength && preg_match('/[A-Za-z]/', $password) && preg_match('/[0-9]/', $password);
+	return (boolean) $result;
+}
+
+$wgHooks['isValidPassword'][] = 'isValidPassword';

@@ -3884,4 +3884,22 @@ Enter the filename without the "{{ns:file}}:" prefix.',
 'dberr-outofdate'   => 'Note that their indexes of our content may be out of date.',
 'dberr-cachederror' => 'This is a cached copy of the requested page, and may not be up to date.',
 
+/* LOGIN SECURITY -- Ralf 2009-07-07 */
+'forcepasswordresettitle'      => 'Password reset for {{SITENAME}}',
+'forcepasswordresettext'       => 'Someone (probably you, from IP address $1) entered an
+incorrect password for {{SITENAME}} 3 times. A temporary password for user
+"$2" has been created and was set to "$3". You will need to log in and choose a new password now.
+Your temporary password will expire in {{PLURAL:$5|one day|$5 days}}.',
+
+'accountblockedtitle'          => 'User locked for {{SITENAME}}',
+'accountblockedtext'           => 'Someone (probably you, from IP address $1) entered an
+incorrect password for {{SITENAME}} 3 times. Since your password has already been reset three
+times, user "$2" has been locked, and will be reviewed by an administrator.',
+
+'accountblockedtitle-admin'    => 'User locked: "$1"',
+'accountblockedtext-admin'     => 'User "$1" has been locked in accordance with password policy
+(incorrectly entered password too often).',
+
+'accountblockedreset'          => 'This user is currently locked.'
+/* END LOGIN SECURITY */
 );

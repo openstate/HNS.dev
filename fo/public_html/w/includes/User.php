@@ -119,6 +119,10 @@ class User {
 		'mEditCount',
 		// user_group table
 		'mGroups',
+/* LOGIN SECURITY -- Ralf 2009-07-07 */
+		'mFailedAttempts',
+		'mForcedResets',
+/* END LOGIN SECURITY */
 	);
 
 	/**
@@ -189,6 +193,9 @@ class User {
 	var $mId, $mName, $mRealName, $mPassword, $mNewpassword, $mNewpassTime,
 		$mEmail, $mOptions, $mTouched, $mToken, $mEmailAuthenticated,
 		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups;
+/* LOGIN SECURITY -- Ralf 2009-07-07 */
+	var $mFailedAttempts, $mForcedResets;
+/* END LOGIN SECURITY */
 	//@}
 
 	/**
@@ -785,6 +792,11 @@ class User {
 		$this->mRegistration = wfTimestamp( TS_MW );
 		$this->mGroups = array();
 
+/* LOGIN SECURITY -- Ralf 2009-07-07 */
+		$this->mFailedAttempts = 0;
+		$this->mForcedResets = 0;
+/* END LOGIN SECURITY */
+
 		wfRunHooks( 'UserLoadDefaults', array( $this, $name ) );
 
 		wfProfileOut( __METHOD__ );
@@ -935,6 +947,10 @@ class User {
 		$this->mEmailTokenExpires = wfTimestampOrNull( TS_MW, $row->user_email_token_expires );
 		$this->mRegistration = wfTimestampOrNull( TS_MW, $row->user_registration );
 		$this->mEditCount = $row->user_editcount; 
+/* LOGIN SECURITY -- Ralf 2009-07-07 */
+		$this->mFailedAttempts = $row->user_failed_attempts;
+		$this->mForcedResets = $row->user_forced_resets;
+/* END LOGIN SECURITY */
 	}
 
 	/**
@@ -2428,6 +2444,10 @@ class User {
 				'user_token' => $this->mToken,
 				'user_email_token' => $this->mEmailToken,
 				'user_email_token_expires' => $dbw->timestampOrNull( $this->mEmailTokenExpires ),
+/* LOGIN SECURITY -- Ralf 2009-07-07 */
+				'user_failed_attempts' => $this->mFailedAttempts,
+				'user_forced_resets' => $this->mForcedResets,
+/* END LOGIN SECURITY */
 			), array( /* WHERE */
 				'user_id' => $this->mId
 			), __METHOD__
@@ -3400,5 +3420,70 @@ class User {
 		$log->addEntry( 'autocreate', $this->getUserPage(), '', array( $this->getId() ) );
 		return true;
 	}
+
+/* LOGIN SECURITY -- Ralf 2009-07-07 */
+	/**
+	 * Update the number of failed password hits
+	 */
+	public function passwordFailed() {
+		if ('' == $this->mPassword) return;
+		$this->mFailedAttempts += 1;
+		if ($this->mFailedAttempts == 3) {
+			$this->mFailedAttempts = 0;
+			$this->mForcedResets += 1;
+			$this->setPassword(null);
+			if ($this->mForcedResets < 4) {
+				$np = $this->randomPassword();
+				$this->setNewpassword( $np, false );
+				$this->sendForceResetPasswordMail($np);
+			} else {
+				$this->sendAccountBlockedMail();
+			}
+		}
+		$this->saveSettings();
+	}
+	
+	/**
+	 * Unblock user after being blocked for too many password errors
+	 */
+	public function resetPasswordFailed() {
+		if ($this->mForcedResets != 4) return;
+		$this->mFailedAttempts = 0;
+		$this->mForcedResets = 0;
+		$np = $this->randomPassword();
+		$this->setNewpassword( $np, false );
+		$this->sendForceResetPasswordMail($np);
+		$this->saveSettings();
+	}
+	
+	/**
+	 * Send password forcefully reset mail
+	 */
+	public function sendForceResetPasswordMail($np, $emailTitle = 'forcepasswordresettitle', $emailText = 'forcepasswordresettext') {
+		global $wgServer, $wgScript, $wgNewPasswordExpiry;
+		$ip = wfGetIP();
+		$m = wfMsgExt( $emailText, array( 'parsemag' ), $ip, $this->getName(), $np,
+				$wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 ) );
+		return $this->sendMail( wfMsg( $emailTitle ), $m );
+	}
+	
+	/**
+	 * Send account blocked mail
+	 */
+	public function sendAccountBlockedMail($emailTitle = 'accountblockedtitle', $emailText = 'accountblockedtext') {
+		global $wgServer, $wgScript, $wgNewPasswordExpiry, $wgxAdminUser;
+		$ip = wfGetIP();
+		$m = wfMsgExt( $emailText, array( 'parsemag' ), $ip, $this->getName(), null,
+				$wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 ) );
+		$result = $this->sendMail( wfMsg( $emailTitle ), $m );
+		
+		$u = User::newFromName($wgxAdminUser);
+		$u->load();
+		$m = wfMsgExt ($emailText.'-admin', array ( 'parsemag'), $this->getName());
+		$u->sendMail(wfMsgExt($emailTitle.'-admin', array('parsemag'), $this->getName()), $m);
+		
+		return $result;
+	}
+/* END LOGIN SECURITY */
 
 }

@@ -3344,4 +3344,22 @@ Voer de bestandsnaam in zonder het voorvoegsel "{{ns:file}}:".',
 'dberr-outofdate'   => "Let op: hun indexen van onze pagina's zijn wellicht niet recent.",
 'dberr-cachederror' => 'Deze pagina is een kopie uit de cache en is wellicht niet de meest recente versie.',
 
+/* LOGIN SECURITY -- Ralf 2009-07-07 */
+'forcepasswordresettitle'      => 'Tijdelijk wachtwoord voor {{SITENAME}}',
+'forcepasswordresettext'       => 'Iemand, waarschijnlijk u, heeft vanaf IP-adres $1 drie keer een
+incorrect wachtwoord voor {{SITENAME}} opgegeven. Er is een tijdelijk wachtwoord aangemaakt voor gebruiker "$2":
+"$3". U moet zich opnieuw aanmelden en een nieuw wachtwoord kiezen.
+Uw tijdelijke wachtwoord vervalt over {{PLURAL:$5|$5 dag|$5 dagen}}.',
+
+'accountblockedtitle'          => 'Gebruiker geblokeerd voor {{SITENAME}}',
+'accountblockedtext'           => 'Iemand, waarschijnlijk u, heeft vanaf IP-adres $1 drie keer een
+incorrect wachtwoord voor {{SITENAME}} opgegeven. Aangezien uw wachtwoord al drie keer hersteld is,
+is gebruiker "$2" geblokeerd. Een beheerder is hiervan op de hoogte gesteld.',
+
+'accountblockedtitle-admin'    => 'Gebruiker geblokkeerd: "$1"',
+'accountblockedtext-admin'     => 'Gebruiker "$1" is geblokeerd wegens schending van het wachtwoordregelement
+(te vaak een incorrect wachtwoord opgegeven).',
+
+'accountblockedreset'          => 'Deze gebruiker is momenteel geblokkeerd.'
+/* END LOGIN SECURITY */
 );
