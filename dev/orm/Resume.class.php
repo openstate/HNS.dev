@@ -1,6 +1,6 @@
 <?php
 
-class Resume extends Record {
+class Resume extends ApiRecord {
 	protected $tableName = 'wiz_resume';
 	protected $softKeyDefinition = 'header';
 

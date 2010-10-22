@@ -8,7 +8,9 @@ class RecordQuery {
 
 	const FETCH_OBJ = 'fetch_object';
 	const FETCH_ARRAY = 'fetch_array';
+	const FETCH_ASSOC = 'fetch_assoc';
 	const FETCH_STATEMENT = 'fetch_statement';
+	const FETCH_SQL = 'fetch_sql';
 
 	protected $queryData = array(
 		'fetchMode' 	=> self::FETCH_OBJ,
@@ -49,7 +51,7 @@ class RecordQuery {
 		Sets the fetchmode for the get() function, only possible to get an object if you are also getting the record's columns
 	*/
 	public function setFetchMode($mode) {
-		$fetchModes = array(self::FETCH_ARRAY, self::FETCH_STATEMENT);
+		$fetchModes = array(self::FETCH_ARRAY, self::FETCH_ASSOC, self::FETCH_STATEMENT, self::FETCH_SQL);
 		if ($this->queryData['recordColumns'] === true) //only allow object fetching if we still get the columns for it.
 			$fetchModes[] = self::FETCH_OBJ;
 		if (in_array($mode, $fetchModes))
@@ -153,10 +155,21 @@ class RecordQuery {
 
 	public function get() {
 		switch	($this->queryData['fetchMode']) {
+			case self::FETCH_SQL:
+				$rec = new $this->className();
+				$query = $rec->buildFetchQuery($this->queryData);
+				return $query;
+				break;
 			case self::FETCH_STATEMENT:
 				$rec = new $this->className();
 				$query = $rec->buildFetchQuery($this->queryData);
 				return $this->db->query($query);
+				break;
+			case self::FETCH_ASSOC:
+				$rec = new $this->className();
+				$query = $rec->buildFetchQuery($this->queryData);
+				$rows = $this->db->query($query)->fetchAllRows();
+				return $rows;
 				break;
 			case self::FETCH_ARRAY:
 				$rec = new $this->className();

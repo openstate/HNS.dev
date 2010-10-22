@@ -72,11 +72,15 @@ class SelectQuery implements Query {
 		
 		return implode(' ', array_filter(array($selectSql, $fromSql, $whereSql, $groupBySql, $orderSql)));
 		*/
-		return $this->getRecordQuery()->getStatement();
+		return $this->getRecordQuery()->setFetchMode(RecordQuery::FETCH_SQL)->get();
 	}
 	
 	public function execute() {
-		return $this->getRecordQuery()->get();
+		return array_merge(
+  			array(array('sql', array(), $this->toSql())),
+  			array_map(create_function('$a', 'return array("'.addslashes($this->from).'", array_filter($a, "is_scalar"));'), $this->getRecordQuery()->get())
+		);
+		//return array(array('foo', array(), $this->toSql()));
 	}
 	
 	protected function alias($obj) {
@@ -84,23 +88,24 @@ class SelectQuery implements Query {
 	}
 	
 	public function getRecordQuery() {
-		$query = Record::getInstance($this->from)->select()->setFetchMode(RecordQuery::FETCH_ARRAY);
+		$query = Record::getInstance($this->from)->select()->setFetchMode(RecordQuery::FETCH_ASSOC);
 		$this->aliases = array();
-		foreach ($this->getJoin() as $join => $condition) {
-			$alias = $this->aliases[$join] = 't'.(count($aliases) + 1);
-			$query = $query->join('JOIN %t %t ON %l', $join, $alias, $condition);
+		foreach ($this->getJoin() as $alias => $join) {
+			list($table, $condition) = $join;
+			$query = $query->join('LEFT JOIN %t AS %t ON %l', $table, $alias, $condition);
 		}
 		if ($this->select != '*') {
+			$this->select['id'] = new QueryProperty('id');
 			$query = $query->addRecordColumns(false);
 			foreach ($this->select as $key => $value)
-				$query = $query->addExtraColumn('%l AS %t', $this->replaceAliases($value), $key);
+				$query = $query->addExtraColumn('%l AS %t', $value, $key);
 		}
 		foreach ($this->where as $where)
-			$query = $query->where('%l', $this->alias(where));
+			$query = $query->where('%l', $where);
 		foreach ($this->order as $order)
-			$query = $query->order('%l', $this->alias(order));
+			$query = $query->order('%l', $order);
 		foreach ($this->getGroupBy() as $group)
-			$query = $query->group('%l', $this->alias(group));
+			$query = $query->group('%l', $group);
 		$query = $query->limit($this->limit, $this->offset);
 		
 		return $query;
@@ -125,24 +130,71 @@ class SelectQuery implements Query {
 		if ($aggregateProperties) {
 			foreach ($selectProperties as $prop)
 				if (!in_array($prop, $aggregateProperties))
-					$groupBy[] = '"'.$prop.'"';
+					$groupBy[] = $prop;
 		}
 		
 		return $groupBy;
 	}
 	
 	protected function getJoin() {
-		/* Find all compound properties */
-		$compoundProperties = array();
+		/* Find all table references */
+		$tables = array();
 		foreach (array($this->select != '*' ? $this->select : array(), $this->where, $this->order) as $array)
 			foreach ($array as $item)
-				$compoundProperties = array_merge($selectProperties, $item->compoundPropertyList());
-		$compoundProperties = array_map();
-		$compoundProperties = array_unique($compoundProperties);
-	}
-	
-	public function getWhereClause() {
-		return $this->where ? 'WHERE ('.implode(') AND (', $this->where).')' : '';
+				$tables = array_merge($tables, $item->tableReferenceList());
+		if (!$tables) return array();
+		$tables = array_unique($tables);
+		sort($tables);
+		$tables = array_reverse($tables);
+		$joins = array();
+		foreach ($tables as $table) {
+			$table = explode('::', $table);
+			if (!array_key_exists(implode('__', $table), $joins)) {
+				$obj = Record::getInstance($this->from);
+				$alias = '';
+				for ($i = 0; $i < count($table); $i++) {
+					$oldAlias = $alias;
+					$alias = $alias.($alias ? '__' : '').$table[$i];
+					$oldObj = $obj;
+					$manyConfig = $obj->getHasManyConfig($table[$i]);
+					if ($manyConfig) {
+						if ($junction = @$manyConfig['table']) {
+							$obj = Record::getInstance($junction['class']);
+							$junctionAlias = 'junction_'.$alias;
+							$joins[$junctionAlias] = array(
+								$obj->getTableName(),
+								($oldAlias ? '"'.$oldAlias.'"' : 't1').'."'.$manyConfig['local'].
+								'" = "'.$junctionAlias.'"."'.$junction['local'].'"'
+							);
+							$obj = Record::getInstance($manyConfig['class']);
+							$joins[$alias] = array(
+								$obj->getTableName(),
+								'"'.$junctionAlias.'"."'.$junction['foreign'].
+								'" = "'.$alias.'"."'.$manyConfig['foreign'].'"'
+							);
+						} else {
+							$obj = Record::getInstance($manyConfig['class']);
+							$joins[$alias] = array(
+								$obj->getTableName(),
+								($oldAlias ? '"'.$oldAlias.'"' : 't1').'."'.$manyConfig['local'].
+								'" = "'.$alias.'"."'.$manyConfig['foreign'].'"'
+							);
+						}
+					} else {
+						$oneConfig = $obj->getHasOneConfig($table[$i]);
+						if (!$oneConfig)
+							throw new ParseException();
+						$obj = Record::getInstance($oneConfig['class']);
+						$joins[$alias] = array(
+							$obj->getTableName(),
+							($oldAlias ? '"'.$oldAlias.'"' : 't1').'."'.$oneConfig['local'].
+								'" = "'.$alias.'"."'.$oneConfig['foreign'].'"'
+						);
+					}
+				}
+			}
+		}
+		return $joins;
 	}
 }
 
@@ -175,7 +227,7 @@ class InsertQuery implements Query {
 		foreach ($data as $row) {
 			/* If the table name contains an underscore, it refers to a foreign relation
 			   The first part will be the parent table, the second part the name of the relation in that table */
-			list($table, $subtable) = strpos($this->table, '_') !== false ? explode('_', $this->table, 2) : array($this->table, null);
+			list($table, $subtable) = strpos($this->table, '::') !== false ? explode('::', $this->table, 2) : array($this->table, null);
 			if ($subtable) {
 				/* Check if there's a one-to-many or many-to-many relation */
 				$manyConfig = Record::getInstance($table)->getHasManyConfig($subtable);
@@ -197,6 +249,8 @@ class InsertQuery implements Query {
 					//var_dump($row, $this->toSql());
 					/* There's not, so we're updating the local object */
 					$oneConfig = Record::getInstance($table)->getHasOneConfig($subtable);
+					if (!$oneConfig)
+						throw new ParseException('No relation '.$subtable.' exists in record '.ucfirst($table));
 					$field = $oneConfig['local'];
 					$obj = Record::getInstance($table);
 					//var_dump(get_class($obj));
@@ -207,7 +261,7 @@ class InsertQuery implements Query {
 				}
 			} else {
 				$obj = Record::getInstance($table);
-				$mmConfig = false;
+				$manyConfig = false;
 			}
 			foreach ($row as $key => $val) {
 				/* Rename local and foreign keys for many-to-many relations */

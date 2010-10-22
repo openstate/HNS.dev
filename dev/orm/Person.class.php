@@ -1,6 +1,6 @@
 <?php
 
-class Person extends Record {
+class Person extends ApiRecord {
 	protected $tableName = 'persons';
 	protected $softKeyDefinition = "usualname||' '||lastname";
 
@@ -12,7 +12,7 @@ class Person extends Record {
 		'date_birth' => array('type' => self::DATE),
 		'nationality' => array('type' => self::LOOKUP, 'lookup' => 'sys_nationalities'),
 		'residency' => array('type' => self::STRING, 'length' => 50),
-		'picture' => array('type' => self::STRING, 'length' => 250),
+		'picture' => array('type' => self::STRING, 'length' => 250, 'regex' => '!^https?://!'),
 		'address' => array('type' => self::STRING, 'length' => 50),
 		'workphone' => array('type' => self::STRING, 'length' => 15),
 		'mobilephone' => array('type' => self::STRING, 'length' => 15),

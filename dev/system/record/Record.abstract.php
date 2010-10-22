@@ -651,7 +651,9 @@ abstract class Record extends RecordBase {
 			}
 		} elseif (isset($this->config[$name]) && (!isset($this->config[$name]['writability']) || $this->config[$name]['writability'] == self::NORMAL)) {
 			if (isset($this->hasOneConfig[$name]) && !(is_int($value) || ctype_digit($value))) {
-				$obj = Record::getInstance($this->hasOneConfig[$name]['class']);
+				$class = $this->hasOneConfig[$name]['class'];
+				require_once($class.'.class.php');
+				$obj = new $class();
 				$obj->loadBySoftKey($value);
 				$value = $obj->id;
 			} elseif ($value !== null && $check = @$this->config[$name]['type']) {
@@ -793,15 +795,4 @@ abstract class Record extends RecordBase {
 	public function getHasManyConfig($key) { return @$this->hasManyConfig[$key]; }
 	public function getHasOneConfig($key) { return @$this->hasOneConfig[$key]; }
 	
-	/* Get an instance of a record object by name */
-	public static function getInstance($name) {
-		$name = ucfirst(strtolower($name));
-		include_once($name.'.class.php');
-		if (!class_exists($name, false))
-			throw new RecordException('Unknown record class '.$name);
-		$obj = new $name();
-		if (!($obj instanceof Record))
-			throw new RecordException('Unknown record class '.$name);
-		return $obj;
-	}
 }

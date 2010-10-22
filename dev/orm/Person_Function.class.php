@@ -1,6 +1,6 @@
 <?php
 
-class Person_Function extends Record {
+class Person_Function extends ApiRecord {
 	protected $tableName = 'persons_functions';
 	protected $softKeyDefinition = 'person';
 

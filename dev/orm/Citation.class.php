@@ -1,6 +1,6 @@
 <?php
 
-class Citation extends Record {
+class Citation extends ApiRecord {
 	protected $tableName = 'citations';
 	protected $softKeyDefinition = 'citation';
 

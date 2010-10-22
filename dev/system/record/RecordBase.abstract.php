@@ -25,7 +25,7 @@ abstract class RecordBase {
 		return $this->db;
 	}
 
-	protected function getTableName() {
+	public function getTableName() {
 		return $this->tableName;
 	}
 

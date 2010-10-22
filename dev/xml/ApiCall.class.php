@@ -27,7 +27,7 @@ class ApiCall {
 				}
 			}
 		}
-		echo ($xml->asXml());
+		echo (str_replace('><', ">\n<", $xml->asXml()));
 	}
 }
 

@@ -25,7 +25,7 @@ class QueryLexer {
 		',' => 'COMMA',
 		'(' => 'PAREN_OPEN',
 		')' => 'PAREN_CLOSE',
-		'/^[a-z_][a-z0-9_]*/' => 'IDENT',
+		'/^[a-z_][a-z0-9_.]*/' => 'IDENT',
 		'/^"[a-z_][^"]*"/' => 'QUOTED_IDENT',
 		"/^'[^']*(\\\\'[^']*)*'/" => 'VALUE',
 		"/^[0-9]+(\.[0-9]+)?/" => 'VALUE',

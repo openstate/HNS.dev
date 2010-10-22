@@ -73,6 +73,14 @@ class QueryParser {
 		return $token[0];
 	}
 
+	/* Return the first word of the first text-containing token */
+	protected function firstToken() {
+		while(!$value = $this->current[1])
+			$this->consume();
+		$this->current = null;
+		return reset(array_reverse(explode('.', reset(explode(' ', $value)))));
+	}
+
 	/* Convenience function for left associative operators
 	   Implements <leftAssociative> ::= <child> { (operators[0] | operators[1] | ... | operators[n]) <child> } */
 	protected function leftAssociative($child, $operators) {

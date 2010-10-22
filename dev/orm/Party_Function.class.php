@@ -1,6 +1,6 @@
 <?php
 
-class Party_Function extends Record {
+class Party_Function extends ApiRecord {
 	protected $tableName = 'parties_functions';
 	protected $softKeyDefinition = 'party';
 

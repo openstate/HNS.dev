@@ -1,6 +1,6 @@
 <?php
 
-class Document extends Record {
+class Document extends ApiRecord {
 	protected $tableName = 'documents';
 	protected $softKeyDefinition = 'title';
 	

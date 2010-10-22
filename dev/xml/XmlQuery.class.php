@@ -91,7 +91,7 @@ class XmlQuery {
 					foreach ($value as $item) {
 						/* Create junction table insert query */
 						$junction = new InsertQuery();
-						$junction->table = $query->table.'_'.$key;
+						$junction->table = $query->table.'::'.$key;
 					
 						/* Store local id as reference to this query's autoincrement id */
 						$junction->fields['local_id'] = &$query->id;
@@ -187,7 +187,7 @@ class XmlQuery {
 							if (@$item['delete']) {
 								/* Reference is marked to be deleted, create a delete query */
 								$junction = new DeleteQuery();
-								$junction->table = $query->table.'_'.$key;
+								$junction->table = $query->table.'::'.$key;
 								$junction->subqueries['local_id'] = $subquery;
 								
 								/* Deleting a reference is always based on id */
@@ -203,7 +203,7 @@ class XmlQuery {
 							} else {
 								/* Add foreign reference */
 								$junction = new InsertQuery();
-								$junction->table = $query->table.'_'.$key;
+								$junction->table = $query->table.'::'.$key;
 								$junction->query = $subquery;
 								$id = (string) $item['id'];
 								if (!$id) {
@@ -277,8 +277,9 @@ class XmlQuery {
 				$expr = $this->parseExpressionTree($select, 'expression');
 
 				if (!$alias) {
-					/* No alias present, so generate one from the first word of the expression */
-					$alias = preg_replace('/[^a-z]+/', '_', preg_replace('/\(.*/', '', strtolower(ltrim($expr, '('))));
+					/* No alias present, so generate one from the first token of the expression */
+					$alias = $this->parseExpressionTree($select, 'firstToken');
+					$alias = preg_replace('/[^a-z]+/', '_', strtolower($alias));
 					if (!$alias) $alias = 'column';
 				};
 				$query->select[$alias] = $expr;

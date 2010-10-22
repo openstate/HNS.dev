@@ -4,14 +4,14 @@
 	Interface for query syntax tree elements
 */
 interface QueryExpression {
-	/* Alias table names in the expression */
-	public function alias($aliases);
-
 	/* List of properties used in the expression */
 	public function propertyList();
 	
 	/* List of properties used in aggregates in the expression */
 	public function aggregatePropertyList();
+
+	/* List of tables used in properties used in the expression */
+	public function tableReferenceList();
 }
 
 /*
@@ -25,20 +25,23 @@ class QueryProperty implements QueryExpression {
 	}
 	
 	public function __toString() {
-		return '"'.$this->property.'"';
-	}
-	
-	public function alias($aliases) {
-		$prefix = implode('.', array_slice(explode('.', $aliases), 0, -1));
-		return @$aliases[$prefix] ? $aliases[$prefix].substr((string) $this->value, strlen($prefix)) : (string) $this->value;
+		$parts = explode('.', $this->property);
+		$last = array_pop($parts);
+		return '"'.implode('__', $parts).($parts ? '' : 't1').'"."'.$last.'"';
 	}
 	
 	public function propertyList() {
-		return array($this->property);
+		return array($this);
 	}
 	
 	public function aggregatePropertyList() {
 		return array();
+	}
+	
+	public function tableReferenceList() {
+		$parts = explode('.', $this->property);
+		array_pop($parts);
+		return $parts ? array(implode('::', $parts)) : array();
 	}
 }
 
@@ -56,15 +59,15 @@ class QueryValue implements QueryExpression {
 		return (string) $this->value;
 	}
 	
-	public function alias($aliases) {
-		return (string) $this->value;
-	}
-	
 	public function propertyList() {
 		return array();
 	}
 	
 	public function aggregatePropertyList() {
+		return array();
+	}
+	
+	public function tableReferenceList() {
 		return array();
 	}
 }
@@ -80,11 +83,22 @@ class QueryFunction implements QueryExpression {
 		$this->function = $function;
 		$this->parameters = $params;
 	}
+
+	protected function eq($params) {
+		return '('.$params[0].' = '.$params[1].')';
+	}
+
+	protected function ne($params) {
+		return '('.$params[0].' != '.$params[1].')';
+	}
 	
 	public function __toString() {
-		return $this->function.'('.implode(', ', array_map(create_function('$k,$v',
-			'return (is_int($k) ? "" : $k."=").(is_array($v) ? "(".implode(", ", $v).")" : $v);'),
-			array_keys($this->parameters), $this->parameters)).')';
+		if (method_exists($this, $fn = $this->function) || method_exists($this, $fn = $this->function.'_'))
+			return $this->$fn($this->parameters);
+		else
+			return $this->function.'('.implode(', ', array_map(create_function('$k,$v',
+				'return (is_int($k) ? "" : $k."=").(is_array($v) ? "(".implode(", ", $v).")" : $v);'),
+				array_keys($this->parameters), $this->parameters)).')';
 	}
 
 	/* Recursively call a method on the function parameters */
@@ -101,9 +115,6 @@ class QueryFunction implements QueryExpression {
 		return array_unique($result);
 	}
 
-	public function alias() {
-	}
-	
 	public function propertyList() {
 		return $this->recursiveCall('propertyList');
 	}
@@ -115,6 +126,10 @@ class QueryFunction implements QueryExpression {
 		else
 			/* Otherwise, delegate the call to the parameters */
 			return $this->recursiveCall('aggregatePropertyList');
+	}
+	
+	public function tableReferenceList() {
+		return $this->recursiveCall('tableReferenceList');
 	}
 
 }
