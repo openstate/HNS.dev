@@ -9,6 +9,11 @@ INSERT INTO doc_types (name) VALUES ('Motie');
 INSERT INTO doc_types (name) VALUES ('Burgerinitiatief');
 INSERT INTO doc_types (name) VALUES ('Onbekend');
 
+-- Allow NULL start_date, link persons_functions to organizations
+ALTER TABLE persons_functions ALTER COLUMN start_date DROP NOT NULL;
+ALTER TABLE persons_functions ADD COLUMN organization INTEGER, ADD CONSTRAINT organization FOREIGN KEY (organization) REFERENCES organizations (id);
+
+DROP TABLE parties_functions;
+
 -- Create column documents.code
-ALTER TABLE documents
-ADD code text;
+ALTER TABLE documents ADD code text;
