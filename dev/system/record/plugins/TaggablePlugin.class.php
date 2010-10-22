@@ -73,7 +73,7 @@ class TaggablePlugin extends RecordPlugin {
 			if (!array_key_exists($tag, $this->tags) && !$delete) $this->tags[$tag] = 0;
 			if (($delete || $tagExists) && @$this->tags[$tag]) $this->tags[$tag] -= $this->ownTags[$tag];
 			if (!$delete) $this->tags[$tag] += $this->options['weight'];
-			if (array_key_exists($tag, $this->tags)) && !$this->tags[$tag]) unset($this->tags[$tag])
+			if (array_key_exists($tag, $this->tags) && !$this->tags[$tag]) unset($this->tags[$tag]);
 		}
 		
 		/* Resort tags */
