@@ -68,18 +68,25 @@ class ApiCall {
 		try {
 			require_once('XmlQuery.class.php');
 			
+			/* Fetch xml input */
+			$input = file_get_contents('php://input');
+			
 			/* If the username or key isn't provided, terminate */
 			if (!@$get['user'] || !@$get['key'])
-				throw new Exception('Required parameters missing');
+				throw new ParseException('Required parameters missing');
 				
 			/* Content type should be text/xml */
 			if ($_SERVER['CONTENT_TYPE'] != 'text/xml')
-				throw new Exception('Unsupported content type');
+				throw new ParseException('Unsupported content type');
 			
 			/* Find user */
 			require_once('User.class.php');
 			$user = new User();
-			$user->loadByUnique('name', $get['user']);
+			try {
+				$user->loadByUnique('name', $get['user']);
+			} catch (RecordException $e) {
+				throw new ParseException('User "'.$get['user'].'" not found');
+			}
 			
 			if ($user->ip) {
 				/* User has an associated ip check, verify the current ip matches */
@@ -94,11 +101,8 @@ class ApiCall {
 				/* If the mask is 32 (ie, all ips match, the shift may fail due to sign extension
 				   so treat it as a special case */
 				if ($mask < 32 && $ip != $remote)
-					throw new Exception('Invalid remote address');
+					throw new ParseException('Invalid remote address');
 			}
-			
-			/* Fetch xml input */
-			$input = file_get_contents('php://input');
 			
 			if (trim(reset(explode("\n", $user->key)), "- \t\r\n") == 'BEGIN PUBLIC KEY') {
 				/* Account has RSA key associated with it, verify the signature sent */
@@ -107,21 +111,21 @@ class ApiCall {
 				$valid = openssl_verify($input, $sig, $pub);
 				openssl_free_key($pub);
 				if (!$valid)
-					throw new Exception('Invalid signature');
+					throw new ParseException('Invalid signature');
 			} else {
 				/* Account has basic key verification, check it */
 				if ($user->key != $get['key'])
-					throw new Exception('Invalid key');
+					throw new ParseException('Invalid key');
 			}
 			
 			/* If the user has exceeded their maximum rate, block them */
-			if ($user->hits() >= $user->max_rate)
-				throw new Exception('Too many hits');
+			if ($user->hits() >= $user->max_rate && $user->max_rate !== null)
+				throw new ParseException('Too many hits');
 			
 			/* If the system load exceeds the maximum load for this user, block them */
 			require_once('current_load.private.php');
-			if (CURRENT_LOAD >= $user->max_load)
-				throw new Exception('Server busy');
+			if (CURRENT_LOAD >= $user->max_load && $user->max_load !== null)
+				throw new ParseException('Server busy');
 		
 			/* Store the user for external use and get a hash of the input value */
 			DataStore::set('api_user', $user);
