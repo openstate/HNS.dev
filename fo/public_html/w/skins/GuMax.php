@@ -119,7 +119,7 @@ class GuMaxTemplate extends QuickTemplate {
 <div class="gumax_head_acc">
         <!-- Login -->
 		<div id="gumax-p-corporate" style="width:auto; text-align:left; float: left;">
-			<ul><li><a href="http://en.hetnieuwestemmen.nl">Corporate site &raquo;</a></li></ul>
+			<ul><li><a href="http://en.hetnieuwestemmen.nl">Back to Het Nieuwe Stemmen &raquo;</a></li></ul>
 		</div>
         <div id="gumax-p-login">
             <ul>
