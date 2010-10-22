@@ -1,16 +1,15 @@
 <?php
 
-class Citation extends Record {
-	protected $tableName = 'citations';
-	protected $softKeyDefinition = 'citation';
+class Author extends Record {
+	protected $tableName = 'authors';
+	protected $softKeyDefinition = 'document';
 
 	protected $config = array(
 		'document' => array('type' => self::RELATION, 'relation' => 'Document'),
 		'person' => array('type' => self::RELATION, 'relation' => 'Person'),
-		'organization' => array('type' => self::RELATION, 'relation' => 'Organization'),
-		'citation' => array('type' => self::STRING, 'length' => 250),
+		'order' => array('type' => self::INT),
 	);
-
+	
 	protected $hasOneConfig = array(
 		'persons' => array(
 			'class' 	=> 'Person',
@@ -23,7 +22,6 @@ class Citation extends Record {
 			'foreign'	=> 'id',
 		),
 	);
-	
 }
 
 ?>

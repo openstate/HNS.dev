@@ -6,7 +6,6 @@ class Document extends Record {
 	
 	protected $config = array(
 		'title' => array('type' => self::STRING, 'length' => 50),
-		'author' => array('type' => self::STRING, 'length' => 50),
 		'source' => array('type' => self::STRING, 'length' => 250),
 		'content' => array('type' => self::STRING, 'length' => 40),
 		'timestamp' => array('type' => self::DATE),
@@ -20,6 +19,15 @@ class Document extends Record {
 	);
 	
 	protected $hasManyConfig = array(
+		'authors' => array(
+			'class' 	=> 'Persons',
+			'table' 	=> array(
+				'class'		=> 'Author',
+				'name'		=> 'authors',
+				'local'		=> 'document',
+				'foreign'	=> 'person',
+			),
+		),
 		'citations' => array(
 			'class' 	=> 'Citation',
 			'foreign'	=> 'document',
@@ -30,7 +38,12 @@ class Document extends Record {
 		),
 		'tags' => array(
 			'class' 	=> 'Tag',
-			'foreign'	=> 'document',
+			'table' 	=> array(
+				'class'		=> 'Document_Tag',
+				'name'		=> 'documents_tags',
+				'local'		=> 'document',
+				'foreign'	=> 'tag',
+			),
 		),
 	);
 }

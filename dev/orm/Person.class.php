@@ -8,11 +8,11 @@ class Person extends Record {
 		'initials' => array('type' => self::STRING, 'length' => 10),
 		'usualname' => array('type' => self::STRING, 'length' => 25),
 		'lastname' => array('type' => self::STRING, 'length' => 25),
-		'gender' => array('type' => self::INT),
+		'gender' => array('type' => self::STRING, 'length' => 1, 'regex' => '!^(m|f)$!'),
 		'date_birth' => array('type' => self::DATE),
 		'nationality' => array('type' => self::LOOKUP, 'lookup' => 'sys_nationalities'),
 		'residency' => array('type' => self::STRING, 'length' => 50),
-		'picture' => array('type' => self::STRING, 'length' => 40),
+		'picture' => array('type' => self::STRING, 'length' => 250),
 		'address' => array('type' => self::STRING, 'length' => 50),
 		'workphone' => array('type' => self::STRING, 'length' => 15),
 		'mobilephone' => array('type' => self::STRING, 'length' => 15),
@@ -42,6 +42,15 @@ class Person extends Record {
 				'foreign'	=> 'document',
 			),
 		),
+		'author_of' => array(
+			'class' 	=> 'Document',
+			'table' 	=> array(
+				'class'		=> 'Author',
+				'name'		=> 'authors',
+				'local'		=> 'person',
+				'foreign'	=> 'document',
+			),
+		),
 		'functions' => array(
 			'class' 	=> 'Function',
 			'foreign'	=> 'person',
@@ -52,7 +61,12 @@ class Person extends Record {
 		),
 		'tags' => array(
 			'class' 	=> 'Tag',
-			'foreign'	=> 'person',
+			'table' 	=> array(
+				'class'		=> 'Person_Tag',
+				'name'		=> 'persons_tags',
+				'local'		=> 'person',
+				'foreign'	=> 'tag',
+			),
 		),
 	);
 }

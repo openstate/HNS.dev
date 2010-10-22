@@ -11,7 +11,7 @@ class Developer extends Record {
 		'gender' => array('type' => self::INT),
 		'date_birth' => array('type' => self::DATE),
 		'nationality' => array('type' => self::LOOKUP, 'lookup' => 'sys_nationalities'),
-		'picture' => array('type' => self::STRING, 'length' => 40),
+		'picture' => array('type' => self::STRING, 'length' => 250),
 		'party' => array('type' => self::INT),
 		'address' => array('type' => self::STRING, 'length' => 50),
 		'workphone' => array('type' => self::STRING, 'length' => 15),

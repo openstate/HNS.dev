@@ -37,7 +37,12 @@ class Organization extends Record {
 		),
 		'tags' => array(
 			'class' 	=> 'Tag',
-			'foreign'	=> 'organization',
+			'table' 	=> array(
+				'class'		=> 'Organization_Tag',
+				'name'		=> 'organizations_tags',
+				'local'		=> 'organization',
+				'foreign'	=> 'tag',
+			),
 		),
 	);
 }
