@@ -118,7 +118,10 @@ class GuMaxTemplate extends QuickTemplate {
 <div id="gumax-rbox" align="left">
 <div class="gumax_head_acc">
         <!-- Login -->
-        <div id="gumax-p-login">
+		<div id="gumax-p-login" style="width:auto; text-align:left; float: left;">
+			<ul><li><a href="http://en.hetnieuwestemmen.nl">Corporate site &raquo;</a></li></ul>
+		</div>
+		<?php /*
             <ul>
               <?php $lastkey = end(array_keys($this->data['personal_urls'])) ?>
               <?php foreach($this->data['personal_urls'] as $key => $item) if($this->data['loggedin']==1) {
@@ -130,7 +133,7 @@ class GuMaxTemplate extends QuickTemplate {
                <?php // if($key != $lastkey) echo "|" ?></li>
              <?php } ?>
             </ul>
-        </div>
+        </div> */ ?>
         <!-- end of Login -->
 		
 		<!-- Special and Login menu -->
@@ -362,8 +365,8 @@ class GuMaxTemplate extends QuickTemplate {
 
 </div></div>
 <div class="gumax-rbbot"><div><div></div></div></div></div>
-<div class="special_bottom_acc"><div style="float:right;"><a style="color:#fff;" href="<?php echo str_replace('$1', 'Contact_Us', $this->data['articlepath']); ?>">Contact us</a> | <a href="<?php echo str_replace('$1', 'Terms', $this->data['articlepath']); ?>" style="color:#fff;">Terms and conditions</a></div>&copy; 2009 - <a style="color:#fff;" href="http://www.hetnieuwestemmen.nl">Stichting Het Nieuwe Stemmen</a></div>
-<div class="special_participation_acc"><a href="http://www.digitalepioniers.nl/"><img src="/w/skins/common/images/dplogo.gif" style="float:right;padding-left:10px;" /></a>DE ONTWIKKELING VAN HNS.DEV IS MOGELIJK GEMAAKT DOOR EEN BIJDRAGE VAN KENNISLAND IN DE REGELING DIGITALE PIONIERSRONDE EPARTICIPATIE (DIE DOOR HET MINISTERIE VAN BINNENLANDSE ZAKEN EN KONINKRIJKSRELATIES GE&Iuml;NITIEERD IS). DIGITALE PIONIERS GEEFT FINANCI&Euml;LE EN ORGANISATORISCHE ONDERSTEUNING AAN INNOVATIEVE INTERNETINITIATIEVEN.</div>
+<div class="special_bottom_acc"><div style="float:right;"><a style="color:#fff;" href="http://en.hetnieuwestemmen.nl/modules/forms/contact">contact us</a> | <a href="<?php echo str_replace('$1', 'Terms', $this->data['articlepath']); ?>" style="color:#fff;">terms and conditions</a></div>&copy; 2009 - <a style="color:#fff;" href="http://en.hetnieuwestemmen.nl">Stichting Het Nieuwe Stemmen</a></div>
+<div class="special_participation_acc"><a href="http://www.digitalepioniers.nl/"><img src="/w/skins/common/images/dplogo.gif" style="float:right;padding-left:10px;" /></a>THE DEVELOPMENT OF HNS.DEV WAS MADE POSSIBLE BY A CONTRIBUTION OF KNOWLEDGELAND THROUGH THE DIGITAL PIONEERS EPARTICIPATION ROUND REGULATION (WHICH WAS INITIATED BY THE MINISTRY OF THE INTERIOR AND KINGDOM RELATIONS). DIGITAL PIONIEERS GIVES FINANCIAL AND ORGANISATORIAL SUPPORT TO INNOVATIVE INTERNET INITIATIVES.</div>
 </div>
 
 <div class="gumax_foot_acc"></div>

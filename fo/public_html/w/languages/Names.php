@@ -224,9 +224,9 @@
 	'new' => 'नेपाल भाषा',		# Newar / Nepal Bhasa
 	'ng' => 'Oshiwambo',		# Ndonga
 	'niu' => 'Niuē',	# Niuean
-*/
+*//*
 	'nl' => 'Nederlands',	# Dutch
-/*
+*//*
 	'nn' => "\xE2\x80\xAANorsk (nynorsk)\xE2\x80\xAC",	# Norwegian (Nynorsk)
 	'no' => "\xE2\x80\xAANorsk (bokmål)\xE2\x80\xAC",		# Norwegian
 	'nov' => 'Novial',		# Novial

@@ -30,3 +30,12 @@ msgstr "Grant rights to %s"
 
 msgid "title.issues.index.create"
 msgstr "New issue"
+
+msgid "title.users.index.create"
+msgstr "Create profile for %s"
+
+msgid "title.users.index.edit"
+msgstr "Edit profile for %s"
+
+msgid "title.users.index.change"
+msgstr "Modify %s"

@@ -8,6 +8,13 @@ require_once('UserExtended.class.php');
 class UsersIndexController extends Controller {
 	protected $defaultAction = 'login';
 
+	protected function getTitle($request = null) {
+		$request = $request ? $request : $this->request;
+		$user = $request->user;
+		$title = parent::getTitle($request);
+		return sprintf($title, htmlspecialchars($user->user_name));
+	}
+
 /*	public function loginAction() {
 		$destination = $this->request->getNamedParam('destination', '/admin/');
 		$d = new Destination();

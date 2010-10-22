@@ -30,3 +30,12 @@ msgstr "Rechten toekennen aan %s"
 
 msgid "title.issues.index.create"
 msgstr "Nieuw probleem"
+
+msgid "title.users.index.create"
+msgstr "Profiel maken voor %s"
+
+msgid "title.users.index.edit"
+msgstr "Profiel bewerken voor %s"
+
+msgid "title.users.index.change"
+msgstr "%s aanpassen"
