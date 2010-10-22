@@ -1,0 +1,88 @@
+<form>
+	<table>
+		<tbody>
+			<e:field>
+				<label>Naam:</label>
+				<content>
+					<e:text name="name" r:maxlength="50">
+						<c:required />
+					</e:text>
+				</content>
+			</e:field>
+		
+			<e:field>
+				<label>Key:</label>
+				<content>
+					<e:textarea name="key">
+						<c:required />
+					</e:textarea>
+				</content>
+			</e:field>
+			
+			<e:field>
+				<label>IP-adres:</label>
+				<content>
+					<e:text name="ip" maxlength="50" />
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>Contact:</label>
+				<content>
+					<e:text name="contact" maxlength="250">
+						<c:required />
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>E-mailadres:</label>
+				<content>
+					<e:text name="email" maxlength="100">
+						<c:email />
+						<c:required />
+					</e:text>
+				</content>
+			</e:field>
+		
+			<e:field>
+				<label>Telefoonnummer:</label>
+				<content>
+					<e:text name="phone_number" maxlength="50" />
+				</content>
+			</e:field>
+			
+			<e:field>
+				<label>Affiliate:</label>
+				<content>
+					<e:select name="affiliate_id" values='$affiliates' />
+				</content>
+			</e:field>
+			
+			<e:field>
+				<label>Maximum Rate:</label>
+				<content>
+					<e:text name="max_rate" maxlength="5">
+						<c:regex><p:regex>/^\d{1,5}$/</p:regex></c:regex>
+					</e:text>
+				</content>
+			</e:field>
+
+			<e:field>
+				<label>Maximum Load:</label>
+				<content>
+					<e:text name="max_load" maxlength="8">
+						<c:regex><p:regex>/^\d{1,5}((\.|,)\d{1,2})?$/</p:regex></c:regex>
+					</e:text>
+				</content>
+			</e:field>
+			
+			<e:field>
+				<label />
+				<content>
+					<input type="submit" value="Opslaan" />
+				</content>
+			</e:field>
+		</tbody>
+	</table>
+</form>

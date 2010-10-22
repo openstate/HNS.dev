@@ -1,6 +1,9 @@
 <?php
 
+require_once ('Affiliate.class.php');
+
 class ApiUser extends Record {
+	protected $database = DBs::HNSDEV;
 	protected $tableName = 'usr_users';
 
 	protected $config = array(
@@ -16,10 +19,12 @@ class ApiUser extends Record {
 		'max_load'		=> array(),
 	);
 	
-	protected $data = array (
+	protected $hasOneConfig = array(
+		'affiliate' => array(
+			'class' => 'Affiliate',
+			'local' => 'affiliate_id',
+			'foreign' => 'id',
+		),
 	);
 	
-	public function init() {
-	}
-
 }
