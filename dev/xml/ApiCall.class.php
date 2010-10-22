@@ -55,11 +55,11 @@ class ApiCall {
 	}
 	
 	/* Log the api call */
-	protected function log($xmlIn, $xmlOut, $hash, $sql, $ex) {
+	protected function log($xmlIn, $xmlOut, $hash, $sql, $queries, $time, $ex) {
 		DBs::inst(DBs::LOGGING)->query(
-			'INSERT INTO api_log (user_id, hash, xml_in, xml_out, sql, exception) VALUES (%, %, %, %, %, %)',
+			'INSERT INTO api_log (user_id, hash, xml_in, xml_out, sql, queries, time, exception) VALUES (%, %, %, %, %, %, %, %)',
 			DataStore::exists('api_user') ? DataStore::get('api_user')->id : null,
-			$hash, $xmlIn, str_replace('><', ">\n<", $xmlOut), $sql, $ex ? $ex->__toString() : null
+			$hash, $xmlIn, str_replace('><', ">\n<", $xmlOut), $sql, $queries, $time, $ex ? $ex->__toString() : null
 		);
 	}
 
@@ -131,7 +131,7 @@ class ApiCall {
 			if (file_exists($cacheFile) && filemtime($cacheFile) >= time() - self::$cacheDuration) {
 				/* Cache hit found, return it */
 				$this->xml = file_get_contents($cacheFile);
-				$this->log($input, $this->xml, $hash, null, null);
+				$this->log($input, $this->xml, $hash, null, null, null, null);
 				return;
 			}
 				
@@ -142,7 +142,7 @@ class ApiCall {
 			/* If the query returns a string, it's a cache request, so return that file */
 			if (is_string($query)) {
 				$this->xml = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/../'.self::$cacheDir.'/'.$query.'.'.$user->id.'.xml');
-				$this->log($input, $this->xml, $hash, null, null);
+				$this->log($input, $this->xml, $hash, null, null, null, null);
 				return;
 			}
 			
@@ -180,7 +180,9 @@ class ApiCall {
 		
 		/* Store the xml */
 		$this->xml = $xml->asXml();
-		$this->log($input, $this->xml, @$selectQuery ? $hash : null, @$sql, @$ex);
+		$queries = DBs::inst(DBs::SYSTEM)->getLastQuery(-1);
+		$time = array_sum(array_map(create_function('$r', 'return $r[1];'), $queries));
+		$this->log($input, $this->xml, @$selectQuery ? $hash : null, @$sql, count($queries), $time, @$ex);
 	}
 	
 	public function show() {
