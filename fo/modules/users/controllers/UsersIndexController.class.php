@@ -278,15 +278,6 @@ class UsersIndexController extends Controller {
 		$this->response->redirect(Wiki::inst()->redirect($user->getWikiTitle()));
 		return;
 
-		if ($this->request->user->user_id != $user->user_id) {
-			$this->displayLogin();
-			return;
-		}
-	
-		$this->view->id = $id;
-		$this->view->user = $user;
-		$this->addPoFile('users.po');
-		$this->view->render('index/view.html');
 	}
 	
 	public function isValidImage($values) {
