@@ -113,8 +113,10 @@ abstract class Record extends RecordBase {
 	*/
 	protected $plugins = array();
 
+	protected $database = DBs::SYSTEM;
+
 	public function __construct() {
-		$this->db = DBs::inst(DBs::SYSTEM);
+		$this->db = DBs::inst($this->database);
 		$this->data[$this->pkColumn] = false;
 		$this->init();
 	}

@@ -1,0 +1,44 @@
+<form>
+	<table>
+		<tbody>
+			<e:field>
+				<label>Naam:</label>
+				<content>
+					<e:text name="name" maxlength="50">
+						<c:required />
+					</e:text>
+				</content>
+			</e:field>
+		
+			<e:field>
+				<label>Contactpersoon:</label>
+				<content>
+					<e:text name="contact" maxlength="100" />
+				</content>
+			</e:field>
+			
+			<e:field>
+				<label>E-mailadres:</label>
+				<content>
+					<e:text name="email" maxlength="100">
+						<c:email />
+					</e:text>
+				</content>
+			</e:field>
+		
+			<e:field>
+				<label>Telefoonnummer:</label>
+				<content>
+					<e:text name="phone_number" maxlength="50" />
+				</content>
+			</e:field>
+			
+			<e:field>
+				<label />
+				<content>
+					<input type="submit" value="Opslaan" />
+				</content>
+			</e:field>
+		</tbody>
+	</table>
+</form>
