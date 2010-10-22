@@ -6,6 +6,7 @@ class LoggingModule extends Module {
 	public function loadBackofficeControllers() {
 		$this->addController('logging', dirname(__FILE__) . '/controllers/LoggingLoggingController.class.php');
 		$this->addController('versioning', dirname(__FILE__) . '/controllers/LoggingVersioningController.class.php');
+		$this->addController('database', dirname(__FILE__) . '/controllers/LoggingDatabaseController.class.php');
 	}
 	
 	public function preDispatch() {		

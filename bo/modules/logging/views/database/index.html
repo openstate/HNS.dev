@@ -1,0 +1,23 @@
+<div class="toolbar">
+	<h4>Toolbar {$toolbar_id}</h4>
+	<ul class="toolbar">
+		<li><a href="?filter={if $filter}0{else}1{/if}" title="Zoeken" class="filter" onclick="$('filter').style.display = $('filter').style.display == 'none' ? '': 'none'; return false;">Zoeken</a></li>
+	</ul>
+</div>
+<div id="filter" class="open"{if !$filter} style="display: none;"{/if}>
+<form method="post" action="">
+{$form->html()|eval}
+</form>
+</div>
+{if !$has_filter}<script type="text/javascript">$('filter').style.display = 'none';</script>{/if}
+<table class="list">
+<tr><th>Gebruiker</th><th>Aantal databaseverzoeken</th><th>Gebruikte databasetijd</th></tr>
+{foreach from=$data item=row}
+<tr><td>{$row.user|htmlspecialchars}</td>
+<td>{$row.queries|htmlspecialchars}</td>
+<td>{$row.time|number_format:3:',':'.'|htmlspecialchars}s</td>
+</tr>
+{foreachelse}
+<tr><td colspan="3">Geen resultaten gevonden</td></tr>
+{/foreach}
+</table>

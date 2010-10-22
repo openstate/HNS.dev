@@ -21,6 +21,9 @@
 			<li>
 				<a{if $active eq 'versioning'} class="active"{/if} href="{'/logging/versioning/index'|route}" title="Revisies" style="background-image: url('/assets/skins/backoffice/images/icons/pages.png');">Revisies</a>
 			</li>
+			<li>
+				<a{if $active eq 'database'} class="active"{/if} href="{'/logging/database/index'|route}" title="Database" style="background-image: url('/assets/skins/backoffice/images/icons/pages.png');">Database</a>
+			</li>
 		</ul>
 	{elseif $section eq 'cms'}
 		<h3>##app.contents##</h3>
