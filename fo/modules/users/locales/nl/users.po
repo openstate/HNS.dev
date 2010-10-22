@@ -37,8 +37,17 @@ msgstr "Telefoon"
 msgid "user.twitter"
 msgstr "Twitter"
 
+msgid "user.linkedin"
+msgstr "LinkedIn"
+
 msgid "user.skype"
 msgstr "Skype"
+
+msgid "user.terms"
+msgstr "Algemene voorwaarden"
+
+msgid "user.accept_terms"
+msgstr "Accepteert u de algemene voorwaarden?"
 
 msgid "user.clear"
 msgstr "Verwijder foto"

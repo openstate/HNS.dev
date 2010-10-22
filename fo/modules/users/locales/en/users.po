@@ -37,8 +37,17 @@ msgstr "Phone"
 msgid "user.twitter"
 msgstr "Twitter"
 
+msgid "user.linkedin"
+msgstr "LinkedIn"
+
 msgid "user.skype"
 msgstr "Skype"
+
+msgid "user.terms"
+msgstr "General terms"
+
+msgid "user.accept_terms"
+msgstr "Do you accept the general terms?"
 
 msgid "user.clear"
 msgstr "Clear photo"
