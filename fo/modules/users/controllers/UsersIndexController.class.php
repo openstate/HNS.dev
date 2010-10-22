@@ -100,11 +100,14 @@ class UsersIndexController extends Controller {
 			'user_email' => $user->user->user_email, 
 			'photo' => $user->photo->getLink(),
 			'organization' => $user->organization,
+			'position' => $user->position,
 			'postalcode' => $user->postalcode,
 			'phone' => $user->phone,
 			'twitter' => $user->twitter,
+			'linkedin' => $user->linkedin,
 			'skype' => $user->skype,
 			'shortbio' => $user->shortbio,
+			'accept_terms' => $user->accept_terms,
 		);
 	}
 

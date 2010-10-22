@@ -47,7 +47,7 @@ class UserExtended extends Record {
 			
 	public function getWikiContent() {
 		$strings = array(
-			'name', 'email', 'photo', 'organization', 'shortbio', 'postalcode', 'phone', 'twitter', 'skype', 'change'
+			'name', 'email', 'photo', 'organization', 'position', 'shortbio', 'postalcode', 'phone', 'twitter', 'linkedin', 'skype', 'change'
 		);
 
 		$tr = new GettextPO(dirname(__FILE__).'/../locales/en/users.po');
