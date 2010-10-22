@@ -24,7 +24,7 @@ class XmlQuery {
 	public function parseXml() {
 		try {
 			/* Hack to suppress warnings, ob_start doesn't seem to work here */
-			if (DEVELOPER && !HIDE_SOME_WARNINGS) {
+			if (DEVELOPER && !HIDE_XML_WARNINGS) {
 				$xml = new SimpleXmlElement($this->xml);
 			}
 			else {
