@@ -401,14 +401,14 @@ body
 
 #content .firstHeading
 {
-    font-size: 150%;
-    color: #aaa;
+    font-size: 180%;
+    color: #063F74;
     font-weight: bolder;
-    padding: 1em 0 0 0;    /* position of the title */
+    padding: 0.5em 0 0.5em 0;    /* position of the title */
     margin: 0;
     border: none;    /* No border for page title */
     text-transform: capitalize;
-    display: none; /* disable papge title */
+    /*display: none; / * disable papge title */
 }
 
 /*
