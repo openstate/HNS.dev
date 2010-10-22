@@ -35,13 +35,14 @@ class QueryLexer {
 		']' => 'BRACKET_CLOSE',
 		'/^[a-z_][a-z0-9_.]*(?<!\.)/' => 'IDENT',
 		'/^"[a-z_][^"]*"/' => 'QUOTED_IDENT',
-		"/^'[^']*(\\\\'[^']*)*'/" => 'VALUE',
+		"/^'[^']*(\\'[^']*)*'/" => 'VALUE',
 		"/^[0-9]+(\.[0-9]+)?/" => 'VALUE',
 		'/^\s+/' => 0,
 	);
 
 	/* Tokenize an expression string */
 	public static function lex($s) {
+		$os = $s;
 		$len = strlen($s);
 		$lc = strtolower($s);
 		$tokens = array();
@@ -72,6 +73,10 @@ class QueryLexer {
 				}
 			}
 			if (!$found) {
+				if (DEVELOPER) {
+					throw new ParseException('Unknown token '. $token .' at position '.($len - strlen($lc) + 1) .' in '. htmlentities($os));
+				}
+
 				throw new ParseException('Unknown token at position '.($len - strlen($lc) + 1));
 			}
 		}
