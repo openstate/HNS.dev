@@ -2,13 +2,13 @@
 
 require_once 'Controller.abstract.php';
 
-require_once '../formgen/formgen/core/FormInstance.class.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/../formgen/formgen/core/FormInstance.class.php';
 
 class UsersIndexController extends Controller {
 	protected $defaultAction = 'login';
 
 	public function loginAction() {
-		$destination = $this->request->getNamedParam('destination', '/admin/');
+		$destination = $this->request->getNamedParam('destination', '/');
 		$d = new Destination();
 		$d->fromUrlString($destination);
 		if ($d->toUrlString(true) == '/users/index/login/') {

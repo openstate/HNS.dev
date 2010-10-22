@@ -64,7 +64,7 @@ class Site {
 	}
 
 	public function getLocale() {
-		return $_COOKIE['locale'];
+		return @$_COOKIE['locale'];
 	}
 
 	public function setLocale($locale) {

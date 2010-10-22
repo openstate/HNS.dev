@@ -26,7 +26,7 @@ if(isset($_POST['swfupload_id'])) {
 */
 require_once 'Site.class.php';
 $site = new Site();
-$site->addSite('/^(?:(?P<subdomain>backoffice)\.)?(?P<domain>hns-dev)\.(?P<tld>(?:nl\.)?gl|nl\.devel|nl\.accepteproject\.nl|nl\.acceptelive\.nl)(?::80)?(?:\/.*)?$/i', 'backoffice');
+$site->addSite('/^(?:(?P<subdomain>backoffice)\.)?(?P<domain>hnsdev|hns-dev)\.(?P<tld>(?:nl\.)?gl|nl\.devel|nl\.accepteproject\.nl|nl\.acceptelive\.nl)(?::80)?(?:\/.*)?$/i', 'backoffice');
 
 $site->process();
 
@@ -65,24 +65,12 @@ $response->setViewHelper($helper);
 $router = new Router($site->getTopDomain());
 
 // initialize the layout
-if ($site->getSiteName() == 'backoffice') {
-	// backoffice
-	$layout = new Layout($response->createView('Smarty'));
-	$layout->setTemplatePath(realpath('../templates/').'/');
-	$layout->setTemplate('backofficeTemplate.html');
-	$layout->setOuterTemplate('outerTemplates/backoffice.html');
-	$router->addRoute('module', new NamedRoute('/admin/modules/:module/:controller/:action/*'));
-	$router->addRoute('named', new NamedRoute('/admin/:controller/:action/*', array('module' => 'admin'), array('controller' => '^(?!modules).*$')));
-} else {
-	// frontoffice
-	$layout = new Layout($response->createView('Smarty'));
-	$layout->setTemplatePath(realpath('../templates/').'/');
-	$layout->setTemplate($site->template);
-	$layout->setOuterTemplate('outerTemplates/frontoffice.html');
-	$router->addRoute('module', new NamedRoute('/modules/:module/:controller/:action/*'));
-	$router->addRoute('named', new NamedRoute('/:action/*', array('module' => 'default', 'controller' => 'index', 'action' => 'index'), array('action' => '^(?!modules).*$')));
-	$router->addRoute('antispam', new AntiSpamRoute());
-}
+$layout = new Layout($response->createView('Smarty'));
+$layout->setTemplatePath(realpath('../templates/').'/');
+$layout->setTemplate('backofficeTemplate.html');
+$layout->setOuterTemplate('outerTemplates/backoffice.html');
+$router->addRoute('module', new NamedRoute('/modules/:module/:controller/:action/*'));
+$router->addRoute('named', new NamedRoute('/:controller/:action/*', array('module' => 'admin'), array('controller' => '^(?!modules).*$')));
 
 $response->setLayout($layout);
 
