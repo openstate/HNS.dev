@@ -77,7 +77,7 @@ class XmlQuery {
 		} else {
 			/* Plain insert query: parse the children */
 			foreach ($xml->children() as $key => $value) {
-				if (count($value)
+				if (count($value))
 					/* Child has children as well: foreign references */
 					foreach ($value as $item) {
 						/* Create junction table insert query */
@@ -179,7 +179,7 @@ class XmlQuery {
 								/* Reference is marked to be deleted, create a delete query */
 								$junction = new DeleteQuery();
 								$junction->table = $query->table.'_'.$key;
-								$junction->subqueries[$query->table.'_id'] = $subquery
+								$junction->subqueries[$query->table.'_id'] = $subquery;
 								
 								/* Deleting a reference is always based on id */
 								$id = (string) $item['id'];
@@ -383,7 +383,7 @@ class XmlQuery {
 }
 
 class ParseException extends Exception { }
-
+/*
 class Politician {
 	public function __call($call, $data) {
 		var_dump($call, $data);
@@ -462,5 +462,5 @@ EOXML
 
 
 var_dump($query->toSql());
-
+*/
 ?>

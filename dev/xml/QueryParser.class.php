@@ -1,7 +1,7 @@
 <?php
 
 /*
-	Parser for query expressions */
+	Parser for query expressions
 */
 class QueryParser {
 	/* Parse an expression according to a root rule */

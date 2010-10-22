@@ -1,7 +1,7 @@
 <?php
 
 /*
-	Interface for query syntax tree elements */
+	Interface for query syntax tree elements
 */
 interface QueryExpression {
 	/* List of properties used in the expression */

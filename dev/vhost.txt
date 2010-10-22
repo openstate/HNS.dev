@@ -1,0 +1,8 @@
+<VirtualHost *:80>
+    ServerName hnsdev.gl
+    ServerAlias *.hnsdev.gl
+    DocumentRoot .../hns-dev/public_html
+
+    RewriteEngine On
+    RewriteRule ^.*$ /index.php
+</VirtualHost>
