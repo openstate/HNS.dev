@@ -1,0 +1,56 @@
+msgid "crud.actions"
+msgstr "Actions"
+
+msgid "crud.edit_title"
+msgstr "Edit"
+
+msgid "crud.edit_description"
+msgstr "Click here to edit this item"
+
+msgid "crud.delete_title"
+msgstr "Delete"
+
+msgid "crud.delete_description"
+msgstr "Click here to delete this item"
+
+msgid "crud.undelete_title"
+msgstr "Undelete"
+
+msgid "crud.undelete_description"
+msgstr "Undo deletion"
+
+msgid "crud.add_title"
+msgstr "Add"
+
+msgid "crud.add_description"
+msgstr "Click here to add an item"
+
+msgid "crud.noitems"
+msgstr "No items"
+
+msgid "crud.default_checkcolumn"
+msgstr "Select"
+
+msgid "crud.with_selected"
+msgstr "with selected"
+
+msgid "crud.sort"
+msgstr "Sort"
+
+msgid "crud.sort.up"
+msgstr "Move up"
+
+msgid "crud.sort.down"
+msgstr "Move down"
+
+msgid "crud.view_title"
+msgstr "View"
+
+msgid "crud.view_description"
+msgstr "Click here to view this item"
+
+msgid "crud.crumbs"
+msgstr "Crumbs"
+
+msgid "crud.noparent"
+msgstr "No parent"

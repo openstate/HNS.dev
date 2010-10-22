@@ -1,0 +1,14 @@
+Chapter: Text and password input
+
+Section: Text input
+
+Type string: *text*
+
+This is a simple single-line edit box.
+
+
+Section: Password input
+
+Type string: *password*
+
+Like the text input, but for entering passwords.

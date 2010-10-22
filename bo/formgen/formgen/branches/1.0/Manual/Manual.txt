@@ -1,0 +1,23 @@
+Chapter: Introduction
+
+Section: Introduction
+
+The form generator is a tool written to ease the creation of HTML forms. Normally, writing a form
+requires a lot of repetitive actions in order to write the HTML template and the associated
+display and action scripts. For forms that manage entries in a database, this is often worse
+since both a create and an update form must be written and maintained separately, although
+generally these forms will be nearly identical. For each form, a set of validation checks
+must also be written, together with generating the correct error messages. Things such as
+client-side validation are generally not considered, due to the extra effort involved in
+writing and maintaining essentially double code. The form generator aims to reduce maintenance
+of both simple and complex forms, while maintaning high flexibility.
+
+Section: Contents
+
+- <Setting up> describes how to get the generator and configure it to generate forms.
+- <Form description> describes the file format used to describe forms.
+- <Form templates> describes the file format used to style forms.
+- <Inputs> describes the different input tags that are available.
+- <Validation checks> describes the checks that are available.
+- <Extension tags> describes extension tags used to ease the creation of forms.
+- <Extending> describes how to write new inputs, checks or extensions to enhance the generator's functionality.

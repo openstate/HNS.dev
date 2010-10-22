@@ -1,0 +1,23 @@
+Chapter: Validation checks
+
+Section: Introduction
+
+Checks specify conditions that values entered into their associated inputs must adhere
+to. If a value fails a check, form submission will have failed and the user is
+presented with an error message.
+
+A check is specified with a <check> tag, which has one required attribute, *type*.
+This specifies what check to use. See the descriptions for the checks what value
+to enter here.
+
+Some check types may have options, and these options are given through <option>
+tags within the check tag. An option tag has a required attribute *name*, which
+gives the name of the option to set, and the option tag's value gives the value
+of the option. See the individual check documentation for a list of their options.
+
+Section: List of checks
+
+Below is a list of all checks, and a short description of their function.
+
+Equal - (<Equal check>)	Requires a value to match the value of another input.
+Regex - (<Regex check>) Requires a value to match a regular expression.

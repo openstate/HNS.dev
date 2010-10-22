@@ -1,0 +1,10 @@
+Chapter: Regex check
+
+Type string: *regex*
+
+This check requires the value of its associated input to match a regular expression.
+Take note that there may be differences in PHP's and JavaScript's regular expressions.
+
+Options:
+regex - The regular expression to match. This must include the delimiters as well (commonly /), and
+        may include modifiers.

@@ -1,0 +1,25 @@
+Chapter: Element templates
+
+Section: Usage
+
+Each special element bases its display on a template. These template files are found in the templates/ directory.
+Normally, each template will have a filename of *element name*.html.
+
+The template files contain plain text, with a few placeholders to indicate where the element's values are placed,
+and where error messages may be placed.
+
+Element variables are placed with the syntax *{$varname}*. See each specific element for which variables are
+available, and what their meaning is. Any unplaced errors that are encountered within variable contents can
+be forced to be placed in a specific error position within the current template by following the name
+with :error=*name* (e.g. {$input:error=er1}).
+
+To place errors, insert *{#error}* into the template. These error positions can be given a name by follwing the
+word 'error' with a colon and a name, like {#error:name}. An alternative template can be given by following the
+name with another colon and the template variation name, like {#error:name:variation}. {#error::variation} is
+also valid, in case just the variation is needed.
+
+Section: Alternative templates
+
+If in certain situations a different template must be used, then alternative templates can be created.
+These are created by putting an extra part before the extension. For example, field.alt.html will create an
+alternative template for the field tag with name 'alt'.

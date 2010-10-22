@@ -1,0 +1,37 @@
+Chapter: Columns tag
+
+This tag represents a list of values in a table structure, with a column for each
+type of value.
+
+Subsubsection: Use
+The columns tag itself does not have any attributes. Within the <columns> tag,
+<column> tags define a single column. These column tags work similarly to
+<Field tags>: using an attribute *property* links them to a specified property,
+while not specifying this attribute allows the use of the child tags <label>
+and <value>. Since no input types are generated, the attribute *type* is not
+present.
+
+A message to be given when there are no items to list can be given in the
+tag <empty>, which is placed within the <columns> tag. The contents of this
+tag is the HTML for one row to be displayed.
+
+Subsubsection: Template placeholders
+header   - The headers for all the columns
+elements - The HTML for all of the rows in the list.
+
+This extension tag requires a few more templates to be specified.
+
+colhead:
+The template for a single column header.
+
+value - The caption of the column.
+
+colrow:
+The template for a single row with values. This is not used for the column header.
+
+row - The row to be contained.
+
+colvalue:
+The template for a single column value.
+
+value - The contents of the column.

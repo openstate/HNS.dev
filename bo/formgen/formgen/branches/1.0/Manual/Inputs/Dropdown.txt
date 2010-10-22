@@ -1,0 +1,6 @@
+Chapter: Dropdown input
+
+Type string: *dropdown*
+
+A dropdown list. Values must be defined for each valid option, and value captions
+may not contain HTML.

@@ -1,0 +1,59 @@
+msgid "crud.actions"
+msgstr "Acties"
+
+msgid "crud.edit_title"
+msgstr "Bewerken"
+
+msgid "crud.edit_description"
+msgstr "Klik hier om dit item te bewerken"
+
+msgid "crud.delete_title"
+msgstr "Verwijderen"
+
+msgid "crud.delete_description"
+msgstr "Klik hier om dit item te verwijderen"
+
+msgid "crud.undelete_title"
+msgstr "Terug plaatsen"
+
+msgid "crud.undelete_description"
+msgstr "Verwijderen ongedaan maken"
+
+msgid "crud.add_title"
+msgstr "Toevoegen"
+
+msgid "crud.add_description"
+msgstr "Klik hier om een item toe te voegen"
+
+msgid "crud.noitems"
+msgstr "Geen items"
+
+msgid "crud.default_checkcolumn"
+msgstr "Selecteer"
+
+msgid "crud.with_selected"
+msgstr "met geselecteerd"
+
+msgid "crud.sort"
+msgstr "Sorteer"
+
+msgid "crud.sort.up"
+msgstr "Verplaats omhoog"
+
+msgid "crud.sort.down"
+msgstr "Verplaats omlaag"
+
+msgid "crud.view_title"
+msgstr "Bekijken"
+
+msgid "crud.view_description"
+msgstr "Klik hier om dit item te bekijken"
+
+msgid "crud.crumbs"
+msgstr "Crumbs"
+
+msgid "crud.noparent"
+msgstr "Geen parent"
+
+
+

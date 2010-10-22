@@ -1,0 +1,15 @@
+Chapter: Group tag
+
+This tag represents a grouping of several tags. This tag is generally used to apply
+conditions on a set of tags without requiring to specify a proper HTML tag.
+
+Subsubsection: Use
+The group tag has no attributes with special meanings, and its content are any tags
+that will be contained within the group.
+
+Note:
+With the ability to template any node, even non-extension non-html tags, having an
+extension tag for this may not be needed anymore.
+
+Subsubsection: Template placeholders
+elements - The HTML contained within the group.

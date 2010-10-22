@@ -1,0 +1,56 @@
+Chapter: Form template
+
+Section: Introduction
+
+To help separate the form structure from its layout, and to avoid a lot of extra typing,
+template files can be created. A template file is generally defined for a large set of
+forms, and describes how certain tags should be converted to HTML.
+
+Section: Template file
+
+A template file is an XML file with a root node <template>. Just like with form definition
+files, the XML specification and doctype can be omitted. Within the template tag, per
+form a template is specified. The tag names used here should match those used to
+describe a form structure in a form definition file.
+
+Within a form template, each tag is taken to represent the template for a single tag
+with the same name. Within this tag, normal HTML is written that will be used to replace
+the tag that is templated. Within this HTML, special empty tags (dubbed 'placeholder tags')
+are placed where the content must be placed. <Extension tags> generally need to be templated
+(if they are used), if they do they all define their own set of placeholders. It is also
+possible to template other tags by just defining a template for them. In this case the
+placeholder is 'content'.
+
+One template must always be specified for each form: the <form> template. This is the
+template applied to the entire form, and has one placeholder, *fields*, which is replaced
+by the form contents.
+
+Subsection: Selectors
+To allow different templates for the same tag in different situations, a selector can
+be specified for a template. Selectors are specified in the attribute *selector* of
+the template tag.	A selector is a set of space-separated tag names, and functions
+like CSS' type and descendant selectors, e.g. the selector 'table' will match
+if the tag is within a table tag (or a table tag itself), and 'table p' will match
+any tag that is within a p tag within a table tag. Extension tags are represented
+in the hierarchy as themselves, not as their replaced HTML. In any situation, selectors
+which are more specific, i.e. those with more tag names specified are selected before
+less specific selectors.
+
+Subsection: Optional roots
+In some cases, a template must have a single root tag, for example when a templated
+tag has a condition. Always requiring a single root may result in superfluous
+generated HTML though, when for example a simple <span> or <div> tag is used as root.
+In this case, the root node can be given the attribute *optional*, with any value,
+to mark that it may be removed if a single root tag is not required.
+
+Subsection: Inheriting templates
+Just as with form descriptions, templates can be inherited from other forms. The
+method is the same: specify the *inherits* attribute in the form template tag,
+with the value being the form template to inherit. The template is now a copy
+of the given source template.
+
+Within a copied template, extra tag templates can be specified, and existing ones
+can be respecified. Respecifying a tag template is simply a matter of giving a
+tag template with the same name as the old one. Note that if multiple templates
+were given for a single tag (through using selectors), they will all be removed
+once a respecification has been given.

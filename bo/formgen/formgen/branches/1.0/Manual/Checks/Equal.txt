@@ -1,0 +1,9 @@
+Chapter: Equal check
+
+Type string: *equal*
+
+This check requires the value of its associated input to match the value of
+another input in the form.
+
+Options:
+compareWith - The identifier of the input to match against.

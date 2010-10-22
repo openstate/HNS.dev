@@ -1,0 +1,166 @@
+{if $title}<h3>{$title|eval}</h3>{/if}
+{if $crumbs}
+<div id="breadcrumbs">
+	<h3>##crud.crumbs##</h3>
+	<ul>
+		{foreach from=$crumbs item=crumb name=crumbs}
+			<li>{$crumb|eval} {if !$smarty.foreach.crumbs.last} - {/if}</li>
+		{/foreach}
+	</ul>
+</div>
+{/if}
+{* Toolbar *}
+{if $toolbar}
+{script}
+	function findChecks(obj, name) {
+		els = obj.parentNode.parentNode.parentNode.parentNode.getElementsByTagName('INPUT');
+		result = ''
+		for (i = 0; i < els.length; i++)
+			if (els[i].name == name+'[]' && els[i].checked)
+				result += ','+els[i].value
+		if (result == '') return false;
+		result = result.substr(1);
+		if (obj.href[obj.href.length-1] != '/')
+			obj.href += '/';
+		obj.href = obj.href+result;
+		return true;
+	}
+{/script}
+<div class="toolbar">
+	<h4>Toolbar {$toolbar_id}</h4>
+	<ul class="toolbar">
+	{foreach from=$toolbar item=tool}
+		{if $tool.check && !$last.check}
+		<li class="no-bg">##crud.with_selected##:</li>		
+		{/if}		
+		<li><a href="{$tool.url|route|escape}" title="{$tool.title|escape|eval}" class="{$tool.class}{if $tool.check} disable-{$tool.check} disabled" onclick="return findChecks(this, '{$tool.check}');{/if}">{$tool.title|escape|eval}</a></li>
+		{assign var=last value=$tool}
+	{/foreach}
+	</ul>
+</div>
+{/if}
+
+
+{script}
+	var disableCache = [];
+	function disableItems(name, disabled) {
+		if (disableCache[name] == undefined) {
+			els = document.getElementsByTagName('*');
+			disableCache[name] = [];
+			regexp = new RegExp('\\bdisable-'+name+'\\b');
+			for (i = 0; i < els.length; i++) {
+				if (regexp.test(els[i].className))
+					disableCache[name].push(els[i]);
+			}
+		}
+		for (i = 0; i < disableCache[name].length; i++)
+			 disableCache[name][i].className = disableCache[name][i].className.replace(/\bdisabled\b/, '')+(disabled ? ' disabled' : '');
+	}
+
+	function checkAll(obj, name) {
+		els = obj.parentNode.parentNode.parentNode.getElementsByTagName('INPUT');
+		check = false;
+		for (i = 0; i < els.length; i++)
+			if (els[i].className == 'select-item checkbox-'+name)
+				els[i].checked = obj.checked;
+		disableItems(name, !obj.checked);
+	}
+
+	function onCheck(obj) {
+		name = obj.name.substr(0, obj.name.length-2);
+		allChecked = true;
+		allUnchecked = true;
+		els = obj.parentNode.parentNode.parentNode.getElementsByTagName('INPUT');
+		for (i = 0; i < els.length; i++)
+			if (els[i].className == 'select-item checkbox-'+name) {
+				allChecked = allChecked && els[i].checked;
+				allUnchecked = allUnchecked && !els[i].checked;
+			}
+		if (allChecked)
+			document.getElementById('all-'+name).checked = true;
+		if (allUnchecked)
+			document.getElementById('all-'+name).checked = false;
+		disableItems(name, allUnchecked);
+	}
+{/script}
+{if $filterUrl}{render url=$filterUrl _get=$getVars}{/if}
+{include file=$pagerTemplate pager=$pager getVars=$getVars}
+<br/>
+<table summary="{$summary}" cellspacing="0" class="list">
+{if $rows|@count eq 0}
+<tr><td>##crud.noitems##</td></tr>
+{else}
+	<tr>
+		{foreach from=$checkColumns item=col key=name}
+			<td class="noclick"><input type="checkbox" class="select-item" id="all-{$name}" title="{$col.title|htmlspecialchars}" onclick="checkAll(this, '{$name}');" /></td>
+		{/foreach}
+		{foreach from=$headers key=column item=header name=header}
+		<th{if $smarty.foreach.header.last && !$extraColumns} class="last"{/if}>
+			{if $sort.direction eq 'asc'}{assign var=dir value='desc'}{else}{assign var=dir value='asc'}{/if}
+			{if $header.sortable}
+				<a href="{formatget getVars=$getVars column=$column direction=$dir}" title="##crud.sort##" {if $column == $sort.column} class="{$sort.direction}"{/if}>{$header.title|escape|eval}</a>
+			{else}
+				{$header.title|escape|eval}
+			{/if}
+		</th>
+		{/foreach}
+		{foreach from=$extraColumns key=name item=column name=extra}
+		<th{if $smarty.foreach.extra.last} class="last"{/if}>{$column.title|escape|eval}</th>
+		{/foreach}
+	</tr>
+
+	{foreach from=$rows item=row key=id}
+	<tr{if $rowclasses.$id} class="{$rowclasses.$id}"{/if}>
+	{foreach from=$checkColumns item=col key=name}
+		<td class="noclick">{strip}
+			{if !isset($col.condition) || $col.condition|eval}
+				<input type="checkbox" class="select-item checkbox-{$name}" name="{$name}[]" title="{$col.title|eval}" value="{$id}" onclick="onCheck(this);" />
+			{/if}
+		{/strip}</td>
+	{/foreach}
+	{foreach from=$headers item=item key=column name=header}
+		<td>			
+			{if $item.value}
+				{assign var=value value=$item.value|eval}
+			{else}
+				{assign var=value value=$row.$column|escape}
+			{/if}
+			{if $item.action}
+				{assign var=url value=$item.action|eval}				
+				{if $url}					
+					{if $url|substr:0:1 eq '/'}
+					<a href="{$url|route}" title="{$value}">{$value}</a>
+					{else}
+					<a href="{$actionPrefix|cat:$url|route}" title="{$value}">{$value}</a>
+					{/if}
+				{else}
+					{$value}
+				{/if}
+			{else}
+				{$value}
+			{/if}
+		</td>
+	{/foreach}
+	{foreach from=$extraColumns item=column key=name name=extra}				
+		<td class="noclick {$column.class}">															
+			{foreach from=$column.actions item=action}																	
+				{if !isset($action.condition) || $action.condition|eval}						
+					{assign var=action_url value=$action.url|eval}
+					{if $action_url|substr:0:1 eq '/'}
+						<a href="{$action_url|route}" title="{$action.description|default:$action.title|escape|eval}" class="{$action.class}">{$action.title|escape|eval}</a>				
+					{else}
+						<a href="{$actionPrefix|cat:$action_url|route}" title="{$action.description|default:$action.title|escape|eval}" class="{$action.class}">{$action.title|escape|eval}</a>
+					{/if}	
+				{else}
+					<a class="blank">&nbsp;</a>	
+				{/if}					
+			{/foreach}			
+		</td>		
+	{/foreach}
+	</tr>
+	{/foreach}
+{/if}
+</table>
+{if $bottomUrl}<br />
+{render url=$bottomUrl _get=$getVars}
+{/if}

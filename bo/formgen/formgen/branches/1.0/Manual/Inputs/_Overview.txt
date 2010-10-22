@@ -1,0 +1,40 @@
+Chapter: Inputs
+
+Section: Introduction
+
+The form generator implements a different way of specifying HTML inputs. This method
+allows specifying validations checks on inputs, and it can also draw information
+from properties defined in an <Object description>.
+
+Section: Common attributes and tags
+A few settings are common for all input tags. First, the type of an input is
+given in its *type* attribute, and this attribute is required. See the various
+descriptions of the input types for their type string. An input's name should be
+given by the *id* attribute, not the name attribute. This id must be unique in the
+form, and must be specified. The default value for an input can be given in the
+*default* attribute. Finally, entering a value in the input can be made required
+by specifying the *required* attribute with any value. Note that it is still not
+required to fill in the input if it is within a condition that is false.
+
+Any attributes other than the ones listed above will be present in the HTML
+generated for the input.
+
+<Checks> can be associated with inputs by placing check tags within the input
+tag. See that section for how to use them.
+
+Inputs with a limited set of options (such as radio buttons and dropdowns) require
+their values to be specified in <value> tags. These tags are placed inside the
+input tag. A value tag has one required attribute, *value*. This specifies the
+internally used value. The content of the value tag is its caption. Some tags
+allow full HTML to be given as a caption, others only allow plain strings.
+
+Section: List of inputs
+
+Below is a list of all inputs, and a short description of their function.
+
+Static   - (<Static input>) A static input that does not allow editing.
+Text     - (<Text input>) A single line input box.
+Password - (<Password input>) A single line password input box.
+Check    - (<Check input>) A check box.
+Radio    - (<Radio input>) A set of radio buttons.
+Dropdown - (<Dropdown input>) A drop down list.

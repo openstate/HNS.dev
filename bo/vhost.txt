@@ -1,0 +1,9 @@
+<VirtualHost *:80>
+	DocumentRoot	<docroot>
+	ServerName	<domain>.gl
+	ServerAlias	*.<domain>.gl
+
+	RewriteEngine on
+	RewriteRule   ^/(assets|favicon.ico|robots.txt) - [L]
+	RewriteRule   ^. /index.php [QSA,L]
+</VirtualHost>

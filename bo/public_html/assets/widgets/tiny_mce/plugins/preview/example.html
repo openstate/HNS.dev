@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="Robots" content="index,follow" />
+	<meta name="Language" http-equiv="Language" content="Dutch" />
+	<title>Preview</title>
+	<script language="javascript" src="../../tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="jscripts/embed.js"></script>
+	<script type="text/javascript">
+		tinyMCEPopup.onInit.add(function(ed) {
+			var dom = tinyMCEPopup.dom;
+		
+			// Load editor content_css
+			/*tinymce.each(ed.settings.content_css.split(','), function(u) {
+				dom.loadCSS(ed.documentBaseURI.toAbsolute(u));
+			});*/
+		
+			// Place contents inside div container
+			dom.setHTML('content', ed.getContent());
+		});
+	</script>
+	<link rel="stylesheet" href="/assets/skins/frontoffice/stylesheets/base.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/widgets/calendar/stylesheets/calendar.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/widgets/squeezebox/stylesheets/squeezebox.css" type="text/css" />
+
+	<script type="text/javascript" src="/assets/widgets/mootools/javascripts/mootools.js"></script>
+	<script type="text/javascript" src="/assets/widgets/mootools/javascripts/framework.js"></script>
+	<script type="text/javascript" src="/assets/widgets/calendar/javascripts/calendar.js"></script>
+	<script type="text/javascript" src="/assets/widgets/squeezebox/javascripts/squeezebox.js"></script>
+	<script type="text/javascript" src="/assets/widgets/formgen/javascripts/formlib.js"></script>
+	<script type="text/javascript" src="/assets/widgets/formgen/javascripts/simpleTabs.js"></script>
+	<script type="text/javascript" src="/assets/skins/frontoffice/javascripts/base.js"></script>
+	<!--[if lt IE 7]><script type="text/javascript" src="/assets/skins/frontoffice/javascripts/minmax.js"></script><![endif]-->	
+</head>
+<body>
+	<div id="wrapper">		
+		<div class="blocks-large last">					
+			<div class="block large white last">
+				<div class="content">
+					<div class="top"></div>
+					<h3>Voorbeeld</h3>
+					<div id="content">
+						<!-- Gets filled with editor contents -->
+					</div>
+				</div>
+				<div class="bottom">
+					<div>&nbsp;</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

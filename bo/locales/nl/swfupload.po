@@ -1,0 +1,10 @@
+msgid "swf.browse"
+msgstr "Browse"
+
+msgid "swf.send"
+msgstr "Verstuur foto's"
+
+msgid "swf.deleteall"
+msgstr "Verwijder alles"
+
+

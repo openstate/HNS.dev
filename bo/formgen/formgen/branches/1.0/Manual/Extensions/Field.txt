@@ -1,0 +1,26 @@
+Chapter: Field tag
+
+This tag represents an input field with an associated label. It can be used in several
+ways.
+
+Subsubsection: Linked to a property
+Most commonly, a field will be linked to a property to generate a caption/input control field
+in the form. In this method, two attributes must be specified: *property* and *type*.
+Property holds the name of the property to link to, and type gives the input type used.
+A default for the input can be given in an optional attribute *default*. The field tag
+is empty in this use.
+
+Subsubsection: Linked to a property, custom controls
+This is similar to a normal property link, but used when a more complex interface is
+required. In this case, the *type* attribute is set to 'custom', and the content of the
+field tag may contain any HTML that is used to fill the input part. The *default* attribute
+is not applicable in this case.
+
+Subsubsection: Custom values
+For fields that have no linked property, the *property* attribute is absent. Instead,
+two child tags of the field tag, <label> and <value> contain the HTML used to create
+the field.
+
+Subsubsection: Template placeholders
+label - The caption of the input.
+value - The HTML of the input itself.

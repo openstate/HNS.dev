@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{#acceptelink_dlg.title}</title>
+	<script type="text/javascript" src="../../tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="../../utils/mctabs.js"></script>
+	<script type="text/javascript" src="../../utils/form_utils.js"></script>
+	<script type="text/javascript" src="../../utils/validate.js"></script>
+	<script type="text/javascript" src="js/acceptelink.js"></script>
+	<link href="css/acceptelink.css" rel="stylesheet" type="text/css" />
+	<base target="_self" />
+</head>
+<body id="acceptelink" style="display: none">
+	
+	<div class="tabs">
+		<ul>
+			<li id="browser_tab" class="current"><span><a href="javascript:mcTabs.displayTab('browser_tab','browser_panel');" onmousedown="return false;">{#acceptelink_dlg.browser_tab}</a></span></li>
+			<li id="sitemap_tab"><span><a href="javascript:mcTabs.displayTab('sitemap_tab','sitemap_panel');" onmousedown="return false;">{#acceptelink_dlg.sitemap_tab}</a></span></li>
+		</ul>
+	</div>
+	
+	<div class="panel_wrapper top_panel">
+		<div id="browser_panel" class="panel current">		
+			<iframe src="/assets/widgets/filemanager/index.php?modus=tinymce&filter=all" border="0"></iframe>
+		</div>
+		
+		<div id="sitemap_panel" class="panel">
+			<iframe src="/modules/cms/tinypages/" border="0"></iframe>
+		</div>
+	</div>
+	<br/>
+	
+    <form onsubmit="insertAction();return false;" action="#">
+		<div class="tabs">
+			<ul>
+				<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{#acceptelink_dlg.general_tab}</a></span></li>				
+			</ul>
+		</div>
+
+		<div class="panel_wrapper">
+			<div id="general_panel" class="panel current">
+				<fieldset>
+					<legend>{#acceptelink_dlg.general_props}</legend>
+
+					<table border="0" cellpadding="4" cellspacing="0">
+						<tr>
+						  <td nowrap="nowrap"><label id="hreflabel" for="href">{#acceptelink_dlg.url}</label></td>
+						  <td><table border="0" cellspacing="0" cellpadding="0">
+								<tr>
+								  <td><input id="href" name="href" type="text" class="mceFocus" value="" onchange="selectByValue(this.form,'linklisthref',this.value);" /></td>
+								  <td id="hrefbrowsercontainer">&nbsp;</td>
+								</tr>
+							  </table></td>
+						</tr>
+						<tr id="linklisthrefrow">
+							<td class="column1"><label for="linklisthref">{#acceptelink_dlg.list}</label></td>
+							<td colspan="2" id="linklisthrefcontainer">&nbsp;</td>
+						</tr>
+						<tr>
+							<td class="column1"><label for="anchorlist">{#acceptelink_dlg.anchor_names}</label></td>
+							<td colspan="2" id="anchorlistcontainer">&nbsp;</td>
+						</tr>
+						
+						<tr>
+							<td class="column1"><label for="openMethod">{#acceptelink_dlg.open_options}</label></td>
+							<td colspan="2">
+								<select id="openMethod" name="openMethod"> 
+									<option value="">{#acceptelink_dlg.open_current}</option> 
+									<option value="new">{#acceptelink_dlg.open_new}</option>
+									<option value="popup">{#acceptelink_dlg.open_popup}</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap"><label id="titlelabel" for="title">{#acceptelink_dlg.titlefield}</label></td>
+							<td><input id="title" name="title" type="text" value="" /></td>
+						</tr>
+						<tr>
+							<td><label id="classlabel" for="classlist">{#class_name}</label></td>
+							<td>
+								 <select id="classlist" name="classlist" onchange="changeClass();">
+									<option value="" selected>{#not_set}</option>
+								 </select>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+			</div>						
+		</div>
+
+		<div class="mceActionPanel">
+			<div style="float: left">
+				<input type="submit" id="insert" name="insert" value="{#insert}" />
+			</div>
+
+			<div style="float: right">
+				<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+			</div>
+		</div>
+    </form>
+</body>
+</html>

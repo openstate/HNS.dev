@@ -1,0 +1,6 @@
+Chapter: Radio input
+
+Type string: *radio*
+
+A set of radio buttons. Values must be defined for each valid option, and value captions
+may contain HTML.

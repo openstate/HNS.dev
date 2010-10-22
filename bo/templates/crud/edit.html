@@ -1,0 +1,23 @@
+{if $title}<h3>{$title|eval}</h3>{/if}
+{if $crumbs}
+<div id="breadcrumbs">
+	<h3>##crud.crumbs##</h3>
+	<ul>
+		{foreach from=$crumbs item=crumb name=crumbs}
+			<li>{$crumb|eval} {if !$smarty.foreach.crumbs.last} - {/if}</li>
+		{/foreach}
+	</ul>
+</div>
+{/if}
+<form id="editForm" method="post" action="" enctype="multipart/form-data">
+{$form->html()|eval}
+</form>
+
+{script}
+	window.addEvent('domready', function() {
+		var form = $('editForm');
+		{{capture name=js assign=js}}{literal}{{$form->js()}}{/literal}{{/capture}}
+		{{$js|eval}}
+		new Form(form, checks, events);
+	});
+{/script}

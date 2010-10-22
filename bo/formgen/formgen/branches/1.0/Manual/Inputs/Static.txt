@@ -1,0 +1,6 @@
+Chapter: Static input
+
+Type string: *static*
+
+The static input simply displays its value. It does not allow any type of editing, it
+does not even passes the value on a submit.

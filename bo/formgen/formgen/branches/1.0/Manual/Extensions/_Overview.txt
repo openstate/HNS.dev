@@ -1,0 +1,17 @@
+Chapter: Extension tags
+
+Section: Introduction
+
+Extension tags are tags which have specific code written to parse them. They tend to
+represent larger structures in forms and can be used to specify a form more in
+terms of structure instead of writing a lot of HTML by hand.
+
+Section: List of extensions
+
+Below is a list of all checks, and a short description of their function.
+Each detailed description will list the tag template's placeholders as well, or
+give a note that a template is not used for the tag.
+
+Field   - (<Field tag>) Represents an input field with an associated label.
+Group   - (<Group tag>)	Represents a grouping of tags.
+Columns - (<Columns tag>) Represents a table of values.

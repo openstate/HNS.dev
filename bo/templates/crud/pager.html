@@ -1,0 +1,34 @@
+{*
+	Parameters:
+		$pager - the pager object		
+		$getVars - [optional] The get vars to filter and include
+*}
+{if $pager->pageList()|@count gt 1}
+	
+	<div class="pager">
+		<h4>Deze lijst beslaat meerdere pagina's, maak hier een keuze:</h4>
+		<ul>
+			<li>
+				{if $pager->prevPage == $pager->currPage}
+				<span>##form.previous##</span>
+				{else}		
+				<a href="{formatget getVars=$getVars page=$pager->prevPage}">##form.previous##</a>
+				{/if}
+			</li>
+		{assign var=prevPage value=$pager->firstPage}
+		{foreach from=$pager->pageList() item=page name=pageLoop}
+			<li>
+				<a href="{formatget getVars=$getVars page=$page.id}"{if $page.iscurrent} class="active"{/if}>{$page.title}</a>
+			</li>
+		{/foreach}			
+			<li>
+				{if $pager->nextPage == $pager->currPage}
+					<span>##form.next##</span>
+				{else}
+					<a href="{formatget getVars=$getVars page=$pager->nextPage}">##form.next##</a>
+				{/if}
+			</li>		
+		</ul>
+	</div>
+	<br style="clear:right;" />
+{/if}

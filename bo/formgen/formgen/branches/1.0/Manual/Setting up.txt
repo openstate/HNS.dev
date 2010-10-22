@@ -1,0 +1,47 @@
+Chapter: Setting up
+
+Setting up the form generator requires three simple steps.
+
+Obtaining the generator:
+To get the generator, check out the repository at http://host27.griv.nl/repos/formgen/gen. The full
+repos is just the /formgen, but this also includes the generated documentation which is not required.
+
+Configuring the generator:
+Create a PHP file, which defines an array $settings. This array contains the generator's settings,
+and must be set to proper values for the project. The settings are described in
+<DirTraverser::__construct>, but copied here for convenience.
+
+baseDir     - The directory at which to start scanning.
+fileMask    - The filemask that identifies form definition files.
+classDir    - The directory relative to the form file where class files will be written.
+className   - The name of the generated classes. The filenames are based on this as well.
+htmlDir     - The directory relative to the form file where HTML files will be written.
+htmlHeadDir - The directory relative to the form file where HTML header files will be written. If not specified,
+              the header will be written in the normal HTML file.
+actionTarget - The file that the form will be submitted to.
+actionDir   - The directory relative to the form file where action files will be written.
+actionFiles - An array of files that perform display and/or actions. The key is the name of the PHP template file,
+							the value is the name of the generated file.
+templateDir - The directory where the PHP templates can be found.
+
+The generated filenames classFile, actionFiles and actionTarget have a
+few format specifiers:
+
+%O - The object name as specified in a form template.
+%o - The object name with the first letter converted to lowercase.
+%A - The action name starting with a capital.
+%a - The action name starting with a lowercase letter.
+
+Running the generator:
+Either open the index file via Apache, or run it from the command line. For the Apache call,
+the get-parameter 'settings' should be given specifying the location of the settings file to
+use, on the command line the first parameter specifies that file.
+
+Generated files:
+For each form description within a description file, a number of files are generated. These are:
+- A HTML template for displaying. If 'htmlHeadDir' is given, a second HTML file will be generated
+  that contains HTML to be included inside the <head> tag.
+- A PHP base class that manages the form input, performs validation, etc.
+- A PHP subclass in which custom code can be written. When regenerating code, this file is not
+  overwritten.
+- A small PHP file that calls the managing class.

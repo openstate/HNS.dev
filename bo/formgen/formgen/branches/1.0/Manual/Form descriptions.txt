@@ -1,0 +1,111 @@
+Chapter: Form description
+
+Section: Introduction
+Form description files describe a (set of) forms, together with an object managed by the forms.
+This is an XML file format. Writing down an XML header (<?xml...?>) or a doctype declaration
+is not needed, as one is prefixed by the parser. The various parts of this file are be described below.
+
+Section: The form
+The root node of each form description is the tag <form>. This tag has one required attribute,
+*template*. This attribute specifies where, relative to the form file, the <Form template> can
+be found. Within the form tag, the <Object description> is placed, as well as the actual
+<Form description>s.
+
+Section: Object description
+The object description describes the object the forms are managing. It is assumed this object
+has various properties that can be set or altered via the described forms. Giving this
+description is required, although it can describe an object with no properties.
+
+Subsection: Object basics
+The object description is contained within the tag <object>. This tag has one required attribute,
+*name*. This attribute gives the class name of the described object. Inside the object tag,
+the tag <id> is required, with the required attribute *id* giving the property from which the
+objects instance ID can be retrieved. The id tag is otherwise empty.
+
+Subsection: Properties
+The only other tags within the object tag are <property> tags. These describe data that can
+be fetched from the object and possibly manipulated. A property tag must have an attribute
+*name*, which gives the property an identifier which can be used to reference the property
+in a form description. By default, the name of the property is also assumed to be the
+name of the actual property of the object that can be read from and written to, e.g. a
+property named 'prop' can be read and written as '$object->prop'. If the name does not
+match, or if it is a function, the *read* and *write* attributes can be used. These define
+a way to read and write the property values. Any name given here will be used for the
+relevant access instead of the property name. To indicate that access is done via a
+method instead of a property, put braces() after the name. Read methods specified this
+way should have no parameters, the write method should accept just one value - the
+new value of the property. If writing to a property requires processing more than one
+submit value, or the assignment function otherwise should not be placed in the manipulated
+object, prefix the value with *c:* to specify the method or property is defined in the
+generated form object instead. It is allowed to define read-only properties by only
+specifying the read attribute, but write-only properties are not permitted.
+
+A property can have an associated caption. This is done by giving a <caption> tag within
+the property tag, the contents of this caption tag define the caption. A caption is not
+required, but most extension tags that link to properties use the value of the caption.
+
+Properties can be made required, have associated checks and be given a set of values
+just as most <Inputs>. See that chapter for more information.
+
+Section: Form description
+Form descriptions describe the structure (and optionally the layout) of a form. Currently,
+form descriptions for three forms can be given within a file, where the name of the tag
+indicates which form is described. The tagnames and their forms are:
+
+createform - A form used to create a new instance of the object.
+editform   - A form used to edit an existing instance of the object.
+list       - A form used to list a selection of instances of the object.
+
+Subsection: Defining a form
+A form definition in itself is simple: it consists of basic HTML. Normally though,
+<Extension tags> will be used to simplify the definition, and simple tags may also
+be templated (see <Form templates>). Finally, the actual <Inputs> will normally
+be the form generator's enriched version, instead of plain HTML input tags.
+
+Subsubsection: Conditions
+For each tag within a form definition conditions can be defined. A condition specifies
+when that tag and all its children are currently relevant for the form submission.
+A condition is specified via the attribute *if*. The value of this attribute is an
+expression that specifies when the tag is relevant. This expression mostly follows
+PHP's syntax, but for a complete reference see the <ExpressionParser> documentation.
+When this expression evaluates to false, any input tags contained within this tag
+will not be validated nor assigned to the object on form submission.
+
+The attribute *ondisable* controls what is done when a tag is disabled. The value
+'hide' (the default) completely hides the tag and its children. The value 'disable'
+will keep everything visible, but disable all input tags.
+
+Subsubsection: Error placeholders
+In order to determine where the error messages from form validation are placed,
+<errormsg> tags are used. These tags have no attributes or content, they are
+simply position indicators. It is allowed to specify multiple errormsg tags,
+and they are the only special tag that can also be used inside <Form template>s.
+All error messages from inputs specified before an errormsg tag (that do not
+already have an error position assigned) will appear at its position.
+
+Subsubsection: Submit buttons
+Submit buttons are placed in a form as usual, with an <input type="submit"> tag.
+An extension provided by the form generator is that the attribute *action* can
+be given. This specifies the method of the managing class that is called when
+this submit button is pressed. If an action is not given, a default method is
+called. To differentiate between different submit buttons, a *name* attribute
+should be specified, although this can be omitted for a single submit button
+(generally the default).
+
+Subsection: Inheriting a form
+If two forms are structurally very similar (common for create and edit forms), a form
+definition can be inherited from a previously declared form definition. To inherit,
+simply specify the attribute *inherits*, and give the name of the form to inherit
+as its value. The defined form will now be a copy of the inherited form. Tags within
+the form definition now alter the inherited structure as follows.
+- Existing tags with an id can be replaced simply by respecifying them.
+- Existing tags that have an id can be moved by specifying the attribute *after*. The
+  tag will be moved directly after the node with the id given as value for the after
+	attribute. If the value of after is empty, the tag will be moved to the very
+	beginning of the form. It is also possible to redefine attributes by specifying
+	them in this tag. Note that this will replace *all* attributes of the tag. Not
+	specifying any attributes other than the tag id and after will keep the old values.
+- Existing tags with an id can be removed by specifying the attribute *remove*. Any value
+  is permitted.
+- New tags are added by defining them. They will be added in order at the top of the
+  form.

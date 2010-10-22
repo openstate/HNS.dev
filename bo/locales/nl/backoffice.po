@@ -1,0 +1,5 @@
+msgid "bo.sidebar"
+msgstr "Sidebar"
+
+msgid "bo.logout"
+msgstr "Uitloggen"

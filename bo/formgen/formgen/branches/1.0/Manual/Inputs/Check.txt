@@ -1,0 +1,5 @@
+Chapter: Check input
+
+Type string: *check*
+
+A single checkbox. Checkboxes return values of *true* and *false*.

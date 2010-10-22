@@ -1,0 +1,11 @@
+{if $tabs}
+<ul class="tab-nav">	
+{foreach from=$tabs item=item key=id}
+	<li><a href="{$item.url|route}" title="{$item.name|escape}"{if $active == $id} class="active"{/if}>{$item.name|escape}</a></li>
+{/foreach}
+{if $options}
+	<li><a href="#" title="overzicht aanpassen" class="edit-view">overzicht aanpassen</a></li>
+	<li><a href="#" title="deze tab vastzetten" class="pin-view">tab vastzetten</a></li>
+{/if}
+</ul>
+{/if}

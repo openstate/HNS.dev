@@ -1,0 +1,17 @@
+msgid "nav.header"
+msgstr "Hoofdnavigatie"
+
+msgid "nav.logout"
+msgstr "Uitloggen"
+
+msgid "nav.users"
+msgstr "Leden"
+
+msgid "nav.cms"
+msgstr "CMS"
+
+msgid "nav.administration"
+msgstr "Systeembeheer"
+
+msgid "nav.filemanager"
+msgstr "Bestandsbeheer"

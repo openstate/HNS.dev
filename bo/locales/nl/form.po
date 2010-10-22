@@ -1,0 +1,59 @@
+msgid "form.next"
+msgstr "volgende"
+
+msgid "form.previous"
+msgstr "vorige"
+
+msgid "form.submit"
+msgstr "Verstuur"
+
+msgid "form.add"
+msgstr "Toevoegen"
+
+msgid "form.edit"
+msgstr "Bewerken"
+
+msgid "form.delete"
+msgstr "Verwijderen"
+
+msgid "form.required"
+msgstr "Dit veld is verplicht"
+
+msgid "form.regex"
+msgstr "Dit is een ongeldige waarde"
+
+msgid "form.server"
+msgstr "Dit is een ongeldige waarde"
+
+msgid "form.compare"
+msgstr "De waardes zijn niet gelijk"
+
+msgid "form.yes"
+msgstr "Ja"
+
+msgid "form.no"
+msgstr "Nee"
+
+msgid "form.email"
+msgstr "Ongeldig e-mail adres"
+
+msgid "form.color"
+msgstr "Ongeldige kleur code"
+
+msgid "form.back"
+msgstr "Terug"
+
+msgid "form.url"
+msgstr "Ongeldige url, graag inclusief http(s):// of beginend met een /"
+
+msgid "confirm.delete"
+msgstr "Weet u zeker dat u wilt verwijderen?"
+
+msgid "form.notset"
+msgstr "Niet ingesteld"
+
+msgid "form.transparent"
+msgstr "Geen kleur"
+
+
+

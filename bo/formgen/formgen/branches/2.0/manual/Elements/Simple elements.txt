@@ -1,0 +1,64 @@
+Chapter: Simple elements
+
+Some elements may be nothing more than applying a template on some arguments specified in the form file.
+To avoid having to write a new PHP class for each of these elements, a simpler definition is available.
+If in the elements/ directory a filename ends in .xml instead of .php, this method is assumed.
+
+When an element is specified this way, its name will be the part before the .xml. The file itself is
+a simple xml file with the following structure.
+
+The root element of the file is <elem>. Within this tag, either <attr>, <tag> or <content> tags can
+be placed. Each of these tags require a single attribute, *name*, which indicates the name of the
+variable under which the value is available in the template.
+
+* <attr> tags specify named attributes that must be given to the element.
+* <tag> tags specify child tags of the element that must be given.
+* a <content> tag specifies that all content inside the element is available.
+
+Only one <content> tag makes sense, and <tag> and <content> tags cannot be used together.
+
+An example
+(table.xml):
+
+(code)
+<elem>
+	<attr name="title" />
+	<tag name="head" />
+	<tag name="body" />
+	<tag name="foot" />
+</elem>
+(end)
+
+This definition indicates
+an element structure like:
+
+(code)
+<e:table title="Some title">
+	<head>Head content</head>
+	<body>Body content</body>
+	<foot>Foot content</foot>
+</e:table>
+(end)
+
+and has the variables title, head, body and foot available in the template.
+
+Another example
+(set.xml):
+
+(code)
+<elem>
+	<attr name="legend" />
+	<content name="content" />
+</elem>
+(end)
+
+This gives an
+element like:
+
+(code)
+<e:set legend="Legend">
+	Content here.
+</e:set>
+(end)
+
+and has the variables legend and content in the template.

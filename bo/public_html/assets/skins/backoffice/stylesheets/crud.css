@@ -1,0 +1,111 @@
+/* Toolbar */
+.toolbar {background:#fff;}
+.toolbar h4 {display:none;}
+.toolbar ul {border:1px solid #e2e1dd;margin:0 0 10px 0 !important;min-height:35px;padding:5px 10px 5px 2px;}
+.toolbar ul li {background:transparent url(../images/pipeline-gray.gif) center right no-repeat;float:left;list-style:none;margin-right:8px;padding-right:1px;}
+.toolbar ul li.no-bg {background:transparent url(../images/pipeline-gray.gif) no-repeat scroll right center;color:#666;height:17px;margin:0;padding:19px 8px 0 0px;}
+.toolbar ul li a.disabled, .toolbar ul li a.disabled:visited, .toolbar ul li a.disabled:hover {color:#666;text-decoration:none;cursor:default;}
+.toolbar ul li a, .toolbar ul li a:visited {background:transparent;border-bottom:1px solid #fff;color:#5c6e44;display:block;float:left;height:17px;padding:0 8px 0 8px;text-align:center;text-decoration:none;padding-top:19px;}
+.toolbar ul li a:hover {color:#5c6e44;text-decoration:underline;}
+/* Add the icons */
+.toolbar ul li a.sort-up, .toolbar ul li a.sort-up:visited {background:transparent url(../images/icons/arrow_up.png) center left no-repeat;display:block;float:left;padding:0;text-indent:-9999px;width:16px;margin-left:8px;}
+.toolbar ul li a.sort-up:hover {background:transparent url(../images/icons/arrow_up.png) center left no-repeat;}
+.toolbar ul li a.sort-down, .toolbar ul li a.sort-down:visited {background:transparent url(../images/icons/arrow_down.png) center left no-repeat;display:block;float:left;padding:0;text-indent:-9999px;width:16px;}
+.toolbar ul li a.sort-down:hover {background:transparent url(../images/icons/arrow_down.png) center left no-repeat;}
+.toolbar ul li a.sort, .toolbar ul li a.sort:visited {float:left;padding-left:3px !important;border:0 !important;padding-top:0px !important;margin-left:-38px;margin-top:19px;}
+.toolbar ul li a.add, .toolbar ul li a.add:visited {background:transparent url(../images/icons/toolbar-add.png) top center no-repeat;}
+.toolbar ul li a.add:hover {background:transparent url(../images/icons/toolbar-add.png) top center no-repeat;}
+.toolbar ul li a.folder-add, .toolbar ul li a.folder-add:visited {background:transparent url(../images/icons/folder_add.png) top center no-repeat;}
+.toolbar ul li a.folder-add:hover {background:transparent url(../images/icons/folder_add.png) top center no-repeat;}
+.toolbar ul li a.folder-delete, .toolbar ul li a.folder-delete:visited {background:transparent url(../images/icons/folder_delete.png) top center no-repeat;}
+.toolbar ul li a.folder-delete:hover {background:transparent url(../images/icons/folder_delete.png) top center no-repeat;}
+.toolbar ul li a.delete, .toolbar ul li a.delete:visited {background:transparent url(../images/icons/toolbar-delete.png) top center no-repeat;}
+.toolbar ul li a.delete:hover {background:transparent url(../images/icons/toolbar-delete.png) top center no-repeat;}
+.toolbar ul li a.move, .toolbar ul li a.move:visited {background:transparent url(../images/icons/toolbar-move.png) top center no-repeat;}
+.toolbar ul li a.move:hover {background:transparent url(../images/icons/toolbar-move.png) top center no-repeat;}
+.toolbar ul li a.publish, .toolbar ul li a.publish:visited {background:transparent url(../images/icons/toolbar-publish.png) top center no-repeat;}
+.toolbar ul li a.publish:hover {background:transparent url(../images/icons/toolbar-publish.png) top center no-repeat;}
+.toolbar ul li a.unpublish, .toolbar ul li a.unpublish:visited {background:transparent url(../images/icons/toolbar-depublish.png) top center no-repeat;}
+.toolbar ul li a.unpublish:hover {background:transparent url(../images/icons/toolbar-depublish.png) top center no-repeat;}
+.toolbar ul li a.copy, .toolbar ul li a.copy:visited {background:transparent url(../images/icons/toolbar-copy.png) top center no-repeat;}
+.toolbar ul li a.copy:hover {background:transparent url(../images/icons/toolbar-copy.png) top center no-repeat;}
+.toolbar ul li a.up, .toolbar ul li a.up:visited {background:transparent url(../images/icons/toolbar-up.png) top center no-repeat;}
+.toolbar ul li a.up:hover {background:transparent url(../images/icons/toolbar-up.png) top center no-repeat;}
+.toolbar ul li a.csv, .toolbar ul li a.csv:visited {background:transparent url(../images/icons/toolbar-csv.png) top center no-repeat;}
+.toolbar ul li a.csv:hover {background:transparent url(../images/icons/toolbar-csv.png) top center no-repeat;}
+.toolbar ul li a.photos, .toolbar ul li a.photos:visited {background:transparent url(../images/icons/photos.png) top center no-repeat;}
+.toolbar ul li a.photos:hover {background:transparent url(../images/icons/photos.png) top center no-repeat;}
+/* Add the disabled icons */
+.toolbar ul li a.disabled.sort-up, .toolbar ul li a.disabled.sort-up:visited {background:transparent url(../images/icons/arrow_up.gray.png) center left no-repeat;display:block;float:left;padding:0;text-indent:-9999px;width:16px;margin-left:8px;}
+.toolbar ul li a.disabled.sort-up:hover {background:transparent url(../images/icons/arrow_up.gray.png) center left no-repeat;}
+.toolbar ul li a.disabled.sort-down, .toolbar ul li a.disabled.sort-down:visited {background:transparent url(../images/icons/arrow_down.gray.png) center left no-repeat;display:block;float:left;padding:0;text-indent:-9999px;width:16px;}
+.toolbar ul li a.disabled.sort-down:hover {background:transparent url(../images/icons/arrow_down.gray.png) center left no-repeat;}
+.toolbar ul li a.disabled.sort, .toolbar ul li a.disabled.sort:visited {float:left;padding-left:3px !important;border:0 !important;padding-top:0px !important;margin-left:-38px;margin-top:19px;}
+.toolbar ul li a.disabled.add, .toolbar ul li a.disabled.add:visited {background:transparent url(../images/icons/toolbar-add.gray.png) top center no-repeat;}
+.toolbar ul li a.disabled.add:hover {background:transparent url(../images/icons/toolbar-add.gray.png) top center no-repeat;}
+.toolbar ul li a.disabled.delete, .toolbar ul li a.disabled.delete:visited {background:transparent url(../images/icons/toolbar-delete.gray.png) top center no-repeat;}
+.toolbar ul li a.disabled.delete:hover {background:transparent url(../images/icons/toolbar-delete.gray.png) top center no-repeat;}
+.toolbar ul li a.disabled.folder-delete, .toolbar ul li a.disabled.folder-delete:visited {background:transparent url(../images/icons/folder_delete.gray.png) top center no-repeat;}
+.toolbar ul li a.disabled.folder-delete:hover {background:transparent url(../images/icons/folder_delete.gray.png) top center no-repeat;}
+.toolbar ul li a.disabled.move, .toolbar ul li a.disabled.move:visited {background:transparent url(../images/icons/toolbar-move.gray.png) top center no-repeat;}
+.toolbar ul li a.disabled.move:hover {background:transparent url(../images/icons/toolbar-move.gray.png) top center no-repeat;}
+.toolbar ul li a.disabled.publish, .toolbar ul li a.disabled.publish:visited {background:transparent url(../images/icons/toolbar-publish.gray.png) top center no-repeat;}
+.toolbar ul li a.disabled.publish:hover {background:transparent url(../images/icons/toolbar-publish.gray.png) top center no-repeat;}
+.toolbar ul li a.disabled.unpublish, .toolbar ul li a.disabled.unpublish:visited {background:transparent url(../images/icons/toolbar-depublish.gray.png) top center no-repeat;}
+.toolbar ul li a.disabled.unpublish:hover {background:transparent url(../images/icons/toolbar-depublish.gray.png) top center no-repeat;}
+.toolbar ul li a.disabled.copy, .toolbar ul li a.disabled.copy:visited {background:transparent url(../images/icons/toolbar-copy.gray.png) top center no-repeat;}	
+.toolbar ul li a.disabled.copy:hover {background:transparent url(../images/icons/toolbar-copy.gray.png) top center no-repeat;}	
+
+/* Ascending and descending icons */
+.asc {background:transparent url(../images/icons/bullet_arrow_up.png) center right no-repeat;padding-right:14px;}
+.desc {background:transparent url(../images/icons/bullet_arrow_down.png) center right no-repeat;padding-right:14px;}
+/* Table, with specific text replacements */
+table {text-align:left;width:auto;word-spacing:-1px;width:100%;}
+table th {color:#5c6e44;border-bottom:1px solid #e2e1dd;padding-right:7px;}
+table th .select-item, table td .select-item {height:13px;margin:0 0 2px 0;padding:0;width:13px;}
+table th.last, table td.last {padding-right:1px;}
+table td {border-bottom:1px solid #e2e1dd;padding-bottom:1px;padding-top:3px;padding-right:7px;}
+table a, table a:visited {color:#5c6e44;text-decoration:none;}
+table a:hover {text-decoration:underline;}
+a.online, a.online:visited {color:#64992c;}
+a.pending, a.pending:visited {color:#ec7000;}
+a.expired, a.expired:visited {color:#cc0000;}
+a.archived, a.archived:visited {color:#854f61;}
+	
+.sort {padding: 1px;}
+.edit {padding:1px;display:inline;}
+table a.blank, table a.blank:visited  {background:transparent url(../images/icons/blank.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right: 4px;}
+table a.entry-insert, table a.entry-insert:visited {background:transparent url(../images/icons/toolbar-add.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right: 4px;}
+table a.sort-up, table a.sort-up:visited  {background:transparent url(../images/icons/arrow_up.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right: 4px;}
+table a.sort-down, table a.sort-down:visited {background:transparent url(../images/icons/arrow_down.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right: 4px;}
+table a.sort-drag, table a.sort-drag:visited {background:transparent url(../images/icons/arrow_drag.png) top left no-repeat;cursor:move;display:block;float:left;text-indent:-9999px;width:16px;}
+table a.entry-edit, table a.entry-edit:visited {background:transparent url(../images/icons/edit.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right:4px;}
+table a.folder-edit, table a.folder-edit:visited {background:transparent url(../images/icons/folder_edit.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right:4px;}
+table a.entry-delete, table a.entry-delete:visited {background:transparent url(../images/icons/delete.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right:4px;}
+table a.folder-delete, table a.folder-delete:visited {background:transparent url(../images/icons/folder_delete.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right:4px;}
+table a.entry-undelete, table a.entry-undelete:visited {background:transparent url(../images/icons/undelete.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right:4px;}
+table a.entry-view, table a.entry-view:visited {background:transparent url(../images/icons/magnifier.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right:4px;}
+table a.folder-view, table a.folder-view:visited {background:transparent url(../images/icons/folder_explore.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right:4px;}
+table a.entry-publish, table a.entry-publish:visited {background:transparent url(../images/icons/publish.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:19px;height:16px;margin-left:2px;}
+table a.entry-unpublish, table a.entry-unpublish:visited {background:transparent url(../images/icons/unpublish.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:19px;height:16px;margin-left:2px;}
+table a.entry-link, table a.entry-link:visited {background:transparent url(../images/icons/link.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right:4px;}
+table a.entry-unlink, table a.entry-unlink:visited {background:transparent url(../images/icons/unlink.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right:4px;}
+table a.entry-world, table a.entry-world:visited {background:transparent url(../images/icons/world.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right:4px;}
+table a.entry-group, table a.entry-group:visited {background:transparent url(../images/icons/group_edit.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right:4px;}
+table a.entry-config, table a.entry-config:visited {background:transparent url(../images/icons/wrench.png) top left no-repeat;display:block;float:left;text-indent:-9999px;width:16px;margin-right:4px;}
+
+/*	Indent -------------------------------------------------------------- */
+div.indent                 { float: left; }
+div.indent div             { width: 15px; height: 18px; float: left; margin-top: -3px; }
+div.indent div.level       { background-image: url(../images/crud/indent.level.png); }
+div.indent div.close       { background-image: url(../images/crud/indent.close.png); }
+div.indent div.close_first { background-image: url(../images/crud/indent.close.first.png); }
+div.indent div.close_last  { background-image: url(../images/crud/indent.close.last.png); }
+div.indent div.open        { background-image: url(../images/crud/indent.open.png); }
+div.indent div.open_first  { background-image: url(../images/crud/indent.open.first.png); }
+div.indent div.open_last   { background-image: url(../images/crud/indent.open.last.png); }
+div.indent div.leaf        { background-image: url(../images/crud/indent.leaf.png); }
+div.indent div.leaf_first  { background-image: url(../images/crud/indent.leaf.first.png); }
+div.indent div.leaf_last   { background-image: url(../images/crud/indent.leaf.last.png); }
+
+.no-padding { padding: 0px; }

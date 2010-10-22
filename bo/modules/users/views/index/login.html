@@ -1,0 +1,12 @@
+<form id="usersIndexLoginForm" method="post" action="{'/users/index/login/'|route}" enctype="multipart/form-data">
+{eval var=$form->html()}
+</form>
+
+{script}
+	window.addEvent('domready', function() {
+		var form = $('usersIndexLoginForm');
+		{{capture name=js assign=js}}{{ldelim}}literal{{rdelim}}{{$form->js()}}{{ldelim}}/literal{{rdelim}}{{/capture}}
+		{{$js|eval}}
+		new Form(form, checks, events);
+	});
+{/script}
