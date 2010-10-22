@@ -50,7 +50,7 @@ class Issue extends Record {
 		if ($this->status != 'closed') {
 			$wiki .= "<guard group=\"sysop\"><div style=\"float: right;\">&#91;";
 			if ($this->status == 'new')
-				$wiki .= "[[Redirect:/modules/issues/index/progress/{$this->id}/|$progress]] | ";
+				$wiki .= "[[Redirect:/modules/issues/index/progress/{$this->id}/|$progress]]] &#91;";
 			$wiki .= "[[Redirect:/modules/issues/index/close/{$this->id}/|$close]]";
 			$wiki .= "]</div>\n\n</guard>";
 		}

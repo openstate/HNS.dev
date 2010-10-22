@@ -93,3 +93,6 @@ msgstr "Mijn issues"
 
 msgid "users.myprojects"
 msgstr "Mijn projecten"
+
+msgid "user.delete"
+msgstr "Gebruiker verwijderen"

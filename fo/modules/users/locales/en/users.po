@@ -93,3 +93,6 @@ msgstr "My issues"
 
 msgid "users.myprojects"
 msgstr "My projects"
+
+msgid "user.delete"
+msgstr "Delete user"

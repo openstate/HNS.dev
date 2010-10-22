@@ -15,55 +15,7 @@ class UsersIndexController extends Controller {
 		return sprintf($title, htmlspecialchars($user->user_name));
 	}
 
-/*	public function loginAction() {
-		$destination = $this->request->getNamedParam('destination', '/admin/');
-		$d = new Destination();
-		$d->fromUrlString($destination);
-		if ($d->toUrlString(true) == '/users/index/login/') {
-			$destination = '/';
-		}
-		$site = $this->request->getSite()->getSiteName();
-		$form = new FormInstance(dirname(__FILE__).'/../forms/'.($site == 'backoffice' ? 'admin' : 'index').'/login.form');
-		$form->addCallback('isCorrectLogin', array($this, 'isCorrectLogin'));
 
-		if ($this->request->isPost()) {
-			$form->setPostData($this->request->getPOST(), $this->request->getFILES());
-			if ($form->isValid()) {
-				$values = $form->getValues();
-				$user = new User();
-				if ($user->login($values['email'], $values['password'])) {
-					if ($values['cookie'])
-						$user->setCookie($this->request->getSite()->getTopDomain());
-					$request->user = $user;
-					$this->response->redirect($destination);
-					return;
-				}
-			}
-		} else {
-			$form->setRawData(array(
-				'destination' => $destination,
-			));
-		}
-
-		if ($site == 'backoffice')
-			$this->response->getLayout()->setTemplate('backofficeLogin.html');
-		$this->view->form = $form;
-		$this->view->render('index/login.html');
-	}
-
-	public function logoutAction() {
-		$destination = $this->request->getNamedParam('destination', '/admin/');
-		if ($this->request->user) {
-			$this->request->user->removeCookie($this->request->getSite()->getTopDomain());
-			$this->request->user->logout();
-			$this->response->redirect($destination);
-		}
-	}
-
-	public function isCorrectLogin($values) {
-		return $this->request->user->login($values['email'], $values['password'], $values['cookie']);
-	}
-*/
 	public function saveUser($id, $values) {
 		$user = new UserExtended();
 		if ($id) 
@@ -93,7 +45,13 @@ class UsersIndexController extends Controller {
 		$user->save();
 		
 		require_once('Wiki.class.php');
-		Wiki::inst()->edit($user->getWikiTitle(), $user->getWikiContent());
+		Wiki::inst()->edit($user->getWikiTitle().'/Profile', $user->getWikiContent());
+		
+		if (!$id) {
+			Wiki::inst()->edit($user->getWikiTitle(),
+				"{{{$user->getWikiTitle()}/Profile}}\n\n[[Category:Users|{$user->user->user_name}]]\n");
+			Wiki::inst()->protect($user->getWikiTitle().'/Profile');
+		}
 
 		return $user->getPk();
 	}
@@ -118,65 +76,6 @@ class UsersIndexController extends Controller {
 		);
 	}
 
-	public function saveCredentials($id, $values) {
-		$user = new UserExtended();
-		$user->load($id);
-		
-		$user->rights_read = (int) @$values['read'];
-		$user->rights_write = (int) @$values['write'];
-		
-		$user->save();
-	}
-
-	public function loadCredentials($id) {
-		$user = new UserExtended();
-		$user->load($id);
-		
-		return array(
-			'read' => $user->rights_read,
-			'write' => $user->rights_write,
-		);
-	}
-
-	public function credentialsAction() {
-		if (!$this->request->user->loggedIn) {
-			$this->displayLogin();
-			return;
-		}
-	
-		$form = new FormInstance(dirname(__FILE__).'/../forms/index/credentials.form');
-
-		$id = $this->request->getParam(0);
-		if (!ctype_digit($id)) throw new NoRouteException();
-		
-		$user = new UserExtended();
-		try {
-			$user->load($id);
-		} catch (RecordNotFoundException $e) {
-			throw new NoRouteException();
-		}
-		
-		if ($this->request->user->user_id != $user->user_id) {
-			$this->displayLogin();
-			return;
-		}
-	
-		if ($this->request->isPost()) {
-			$form->setPostData($this->request->getPost(), $this->request->getFiles());
-			if ($form->isValid()) {
-				$this->saveCredentials($id, $form->getValues());
-				$this->redirect('/users/index/change/'.$id);
-			}
-		} else {
-			$form->setRawdata($this->loadCredentials($id));
-		}
-
-		$this->view->form = $form;
-		$this->addPoFile('users.po');
-		$this->addPoFile('form.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->addPoFile('crud.po', $_SERVER['DOCUMENT_ROOT'].'/../locales');
-		$this->view->render('index/credentials.html');
-	}
 	
 	public function createAction() {
 		if (!$this->request->user->loggedIn) {
@@ -194,7 +93,7 @@ class UsersIndexController extends Controller {
 			$form->setPostData($this->request->getPost(), $this->request->getFiles());
 			if ($form->isValid()) {
 				$id = $this->saveUser(false, $form->getValues());
-				$this->redirect('/users/index/credentials/'.$id);
+				$this->redirect('/users/index/view/'.$id);
 			}
 		} else {
 			$form->setRawData($user->toArray());
@@ -237,7 +136,7 @@ class UsersIndexController extends Controller {
 			$form->setPostData($this->request->getPost(), $this->request->getFiles());
 			if ($form->isValid()) {
 				$this->saveUser($id, $form->getValues());
-				$this->redirect('/users/index/change/'.$id);
+				$this->redirect('/users/index/view/'.$id);
 			}
 		} else {
 			$form->setRawdata($this->loadUser($id));
@@ -251,32 +150,6 @@ class UsersIndexController extends Controller {
 		$this->view->render('index/user.html');
 	}
 
-	public function changeAction() {
-		if (!$this->request->user->loggedIn) {
-			$this->displayLogin();
-			return;
-		}
-	
-		$id = $this->request->getParam(0);
-		if (!ctype_digit($id)) throw new NoRouteException();
-		$user = new UserExtended();
-		try {
-			$user->load($id);
-		} catch (RecordNotFoundException $e) {
-			throw new NoRouteException();
-		}
-
-		if ($this->request->user->user_id != $user->user_id) {
-			$this->displayLogin();
-			return;
-		}
-	
-		$this->view->id = $id;
-		$this->view->user = $user;
-		$this->addPoFile('users.po');
-		$this->view->render('index/change.html');
-	}
-	
 	public function viewAction() {
 		$id = $this->request->getParam(0);
 		if (!ctype_digit($id)) throw new NoRouteException();

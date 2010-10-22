@@ -118,10 +118,10 @@ class GuMaxTemplate extends QuickTemplate {
 <div id="gumax-rbox" align="left">
 <div class="gumax_head_acc">
         <!-- Login -->
-		<div id="gumax-p-login" style="width:auto; text-align:left; float: left;">
+		<div id="gumax-p-corporate" style="width:auto; text-align:left; float: left;">
 			<ul><li><a href="http://en.hetnieuwestemmen.nl">Corporate site &raquo;</a></li></ul>
 		</div>
-		<?php /*
+        <div id="gumax-p-login">
             <ul>
               <?php $lastkey = end(array_keys($this->data['personal_urls'])) ?>
               <?php foreach($this->data['personal_urls'] as $key => $item) if($this->data['loggedin']==1) {
@@ -133,7 +133,7 @@ class GuMaxTemplate extends QuickTemplate {
                <?php // if($key != $lastkey) echo "|" ?></li>
              <?php } ?>
             </ul>
-        </div> */ ?>
+        </div>
         <!-- end of Login -->
 		
 		<!-- Special and Login menu -->

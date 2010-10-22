@@ -119,7 +119,7 @@ body
 /*
  * --- Login ---
  */
-#gumax-p-login,#gumax-p-special {
+#gumax-p-login,#gumax-p-special, #gumax-p-corporate {
     /* border:  1px solid #fff; /* debuging */
 	width: 849px;
 	text-align: right;
@@ -135,7 +135,7 @@ body
 }
 */
 
-#gumax-p-login ul {
+#gumax-p-login ul, #gumax-p-corporate ul {
     position: relative;
     width: auto;
     list-style: none;
@@ -143,12 +143,12 @@ body
     margin: 0 10px; /* left and right margin of the list */
 }
 
-#gumax-p-login li {
+#gumax-p-login li, #gumax-p-corporate li {
     position: relative;
     display: inline;    /* display in line  */
     color: #999; /* color of "|" */
 }
-#gumax-p-login ul li a {
+#gumax-p-login ul li a, #gumax-p-corporate ul li a {
     margin: 0;
     padding: 0 5px;
 	color: #999; /* margin betwen items */

@@ -47,7 +47,8 @@ class UserExtended extends Record {
 			
 	public function getWikiContent() {
 		$strings = array(
-			'name', 'email', 'photo', 'organization', 'position', 'shortbio', 'postalcode', 'phone', 'twitter', 'linkedin', 'skype', 'change'
+			'name', 'email', 'photo', 'organization', 'position', 'shortbio', 'postalcode', 'phone',
+			'twitter', 'linkedin', 'skype', 'change', 'delete'
 		);
 
 		$tr = new GettextPO(dirname(__FILE__).'/../locales/en/users.po');
@@ -58,6 +59,8 @@ class UserExtended extends Record {
 		$photo = $this->photo->getThumbnail(200);
 		
 		$server = 'http'.(@$_SERVER['HTTPS'] ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
+		$change = strtolower($change);
+		$delete = strtolower($delete);
 		
 		$wiki = '';
 		if ($photo) {
@@ -65,7 +68,7 @@ class UserExtended extends Record {
 			$wiki .= "<div style=\"margin: 5px; padding: 5px; border: 1px solid black;\">{$server}$photo</div>\n\n";
 			$wiki .= "</div>\n\n";
 		}
-		$wiki .= "<guard user=\"".htmlspecialchars($user)."\"><div style=\"float: right;\">&#91;[[Redirect:/modules/users/index/change/{$this->getPk()}/|$change]]]</div>\n\n</guard>";
+		$wiki .= "<guard user=\"".htmlspecialchars($user)."\"><div style=\"float: right;\">&#91;[[Redirect:/modules/users/index/edit/{$this->getPk()}/|$change]]] &#91;[[Special:DeleteUser|$delete]]]</div>\n\n</guard>";
 		$wiki .= "* '''$name''': {$this->user->user_real_name}\n";
 		$wiki .= "* '''$email''': {$this->user->user_email}\n";
 		$wiki .= "* '''$organization''': {$this->organization}\n";
@@ -76,7 +79,6 @@ class UserExtended extends Record {
 		$wiki .= "* '''$linkedin''': {$this->linkedin}\n";
 		$wiki .= "* '''$skype''': {$this->skype}\n\n";
 		$wiki .= "=== $shortbio ===\n\n".str_replace("\n", "\n\n", trim($this->shortbio))."\n\n";
-		$wiki .= "[[Category:Users|{$this->user->user_name}]]\n";
 		
 		return $wiki;
 	}

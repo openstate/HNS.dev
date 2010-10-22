@@ -96,6 +96,14 @@ class DeleteUser extends SpecialPage {
 		return;*/
 		global $wgOut,$wgUser;
 
+		$title = Title::newFromUrl('User:'.$olduser_text);
+		$article = new Article($title);
+		$article->doDelete('User deleted');
+
+		$title = Title::newFromUrl('User:'.$olduser_text.'/Profile');
+		$article = new Article($title);
+		$article->doDelete('User deleted');
+
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'user_groups', array( 'ug_user' => $olduserID ) );
 		$dbw->delete( 'user', array( 'user_id' => $olduserID ) );
