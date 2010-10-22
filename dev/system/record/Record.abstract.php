@@ -29,7 +29,9 @@ abstract class Record extends RecordBase {
 	const FLOAT = 'float';
 	const INT = 'int';
 	const STRING = 'string';
+	const DATE = 'date';
 	const LOOKUP = 'lookup';
+	const CALLBACK = 'callback'
 
 	/*
 		Holds column settings for this table
@@ -46,8 +48,18 @@ abstract class Record extends RecordBase {
 			- self::GREEDY		Loaded on loading of the record (default)
 			- self::LAZY			Loaded when accessed
 			- self::PASSTHROUGH	Loaded when accessed but not internally stored (Useful for blobs)
-		- type						One of self::FLOAT, self::INT, self::STRING, self::LOOKUP
-		- pattern					Regex pattern (for self::STRING) or lookup table name (for self::LOOKUP)
+		- type						One of self::FLOAT, self::INT, self::STRING, self::DATE, self::LOOKUP, self::CALLBACK
+			- self::FLOAT			Accepts floats, ints and strings formatted as either
+			- self::INT				Accepts ints and strings formatted as ints
+			- self::STRING			Accepts strings
+									Optional 'regex' parameter defines a regular expression to match
+			- self::DATE			Accepts ints representing timestamps and strings formatted as dates
+			- self::LOOKUP			Accepts values as they are found in a lookup table (either the id or the name)
+									Mandatory 'lookup' parameter defines the lookup table name
+			- self::CALLBACK		Defers type checking to a callback function, which should return the (transformed) value
+									or raise a RecordException if the value is not allowed
+									Mandatory 'callback' parameter defines the callback function name
+									
 	*/
 	protected $config = array();
 
@@ -625,18 +637,20 @@ abstract class Record extends RecordBase {
 					throw new RecordException('INT expected but not found for '.get_class($this).'.'.$name);
 				elseif ($check == self::FLOAT && !(is_float($value) || is_int($value) || preg_match('/^[0-9]+(\.[0-9]+)?$/', $value)))
 					throw new RecordException('FLOAT expected but not found for '.get_class($this).'.'.$name);
-				elseif ($check == self::STRING) {
-					$pattern = @$this->config[$name]['pattern'];
-					if ($pattern && !preg_match($pattern, $value))
+				elseif ($check == self::DATE) {
+					if (!is_int($value))
+						$value = strtotime($value);
+					if (!is_int($value)
+						throw new RecordException('DATE expected but not found for '.get_class($this).'.'.$name);
+					$value = strftime('%Y-%m-%d %H:%M:%S', $value)
+				} elseif ($check == self::STRING && $regex = @$this->config[$name]['regex'] && !preg_match($pattern, $value))
 						throw new RecordException('STRING expected but not found for '.get_class($this).'.'.$name);
-				} elseif ($check == self::LOOKUP) {
-					$pattern = @$this->config[$name]['pattern'];
-					if ($pattern) {
-						$value = $this->db->query('SELECT id FROM %t WHERE id = % OR name = %2', $this->tableName, $value)->fetchCell();
-						if (!$value)
-							throw new RecordException('LOOKUP expected but not found for '.get_class($this).'.'.$name);
-					}
-				}
+				} elseif ($check == self::LOOKUP && $lookup = @$this->config[$name]['lookup']) {
+					$value = $this->db->query('SELECT id FROM %t WHERE id = % OR name = %2', $lookup, $value)->fetchCell();
+					if (!$value)
+						throw new RecordException('LOOKUP expected but not found for '.get_class($this).'.'.$name);
+				} elseif ($check == self::CALLBACK && $callback = @$this->config[$name]['callback'])
+					$value = $this->$callback($value);
 			}
 			if (isset($this->hasOneConfig[$name]) && !(is_int($value) || ctype_digit($value))) {
 				$obj = Record::getInstance($this->hasOneConfig[$name]['class']);
