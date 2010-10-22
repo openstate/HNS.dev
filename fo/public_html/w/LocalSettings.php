@@ -133,6 +133,7 @@ $wgExtraNamespaces[NS_REDIRECT] = 'Redirect';
 
 require_once("$IP/extensions/GeSHiCodeTag.php");
 require_once( "$IP/extensions/UnblockUser/UnblockUser.php" );
+require_once( "$IP/extensions/DeleteUser/DeleteUser.php" );
 
 $wgxAdminUser = 'Admin';
 
