@@ -15,7 +15,7 @@ interface Query {
 	A wrapper for an array of queries.
 */
 class CompositeQuery implements Query {
-	protected $queries = array();
+	public $queries = array();
 	
 	/* Iterate over the queries and return their sql representations */
 	public function toSql() {
@@ -27,8 +27,11 @@ class CompositeQuery implements Query {
 	
 	/* Execute all queries */
 	public function execute() {
+		var_dump($this->toSql());
+		$result = array();
 		foreach ($this->queries as $query)
-			$query->execute();
+			$result = array_merge($result, $query->execute());
+		return $result;
 	}
 	
 	/* Add a query to the composite */
@@ -39,11 +42,6 @@ class CompositeQuery implements Query {
 	/* Merge two composites */
 	public function merge($composite) {
 		$this->queries = array_merge($this->queries, $composite->queries);
-	}
-	
-	/* Return the last query in this composite */
-	public function last() {
-		return $this->queries[count($this->queries)-1];
 	}
 }
 
@@ -59,7 +57,6 @@ class SelectQuery implements Query {
 	public $offset = 0;
 	
 	protected $aliases = array();
-	
 
 	public function toSql() {
 		/* SQLize select, from, where and order clauses */
@@ -131,7 +128,7 @@ class SelectQuery implements Query {
 					$groupBy[] = '"'.$prop.'"';
 		}
 		
-		return $groupBy
+		return $groupBy;
 	}
 	
 	protected function getJoin() {
@@ -162,26 +159,77 @@ class InsertQuery implements Query {
 	   This value is used by reference in other queries so their ids are updated when this
 	   row is inserted. */
 	public $id = null;
-
-	protected static $next = 1;
+	
+	protected static $next = 0;
 
 	public function toSql() {
-		$this->id = self::$next++;
+		$this->id = ++self::$next;
 		$fields = $this->query ? $this->query->select : $this->fields;
 		return 'INSERT INTO '.$this->table.' '.(is_array($fields) ? '("'.implode('", "', array_keys($fields)).'") ' : '').
 			($this->query ? $this->query->toSql() : ' VALUES ('.implode(', ', $this->fields).')').' ==> '.$this->id;
 	}
 
 	public function execute() {
-		$data = $this->query ? $this->query->execute() : array($this->fields);
+		$data = $this->query ? $this->query->execute() : array(array_map(array($this, 'unwrapValue'), $this->fields));
+		$result = array();
 		foreach ($data as $row) {
-			$obj = Record::getInstance($this->table);
-			foreach ($row as $key => $val)
+			/* If the table name contains an underscore, it refers to a foreign relation
+			   The first part will be the parent table, the second part the name of the relation in that table */
+			list($table, $subtable) = strpos($this->table, '_') !== false ? explode('_', $this->table, 2) : array($this->table, null);
+			if ($subtable) {
+				/* Check if there's a one-to-many or many-to-many relation */
+				$manyConfig = Record::getInstance($table)->getHasManyConfig($subtable);
+				if ($manyConfig) {
+					/* There is, check if there's a many-to-many relation */
+					if (array_key_exists('table', $manyConfig))
+						/* It is, so we're inserting a row in the junction table */
+						$obj = Record::getInstance($manyConfig['table']['class']);
+					else {
+						/* It's not, so we're updating the foreign object */
+						$field = $manyConfig['foreign'];
+						$obj = Record::getInstance($manyConfig['class']);
+						$obj->load($row['foreign_id']);
+						$obj->$field = $row['local_id'];
+						$obj->save();
+						continue;
+					}
+				} else {
+					var_dump($row, $this->toSql());
+					/* There's not, so we're updating the local object */
+					$oneConfig = Record::getInstance($table)->getHasOneConfig($subtable);
+					$field = $oneConfig['local'];
+					$obj = Record::getInstance($table);
+					var_dump(get_class($obj));
+					$obj->load($row['local_id']);
+					$obj->$field = $row['foreign_id'];
+					$obj->save();
+					continue;
+				}
+			} else {
+				$obj = Record::getInstance($table);
+				$mmConfig = false;
+			}
+			foreach ($row as $key => $val) {
+				/* Rename local and foreign keys for many-to-many relations */
+				if ($key == 'local_id' && $manyConfig) $key = $manyConfig['table']['local'];
+				if ($key == 'foreign_id' && $manyConfig) $key = $manyConfig['table']['foreign'];
 				$obj->$key = $val;
+			}
 			$obj->save();
 			if (!$this->query)
 				$this->id = $obj->id;
+			$result[] = array(strtolower(get_class($obj)), array('id' => $obj->id), $obj->softKey());
+			var_dump(array($table, array('id' => $obj->id)));
 		}
+		return $result;
+	}
+	
+	protected function unwrapValue($v) {
+		$v = is_object($v) ? $v->__toString() : $v;
+		if (preg_match('/^\'(.+)\'$/', $v, $match))
+			return str_replace('\\\'', '\'', $match[1]);
+		else
+			return $v;
 	}
 }
 
@@ -242,7 +290,6 @@ class DeleteQuery implements Query {
 		$select->where = $this->where;
 		
 		$query = $obj->select();
-		foreach ($select->where('%l', $select->where);
 		foreach ($this->subqueries as $key => $subquery)
 			$query->where('%t IN (%l)', $key, $subquery->toSql());
 		$list = $query->get();

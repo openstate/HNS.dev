@@ -52,6 +52,15 @@ class XmlQuery {
 			throw new ParseException('Where clause expected but not found');
 	}
 
+	/* Get the main insert/update in a composite query */
+	protected function getMainQuery($composite) {
+		$queries = array_filter($composite->queries, create_function('$q', '
+			return ($q instanceof InsertQuery || $q instanceof UpdateQuery) && strpos($q->table, "_") === false;
+		'));
+		$q = array_pop($queries);
+		return $q;
+	}
+
 	/* Parse a set of insert queries */
 	protected function parseInsert($xml) {
 		$composite = new CompositeQuery();
@@ -85,20 +94,20 @@ class XmlQuery {
 						$junction->table = $query->table.'_'.$key;
 					
 						/* Store local id as reference to this query's autoincrement id */
-						$junction->fields[$query->table.'_id'] = &$query->id;
+						$junction->fields['local_id'] = &$query->id;
 					
 						$id = (string) $item['id'];
 						if (!$id) {
 							/* New object: generate insert query and merge with queries */
 							$subqueries = $this->parseSingleInsert($item);
 							$composite->merge($subqueries);
-							$last = $subqueries->last();
+							$main = $this->getMainQuery($subqueries);
 							
 							/* Store remote id as reference to the new object's autoincrement id */
-							$junction->fields[$key.'_id'] = &$last->id;
+							$junction->fields['foreign_id'] = &$main->id;
 						} else {
 							/* Exisiting object, store remote id */
-							$junction->fields[$key.'_id'] = $id;
+							$junction->fields['foreign_id'] = $id;
 						}
 						/* Store xml attributes as fields in the junction table */
 						foreach($item->attributes() as $field => $val)
@@ -171,7 +180,7 @@ class XmlQuery {
 							
 							/* Find the relevant local ids using a subquery */
 							$subquery = new SelectQuery();
-							$subquery->select[$query->table.'_id'] = new QueryProperty('id');
+							$subquery->select['local_id'] = new QueryProperty('id');
 							$subquery->from = $query->table;
 							$subquery->where = $query->where;
 							
@@ -179,7 +188,7 @@ class XmlQuery {
 								/* Reference is marked to be deleted, create a delete query */
 								$junction = new DeleteQuery();
 								$junction->table = $query->table.'_'.$key;
-								$junction->subqueries[$query->table.'_id'] = $subquery;
+								$junction->subqueries['local_id'] = $subquery;
 								
 								/* Deleting a reference is always based on id */
 								$id = (string) $item['id'];
@@ -188,7 +197,7 @@ class XmlQuery {
 								
 								/* Generate junction table where clause to match on id */
 								$junction->where = array(new QueryFunction('eq', array(
-									new QueryProperty($key.'_id'),
+									new QueryProperty('foreign_id'),
 									new QueryValue($this->parseValue($id))
 								)));
 							} else {
@@ -201,13 +210,13 @@ class XmlQuery {
 									/* New object: generate insert query and merge with queries */
 									$subqueries = $this->parseSingleInsert($item);
 									$composite->merge($subqueries);
-									$last = $subqueries->queries[count($subqueries->queries)-1];
+									$main = $this->getMainQuery($subqueries);
 									/* Store remote id as reference to the new object's autoincrement id */
-									$junction->query->select[$key.'_id'] = new QueryValue(null);
-									$junction->query->select[$key.'_id']->value = &$last->id;
+									$junction->query->select['foreign_id'] = new QueryValue(null);
+									$junction->query->select['foreign_id']->value = &$main->id;
 								} else {
 									/* Store remote id */
-									$junction->query->select[$key.'_id'] = new QueryValue($id);
+									$junction->query->select['foreign_id'] = new QueryValue($id);
 								}
 								/* Store xml attributes as fields in the junction table */
 								foreach($item->attributes() as $field => $value)

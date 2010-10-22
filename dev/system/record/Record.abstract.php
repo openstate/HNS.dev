@@ -25,6 +25,11 @@ abstract class Record extends RecordBase {
 	const LOAD_NONE = 'load_none';
 	const LOAD_ALL = 'load_all';
 	const LOAD_DEFAULT = 'load_default';
+	
+	const FLOAT = 'float';
+	const INT = 'int';
+	const STRING = 'string';
+	const LOOKUP = 'lookup';
 
 	/*
 		Holds column settings for this table
@@ -41,6 +46,8 @@ abstract class Record extends RecordBase {
 			- self::GREEDY		Loaded on loading of the record (default)
 			- self::LAZY			Loaded when accessed
 			- self::PASSTHROUGH	Loaded when accessed but not internally stored (Useful for blobs)
+		- type						One of self::FLOAT, self::INT, self::STRING, self::LOOKUP
+		- pattern					Regex pattern (for self::STRING) or lookup table name (for self::LOOKUP)
 	*/
 	protected $config = array();
 
@@ -558,16 +565,6 @@ abstract class Record extends RecordBase {
 		//---- Listeners
 		if (isset($this->dataListeners[$name])) {
 			return $this->dataListeners[$name]->__get($name);
-		//---- Columns
-		} elseif (isset($this->config[$name])) {
-			if (!array_key_exists($name, $this->data)) {
-				$column = $name;
-				$cell = $this->db->query('SELECT %t FROM %t WHERE %t = %', $column, $this->tableName, $this->pkColumn, $this->data[$this->pkColumn])->fetchCell();
-				if (isset($this->config[$name]['loading']) && $this->config[$name]['loading'] == self::PASSTHROUGH)
-					return $cell;
-				$this->data[$name] = $cell;
-			}
-			return $this->data[$name];
 		//----- HasOne relations
 		} elseif (isset($this->hasOneConfig[$name])) {
 			if (!array_key_exists($name, $this->hasOneData)) {
@@ -585,6 +582,16 @@ abstract class Record extends RecordBase {
 				}
 			}
 			return $this->hasOneData[$name];
+		//---- Columns
+		} elseif (isset($this->config[$name])) {
+			if (!array_key_exists($name, $this->data)) {
+				$column = $name;
+				$cell = $this->db->query('SELECT %t FROM %t WHERE %t = %', $column, $this->tableName, $this->pkColumn, $this->data[$this->pkColumn])->fetchCell();
+				if (isset($this->config[$name]['loading']) && $this->config[$name]['loading'] == self::PASSTHROUGH)
+					return $cell;
+				$this->data[$name] = $cell;
+			}
+			return $this->data[$name];
 		//---- HasMany Relations
 		} elseif (isset($this->hasManyConfig[$name])) {
 			if (!array_key_exists($name, $this->hasManyData)) {
@@ -603,7 +610,39 @@ abstract class Record extends RecordBase {
 		}
 		//---- Columns
 		if ($name == $this->pkColumn) throw new RecordException('Setting of the primary key is not allowed !');
-		if (isset($this->config[$name]) && (!isset($this->config[$name]['writability']) || $this->config[$name]['writability'] == self::NORMAL)) {
+		if (isset($this->hasOneConfig[$name]) && is_object($value)) {
+			if ($value instanceof $this->hasOneConfig[$name]['class']) {
+				$this->hasOneData[$name] = $value;
+				if ($this->hasOneConfig[$name]['local'] != $this->pkColumn)
+					$this->data[$this->hasOneConfig[$name]['local']] = $value->{$this->hasOneConfig[$name]['foreign']};
+				$this->dirty = true;
+			} else {
+				throw new RecordException('Attempt to write has one relation "'.$name.'" with invalid class expected instance of "'.$this->hasOneConfig[$name]['class'].'"');
+			}
+		} elseif (isset($this->config[$name]) && (!isset($this->config[$name]['writability']) || $this->config[$name]['writability'] == self::NORMAL)) {
+			if ($check = @$this->config[$name]['check']) {
+				if ($check == self::INT && !(is_int($value) || ctype_digit($value)))
+					throw new RecordException('INT expected but not found for '.get_class($this).'.'.$name);
+				elseif ($check == self::FLOAT && !(is_float($value) || is_int($value) || preg_match('/^[0-9]+(\.[0-9]+)?$/', $value)))
+					throw new RecordException('FLOAT expected but not found for '.get_class($this).'.'.$name);
+				elseif ($check == self::STRING) {
+					$pattern = @$this->config[$name]['pattern'];
+					if ($pattern && !preg_match($pattern, $value))
+						throw new RecordException('STRING expected but not found for '.get_class($this).'.'.$name);
+				} elseif ($check == self::LOOKUP) {
+					$pattern = @$this->config[$name]['pattern'];
+					if ($pattern) {
+						$value = $this->db->query('SELECT id FROM %t WHERE id = % OR name = %2', $this->tableName, $value)->fetchCell();
+						if (!$value)
+							throw new RecordException('LOOKUP expected but not found for '.get_class($this).'.'.$name);
+					}
+				}
+			}
+			if (isset($this->hasOneConfig[$name]) && !(is_int($value) || ctype_digit($value))) {
+				$obj = Record::getInstance($this->hasOneConfig[$name]['class']);
+				$obj->loadBySoftKey($value);
+				$value = $obj->id;
+			}
 			$this->data[$name] = $value;
 			if (!isset($this->config[$name]['relations'])) {
 				foreach ($this->config as &$item)
@@ -616,15 +655,6 @@ abstract class Record extends RecordBase {
 			foreach ($this->config[$name]['relations'] as $item)
 				unset($this->hasOneData[$item]);
 			$this->dirty = true;
-		} elseif (isset($this->hasOneConfig[$name])) {
-			if ($value instanceof $this->hasOneConfig[$name]['class']) {
-				$this->hasOneData[$name] = $value;
-				if ($this->hasOneConfig[$name]['local'] != $this->pkColumn)
-					$this->data[$this->hasOneConfig[$name]['local']] = $value->{$this->hasOneConfig[$name]['foreign']};
-				$this->dirty = true;
-			} else {
-				throw new RecordException('Attempt to write has one relation "'.$name.'" with invalid class expected instance of "'.$this->hasOneConfig[$name]['class'].'"');
-			}
 		} elseif (isset($this->hasManyConfig[$name])) {
 			throw new RecordException('Attempt to write to has many relation "'.$name.'"');
 		} else {
@@ -707,15 +737,37 @@ abstract class Record extends RecordBase {
 		return $result;
 	}
 
+	protected $softKeyDefinition = 'id';
+
+	public function loadBySoftKey($key) {
+		$rows = $this->db->query('SELECT id FROM %t WHERE %l = % LIMIT 2', $this->tableName, $this->softKeyDefinition, $key)->fetchAllCells();
+		if (!count($rows))
+			throw new RecordException('Soft key \''.$key.'\' in record '.get_class($this).' not found');
+		elseif (count($rows) > 1)
+			throw new RecordException('Soft key \''.$key.'\' in record '.get_class($this).' not unique');
+		$this->load($rows[0]);
+	}
+	
+	public function softKey() {
+		return $this->db->query('SELECT %l FROM %t WHERE id = %', $this->softKeyDefinition, $this->tableName, $this->id)->fetchCell();
+	}
+	
 	public function has($key, $config) { $this->config[$key] = $config; }
 	public function hasOne($key, $config) { $this->hasOneConfig[$key] = $config; }
 	public function hasMany($key, $config) { $this->hasManyConfig[$key] = $config; }
 	
+	public function getHasManyConfig($key) { return @$this->hasManyConfig[$key]; }
+	public function getHasOneConfig($key) { return @$this->hasOneConfig[$key]; }
+	
+	/* Get an instance of a record object by name */
 	public static function getInstance($name) {
 		$name = ucfirst(strtolower($name));
 		include_once($name.'.class.php');
 		if (!class_exists($name, false))
-			throw new Exception('Unknown record class '.$name);
-		return new $name();
+			throw new RecordException('Unknown record class '.$name);
+		$obj = new $name();
+		if (!($obj instanceof Record))
+			throw new RecordException('Unknown record class '.$name);
+		return $obj;
 	}
 }
