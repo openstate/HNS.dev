@@ -23,6 +23,10 @@ class Project extends Record {
 		'granted' => array(),
 	);
 	
+	protected $data = array(
+		'granted' => 0,
+	);
+	
 	protected $hasOneConfig = array(
 		'user' => array(
 			'class' => 'User',
