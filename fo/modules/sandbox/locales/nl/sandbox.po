@@ -1,0 +1,2 @@
+msgid "sandbox.results"
+msgstr "Resultaat"

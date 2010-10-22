@@ -1,0 +1,10 @@
+{pofile form}
+<form method="post" action="{$smarty.server.REQUEST_URI}">
+<textarea rows="30" cols="40" name="xml">{$session.post|htmlspecialchars}</textarea><br />
+<input type="submit" value="##form.submit##"/>
+</form>
+
+{if $session.out}
+<h2><span class="mw-headline"> ##sandbox.results## </span></h2>
+<pre>{$session.out|htmlspecialchars}</pre>
+{/if}

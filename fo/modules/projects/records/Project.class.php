@@ -88,6 +88,8 @@ class Project extends Record {
 		$screenshot = $this->screenshot->getThumbnail(200);
 		$date = strftime($date_format, strtotime($this->date));
 		
+		$change = strtolower($change);
+		
 		$server = 'http'.($_SERVER['HTTPS'] ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
 		
 		$wiki = '';

@@ -7,7 +7,7 @@
 </div>{/if}
 <div style="float: right;">[<a href="{'/projects/index/publish/'|cat:$project->id|route}">##project.publish##</a>]</div>
 <p><em>##project.notpublished##</em></p>
-<div style="float: right;">[<a href="{'/projects/index/change/'|cat:$project->id|route}">##project.change##</a>]</div>
+<div style="float: right;">[<a href="{'/projects/index/change/'|cat:$project->id|route}">{'##project.change##'|strtolower}</a>]</div>
 <ul><li><b>##project.owner##</b>: <a href="##wiki.path##/User:{$project->user->user_name|htmlspecialchars}" class="?new?" title="User:{$project->user->user_name|htmlspecialchars}">{$project->user->user_name|htmlspecialchars}</a> (<a href="##wiki.path##/User_talk:{$project->user->user_name|htmlspecialchars}" class="?new?" title="User talk:{$project->user->user_name|htmlspecialchars}">##project.talk##</a> • <a href="##wiki.path##/Special:Contributions/{$project->user->user_name|htmlspecialchars}">##project.contribs##</a>)</li>
 {assign var=date value=$project->date|strtotime}<li><b>##project.date##</b>: {'##project.date_format##'|strftime2:$date}</li>
 <li><b>##project.website##</b>: <a href="{$project->website|htmlspecialchars}" class="external free" title="{$project->website|htmlspecialchars}" rel="nofollow">{$project->website|htmlspecialchars}</a></li>
