@@ -1,7 +1,6 @@
 <VirtualHost *:80>
-	DocumentRoot	<docroot>
-	ServerName	<domain>.gl
-	ServerAlias	*.<domain>.gl
+	DocumentRoot	.../hns-dev-bo/public.html
+	ServerName	backoffice.hns-dev.gl
 
 	RewriteEngine on
 	RewriteRule   ^/(assets|favicon.ico|robots.txt) - [L]

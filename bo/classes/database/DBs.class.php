@@ -29,6 +29,10 @@ class DBs {
 	// The link to the System database.
 	const SYSTEM = 0;
 
+	// Constant: LOGGING
+	// The link to the Logging database.
+	const LOGGING = 1;
+
 	// Property: $dbinfo
 	// Contains host, username and password information of the databases.
 	private static $dbinfo;
