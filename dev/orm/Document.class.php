@@ -13,9 +13,9 @@ class Document extends ApiRecord {
 		'vote_date' => array('type' => self::DATE),
 		'summary' => array('type' => self::STRING, 'length' => 250),
 		'type' => array('type' => self::LOOKUP, 'lookup' => 'doc_types'),
-		'result' => array('type' => self::INT),
+		'result' => array('type' => self::LOOKUP, 'lookup' => 'doc_results'),
 		'submitter' => array('type' => self::RELATION, 'relation' => 'Organization'),
-		'category' => array('type' => self::INT),
+		'category' => array('type' => self::LOOKUP, 'lookup' => 'doc_categories'),
 	);
 	
 	protected $hasManyConfig = array(

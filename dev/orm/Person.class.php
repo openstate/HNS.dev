@@ -25,7 +25,7 @@ class Person extends ApiRecord {
 		'country_birth' => array('type' => self::STRING),
 		'origin_mom' => array('type' => self::LOOKUP, 'lookup' => 'sys_nationalities'),
 		'origin_dad' => array('type' => self::LOOKUP, 'lookup' => 'sys_nationalities'),
-		'marital_status' => array('type' => self::INT),
+		'marital_status' => array('type' => self::LOOKUP, 'lookup' => 'marital_status'),
 	);
 	
 	protected $hasManyConfig = array(
