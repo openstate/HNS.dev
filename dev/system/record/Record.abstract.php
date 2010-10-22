@@ -658,6 +658,11 @@ abstract class Record extends RecordBase {
 			}
 		} elseif (isset($this->config[$name]) && (!isset($this->config[$name]['writability']) || $this->config[$name]['writability'] == self::NORMAL)) {
 			if (isset($this->hasOneConfig[$name]) && !(is_int($value) || ctype_digit($value))) {
+				if (is_null($value) || strlen($value) == 0) return;
+
+				/// BUG Values are escaped multiple times
+				if ($value == "''") return; // This occurred when inserting a <document> with an empty <parent>
+
 				$class = $this->hasOneConfig[$name]['class'];
 				require_once($class.'.class.php');
 				$obj = new $class();
