@@ -1,0 +1,876 @@
+/*
+ * ----------------------------------------------------------------------------
+ * 'gumax' style sheet for CSS2-capable browsers.
+ *       Loosely based on the monobook style
+ *
+ * @Version 3.3
+ * @Author Paul Y. Gu, <gu.paul@gmail.com>
+ * @Copyright paulgu.com 2006 - http://www.paulgu.com/
+ * @License: GPL (http://www.gnu.org/copyleft/gpl.html)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * ----------------------------------------------------------------------------
+ */
+
+/* Basic Structure
+-----------------------------------------------------------------------------*/
+/*
+ * page width
+ */
+#gumax-rbox
+{
+    width: 829px;     /* width of the web page */
+    /* border-left:  3px solid #ccc; /**/
+    /* border-right: 3px solid #ccc;  /**/
+}
+
+.gumax
+{
+    /* background: #fff;  /* content background: white */
+    background: transparent;  /* content background: white */
+    width:      100%;  /* need for IE6 win */
+}
+
+/*
+ * Setting for the Website: font style, font size
+ */
+
+body, td, th, input, textarea, pre, h1, h2, h3, h4, h5, h6 { color: #222; }
+
+body, td, th, input, textarea, pre
+{
+    font-family: Verdana, Georgia, Sans-serif, Arial, 'Trebuchet MS', 'Times New Roman';
+}
+
+body
+{
+    font-size: 11px;
+    margin: 0; padding: 0;
+    min-width: 800px;
+    background: #fff;  /* web site background */
+    /* background: transparent url("images/background_orange.jpg") top left repeat-x;  /* web site background */
+    /* background:#F3F2DD url("images/flower.jpg") top center no-repeat fixed;   /* web site background */
+    background:#f0f7f8;   /* web site background */
+}
+
+/* Logo properties and style
+-----------------------------------------------------------------------------*/
+
+#p-logo,
+#p-logo a,
+#p-logo a:hover
+{
+    width:  178px;
+    height: 45px;
+}
+
+#p-logo
+{
+    /* border:  1px solid #CC0033; /* debuging */
+    z-index: 200;
+    position: absolute; /*needed to use z-index */
+    top:  10px;
+    left: 20px; /* left margin of the logo, which is same as content margin */
+    overflow: visible;
+}
+#p-logo h5 { display: none; }
+#p-logo a,
+#p-logo a:hover
+{
+    display: block;
+    background-repeat: no-repeat;
+    background-position: 35% 50% !important;
+    text-decoration: none;
+}
+
+/* Header Style
+-----------------------------------------------------------------------------*/
+/*
+ * --- gumax-header ---
+ */
+#gumax-header
+{
+    /* border:  1px solid #CC0033; /* debuging */
+    position: relative;
+    z-index: 100;     /* make logo visible over content*/
+    min-height: 45px; /* height of header */
+    height:     47px; /* need for IE */
+    margin: 0 auto;
+    padding-top: 7px;
+	padding-left: 12px;
+	padding-bottom: 12px;
+	padding-right: 12px;
+}
+
+/*
+ * --- Login ---
+ */
+#gumax-p-login,#gumax-p-special {
+    /* border:  1px solid #fff; /* debuging */
+	width: 849px;
+	text-align: right;
+    text-transform: none;
+	padding-top: 5px;
+}
+
+/* Removed by Accepte 
+#gumax-p-login {
+    position: absolute;
+    top:   2px;
+    right: 0;
+}
+*/
+
+#gumax-p-login ul {
+    position: relative;
+    width: auto;
+    list-style: none;
+    z-index: 90; /* below the H1 */
+    margin: 0 10px; /* left and right margin of the list */
+}
+
+#gumax-p-login li {
+    position: relative;
+    display: inline;    /* display in line  */
+    color: #999; /* color of "|" */
+}
+#gumax-p-login ul li a {
+    margin: 0;
+    padding: 0 5px;
+	color: #999; /* margin betwen items */
+    font-size: 11px; /* font size of items */
+
+}
+
+/*
+ * --- gumax date time ---
+ */
+#gumax-p-date
+{
+    /* border:  1px solid #FFCC00; /* debuging */
+    position: absolute;
+    top:   2px;
+    left: 10px;
+    color: #bbb;
+    font-size: 90%;
+    display: none;
+}
+
+
+/*
+ * --- Special and Login menu ---
+ */
+
+/* removed by Accepte
+#gumax-p-special
+{
+    position: absolute;
+    z-index: 3;
+    top: 48px; /* lined up with search box 
+    right: 23em; /* 23em (*11) = 253px 
+}*/
+
+#gumax-p-special ul
+{
+	margin: 0 10px;
+}
+
+#gumax-p-special ul li
+{
+    display: inline;
+    list-style: none;
+}
+
+#gumax-p-special ul li a
+{
+	margin: 0;
+    font-size: 11px;
+    padding: 0 5px; /* margin betwen items */
+    color: #999;
+}
+
+#gumax-p-special ul li a:hover
+{
+    color: #777;
+    text-decoration: none;
+}
+
+/*
+ * --- Search ---
+ */
+#gumax-p-search {
+    /* border:  1px solid #FFCC00; /* debuging */
+    position: absolute;
+    z-index: 3;
+    top: 25px;
+    right: 0;
+}
+
+#gumax-p-search .gumax-pBody,
+#gumax-searchBody {
+    /* border: 1px solid #99FF00;  /* testing */
+    background: none;
+    position: relative;
+    padding: 0;
+    margin-right:  10px;   /* right side margin of search, same as content margin */
+    text-align: left;
+    white-space: nowrap;    /* for Opera */
+    vertical-align: middle;
+}
+
+#gumax-p-search form #searchInput {
+    font-size: 100%;
+    width: 15em;   /* text field width */
+	padding: 4px;
+    text-align: left;
+    vertical-align: middle;
+    border: 1px solid #000; /* text field border style */
+    background: #FFF; /* background color of the text field */
+}
+
+#gumax-p-search form #searchGoButton,
+#gumax-p-search form #mw-searchButton {
+    font-family: Verdana, Sans-serif, Arial;
+    vertical-align: middle;
+    background: #5f96bd; /* button background */
+    color: #fff;  /* font color */
+    border: none; /* border: 1px inset #777; */
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 80%;
+	height: 23px;
+}
+
+#searchGoButton:link, #searchGoButton:visited, #searchGoButton:hover, #searchGoButton:active,
+#mw-searchButton:link, #mw-searchButton:visited, #mw-searchButton:hover, #mw-searchButton:active
+{
+    background: #FFCC00;
+    cursor: pointer;
+}
+
+/* dynamic site logo style
+-----------------------------------------------------------------------------*/
+#gumax-site-logo,
+#gumax-site-logo a,
+#gumax-site-logo a:hover {
+    /* border: 3px solid #99FF00;  /* testing */
+    height:     50px;
+    min-height: 50px; /* height of header */
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center center;
+    text-decoration: none;
+}
+
+#gumax-site-logo {
+    /* background: #fff; */
+    border:  1px solid #ccc;
+    background: #fff;
+    text-align: center;
+    padding: 0;
+    margin: 2px 15px; /* same margin as content */
+    /* display: none; /* disable site logo */
+}
+
+/* main content and navigation style
+-----------------------------------------------------------------------------*/
+/*
+ * --- Navigation ---
+ */
+.gumax-portlet h5 { display: none; } /* hide menu title */
+
+#gumax-p-navigation-wrapper
+{
+    /* border: 1px solid red; /* debuging */
+    height:     22px;
+    padding-right: 1px;
+	background: #063f74;
+	border-bottom: 3px solid #275d8d;
+	width:834px;
+	height: 32px;
+	margin: 0px auto;
+}
+
+#gumax-p-navigation {
+    /* border: 1px solid #000; /* debuging */
+    float: left; /* main menu position */
+	height: 32px;
+	padding-left:5px;
+}
+
+#gumax-p-navigation ul {
+    /* border: 1px solid red; /* debuging */
+    margin: 0;
+}
+
+#gumax-p-navigation ul li {
+     float: left; /* fix the gap between <li> list */
+    /* display: inline;  /* display in one line with gaps */
+    margin: 0;
+    padding: 0;
+    font-weight: normal; /* the font weight of '|' */
+    font-size: 1.3em;   /* the font size of the navigation menu */
+    color: #7FBAFF;    /* the font color of '|' */
+    list-style: none;
+	height: 32px;
+	background: url('images/bg_menu_line.gif') top left no-repeat;
+}
+
+#gumax-p-navigation ul li a {
+    /*padding: 3px 9px 3px 9px; /* padding inside the tab */
+	display: block;
+	height: 32px;
+	line-height: 31px;
+	padding: 0px 10px;
+    margin: 0;
+    font-weight: bold;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #beecff;
+}
+
+#gumax-p-navigation ul li a:hover {
+	height: 32px;
+	line-height: 31px;
+	background: url('images/bg_active_menuitem.gif') repeat-x;
+	color: #FFF;
+}
+
+/* need for IE to display as block */
+* html #gumax-p-navigation ul li a {
+    display: block; /* Make the hyperlinks as a block element, sort of a hover effect */
+    position: relative; /* need for IE */
+	background: url('images/bg_active_menuitem.gif') repeat-x;
+}
+
+#main_menu_spacer
+{
+    height: 10px;
+	width: 829px;
+	margin: 0px auto;
+	clear: both;
+}
+
+/*
+ * --- content style ---
+ */
+#gumax-content-body {
+    /* border:  1px solid #CC6600;  /* debuging */
+    padding: 0;
+    margin: 0;
+    /* border-left:  1px solid #ddd;  /**/
+    /* border-right:  1px solid #ddd;  /**/
+    /* text-align: justify; /**/
+}
+
+#gumax-content-body {
+    width: 100%;
+}
+
+#content {
+    border: none;
+    background: transparent;
+    margin: 0;
+    padding: 0px 15px 10px 15px;  /* margin of the main content */
+    /* position: relative !important;  */
+    position: static; /* need for IE positioning problem */
+    z-index: 2;
+    clear: both;
+    color: black;
+    line-height: 1.4em; /* value other than 'normal' needed for WinIE */
+    overflow-x: visible;    /* need for Firefox, extreme long string :( */
+}
+
+/*
+ * --- content page title format ---
+ */
+.page-Home .firstHeading { display: none; } /* Hide Home Page title */
+
+#content .firstHeading
+{
+    font-size: 150%;
+    color: #aaa;
+    font-weight: bolder;
+    padding: 1em 0 0 0;    /* position of the title */
+    margin: 0;
+    border: none;    /* No border for page title */
+    text-transform: capitalize;
+    display: none; /* disable papge title */
+}
+
+/*
+ * ---  breadcrumbs ---
+ */
+div.breadcrumbs                          { margin: 0 0 30px 0; }
+* html div.breadcrumbs                   { margin: 10px 0 30px 0; } /* IE fix */
+div.breadcrumbs a.breadcrumbs            { text-decoration: none; }
+div.breadcrumbs span.breadcrumbs         { font-weight: normal; }
+div.breadcrumbs span.breadcrumbs_current { font-weight: normal; }
+
+#bodyContent {
+    /* border:  1px solid #ddd;  /* debuging */
+    width: 100%;
+}
+
+/*
+ * --- AJax search style ---
+ */
+div#searchTargetContainer {
+    left:       0px;
+    top:        0px;
+    width:      100%;
+    background: white;
+    overflow-x: visible;    /* need for Firefox, extreme long string :( */
+    word-wrap: break-word;  /* need for IE, extreme long string :( */
+}
+
+div#searchTarget {
+    padding:    10px;
+    margin:     5px;
+    background: #fefefe;
+    border:     solid 1px #FFCC00;
+}
+
+div#searchTarget h2 {
+    padding-top: 1em;
+    margin-bottom: .5em;
+}
+
+div#searchTarget a {
+    position: relative;
+    z-index: 300; /* fix the hide link button */
+}
+
+/*
+ * --- table of content styles ---
+ */
+#toc, .toc, .mw-warning {
+    font-size: 100%;
+    border: 1px solid #AAAAAA;
+    background-color: #F5F5F5;
+    padding: .5em;
+    margin-bottom: 1.2em;
+}
+
+#toc h2, .toc h2 {
+    font-size: 110%;
+    border: none;
+    margin: 0;  /* fix toc top margin */
+    padding-right: .2em; /* margin between title and hide/show link */
+    display: inline;  /* display the hide/show link after Contents */
+}
+
+#toc #toctitle,
+.toc #toctitle,
+#toc .toctitle,
+.toc .toctitle {
+    text-align: left; /* left adjust of title */
+}
+
+#toc ul, .toc ul {
+    list-style-type: none;
+    list-style-image: none;
+    margin:  0;
+    padding: .3em 0 0 .7em; /* margin of the item list */
+    text-align: left;
+}
+#toc ul ul, .toc ul ul,
+#toc ul ul ul, .toc ul ul ul {
+    margin: 0 0 0 .7em; /* toclevel-2 margin */
+}
+
+#toc .tocindent   { margin-left: 1em; }
+#toc .tocline     { margin-bottom: 0; }
+#toc p            { margin: 0 }
+#toc .toctoggle   { font-size: 90%; }
+
+#toc .editsection {
+    margin-top: .3em;
+    font-size: 90%;
+}
+
+/*
+ * --- body content ---
+ */
+h1, h2 {
+    padding: .3em 0;
+    border-bottom: 3px solid #ccc;
+}
+
+ul {
+    margin: .3em 0 0 1.5em;
+    list-style-image: url(arrow.gif);
+}
+li {
+    margin-left: .5em;
+    margin-bottom: .1em;
+    padding: 0; /* margin between bullet and content */
+}
+
+#editform {
+    width: 100%; /* prevent overflow in IE when editing */
+}
+
+textarea {
+    font-size: 100%;
+    width: 99%;     /* fix the textarea oversize in IE */
+    padding: 5px 0 0 5px;
+    margin: 0;
+    border: 1px solid #3399FF;
+}
+
+/* pre{ */
+/* white-space: pre;            /* CSS2 */
+/* white-space: -moz-pre-wrap;  /* Mozilla */
+/* white-space: -hp-pre-wrap;   /* HP printers */
+/* white-space: -o-pre-wrap;    /* Opera 7 */
+/* white-space: -pre-wrap;      /* Opera 4-6 */
+/* white-space: pre-wrap;       /* CSS 2.1 */
+/* white-space: pre-line;       /* CSS 3 (and 2.1 as well, actually) */
+/* word-wrap: break-word;       /* IE */
+/* } */
+
+pre {
+    white-space: -moz-pre-wrap;     /* need for Firefox */
+    overflow-x: auto;    /* need for Firefox, extreme long string :( */
+    font-size: 90%;
+    padding: 1em 2em;
+    border: 1px dashed #2f6fab;
+    color: black;
+    background: #fefefe;
+    line-height: 1.2em;
+}
+* html pre {
+    word-wrap: break-word;       /* IE */
+}
+.visualClear { clear: both;}
+
+.errorbox, .successbox {
+    margin-top:     .2em;
+    margin-bottom:  1em;
+}
+
+#contentSub, #contentSub2 {
+    font-size: 90%;
+    line-height: 1.2em;
+    margin: 0.5em 0 1.4em 0;
+    color: #7d7d7d;
+    width: auto;
+}
+
+/* edit section
+-----------------------------------------------------------------------------*/
+* html div.editsection {
+    font-size: 90%;
+}
+.editsection {
+    font-size: 90%;
+    margin-top: 2px;
+}
+
+/* category style
+-----------------------------------------------------------------------------*/
+#catlinks {
+    border: 1px solid #aaa;
+    background-color: #f9f9f9;
+    padding: .3em;
+    margin-top: 1em;
+    clear: both;
+}
+#catlinks p, .catlinks {
+    margin:  0;
+    padding: 0;
+}
+
+
+/* content action
+-----------------------------------------------------------------------------*/
+/*
+ * --- content actions  ---
+ */
+#gumax-content-actions
+{
+    /* border:  1px solid #000; /* debuging */
+    text-align: left;
+    height: 1.5em;   /* need for IE win */
+    font-size: 95%;
+    padding-left:  9px;
+    padding-right: 9px;
+}
+
+#gumax-content-actions ul
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#gumax-content-actions ul li
+{
+    /* display: inline;  /* display in line */
+    float: left;
+    overflow: visible;
+    color: #999; /* the font color of '|' */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#gumax-content-actions ul li a
+{
+    padding: 2px 7px; /* padding of the menu item */
+}
+
+
+/* Page footer
+-----------------------------------------------------------------------------*/
+#footer_spacer
+{
+    height: 20px;
+	width: 836px;
+	margin: 0px auto;
+    background: transparent url("images/three_dot.gif") center center repeat-x;  /* footer spacer background */
+}
+
+#gumax-page-footer
+{
+    /* border:  1px solid #000; /* debuging */
+    padding-bottom: 10px;
+}
+
+#gumax-page-footer {
+    text-align: left;
+}
+#gumax-page-footer li {
+    display: inline;
+    margin: 0;
+}
+
+#gumax-personal-tools,
+#gumax-personal-tools ul li,
+#gumax-footer,
+#gumax-footer ul li,
+#gumax-f-message,
+#gumax-f-message ul li{
+    font-size: 95%; /* font size of page footer */
+}
+
+#gumax-personal-tools,
+#gumax-footer
+{
+    padding-left:  10px;
+    padding-right: 10px;
+}
+
+#gumax-personal-tools {
+    /* border:  1px solid #000; /* debuging */
+    margin: 0;
+}
+#gumax-personal-tools ul {
+    list-style: none;
+    margin: 0;
+}
+#gumax-personal-tools li {
+    display: inline;
+    margin: 0;
+    overflow: visible;
+    color: #bbb; /* the font color of '|' */
+}
+
+#gumax-personal-tools ul li a,
+#gumax-footer ul li a
+{
+    padding: 2px 5px; /* padding of the menu item */
+}
+
+/*
+ * --- gumax-footer ---
+ */
+#gumax-footer {
+    clear: both;
+    border: 0; /* 1px solid #999; */
+}
+#gumax-footer ul {
+    list-style: none;
+    margin: 0;
+}
+#gumax-footer ul li {
+    display: inline;
+    margin: 0;
+    white-space: nowrap;
+    color: #aaa; /* the font color of '|' */
+}
+
+#gumax-f-message {
+    padding-left: 5px;
+}
+
+/* Special:Specialpages
+-----------------------------------------------------------------------------*/
+#allmessagestable { /* system message table fix */
+    table-layout: fixed;
+    width:     100%;
+    max-width: 100%;
+    margin-top: 20px;
+}
+#allmessagestable.left td {
+    width: 30%;
+}
+
+table.imagelist, table.TablePager { /* image list table fix */
+    /* table-layout: fixed; /**/
+    width:     100%;
+    max-width: 100%;
+    margin-top: 0.3em;
+}
+.TablePager td, .TablePager th {
+    border: 1px solid #777777;
+}
+.imagelist td, .imagelist th {
+    white-space: normal;
+}
+/* remove line wrapping for TablePager_col_links */
+.imagelist .TablePager_col_links {
+    white-space: nowrap;
+}
+
+/* file gallery fix */
+/*
+table.gallery {
+    margin: 2px 0;
+    padding: 2px 0;
+}
+div.gallerybox {
+    margin: 2px 1px;
+    width:  125px;
+}
+div.gallerybox div.thumb {
+    margin: 2px 0;
+}
+*/
+
+/* Random HTML Style
+-----------------------------------------------------------------------------*/
+hr {
+    height: 1px;
+    color: #aaa;
+    background-color: #aaa;
+    border: 0;
+    margin: .2em 0 .2em 0;
+}
+
+input[type="submit"] { font-weight: bold; }
+
+/* for margin between paragraphs */
+.cc {
+    font-size: 10%;
+    padding: 0.2em 0 0.2em 0;
+    margin: 0;
+}
+/*-------------------------------------
+    <div class="cc">&nbsp;</div>
+-------------------------------------*/
+
+/*
+* Force Opera / Moz / Netscape
+* to display an _IN_active vertical scrollbar
+* (like IE).
+*/
+html {
+    overflow-y: scroll;
+}
+
+/* -----------------------------------------------------------
+-- make a few corners round --
+only supported by moz/firefox/other gecko browsers for now
+-----------------------------------------------------------
+*/
+div.breadcrumbs {
+    -moz-border-radius-topleft: 0.5em;
+    -moz-border-radius-topright: 0.5em;
+    -moz-border-radius-bottomleft: 0.5em;
+    -moz-border-radius-bottomright: 0.5em;
+}
+
+/* IE/Mac fixes
+-----------------------------------------------------------------------------*/
+/* fix for position of image inside table */
+table {
+    /* position: none !important;  /* positioning, except IE */
+    /* position: relative;         /* positioning for IE */
+}
+
+/* the positioning of preferences */
+/* float/negative margin brokenness */
+* html #preferences {
+    width: 90%;
+}
+
+/* login form fix */
+div#userloginForm form,
+form#userlogin2 {
+    width: 500px;
+}
+
+/* Google Map
+-----------------------------------------------------------------------------*/
+#google_maps_show_link,
+#google_maps_toggle_link {
+    /* border:  1px solid #CC0033; /* debuging */
+    font-size: 120%;
+    display: inline;
+    float: right;
+    padding: 0 0 2px 0;
+}
+
+/* Accepte edit
+-----------------------------------------------------------------------------*/
+
+.gumax_head_acc {
+	width: 849px;
+	height: 37px;
+	background: url('images/bg_topsection.gif') no-repeat;
+}
+
+.gumax_box_acc {
+	width: 849px;
+	background: url('images/bg_sitecontainer.gif') repeat-y;
+}
+
+.gumax_foot_acc {
+	width: 849px;
+	height: 20px;
+	background: url('images/bg_siteend.gif') no-repeat;
+}
+
+.special_bottom_acc {
+	width: 816px;
+	margin: 0px auto;
+	padding: 10px;
+	background: #063f74;
+	color: #FFF;
+}
+
+.special_participation_acc {
+	width: 616px;
+	margin: 0px auto;
+	padding: 20px;
+	padding-left: 200px;
+	background: #beecff;
+	font-size:10px;
+	color: #666;
+}
+/* The end
+-----------------------------------------------------------------------------*/
