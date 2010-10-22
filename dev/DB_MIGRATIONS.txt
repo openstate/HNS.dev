@@ -8,3 +8,7 @@ INSERT INTO doc_types (name) VALUES ('Amendement');
 INSERT INTO doc_types (name) VALUES ('Motie');
 INSERT INTO doc_types (name) VALUES ('Burgerinitiatief');
 INSERT INTO doc_types (name) VALUES ('Onbekend');
+
+-- Create column documents.code
+ALTER TABLE documents
+ADD code text;

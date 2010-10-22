@@ -3,7 +3,7 @@
 class Document extends ApiRecord {
 	protected $tableName = 'documents';
 	protected $softKeyDefinition = 'title';
-	
+
 	protected $config = array(
 		'title' => array('type' => self::STRING, 'length' => 50),
 		'source' => array('type' => self::STRING, 'length' => 250),
@@ -17,8 +17,9 @@ class Document extends ApiRecord {
 		'submitter_organization' => array('type' => self::RELATION, 'relation' => 'Organization'),
 		'submitter_person' => array('type' => self::RELATION, 'relation' => 'Person'),
 		'category' => array('type' => self::LOOKUP, 'lookup' => 'doc_categories'),
+		'code' => array('type' => self::STRING, 'length' => 250),
 	);
-	
+
 	protected $hasManyConfig = array(
 		'authors' => array(
 			'class' 	=> 'Person',
@@ -51,7 +52,7 @@ class Document extends ApiRecord {
 			'foreign'	=> 'document',
 		),
 	);
-	
+
 	public function init() {
 		$this->registerTaggablePlugin();
 		parent::init();
