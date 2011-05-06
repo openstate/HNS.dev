@@ -188,6 +188,10 @@ class DatabasePostgres extends Database {
 			$safeschema = $this->quote_ident($wgDBmwschema);
 			$safeschema2 = $this->quote_ident($wgDBts2schema);
 			$this->doQuery( "SET search_path = $safeschema, $wgDBts2schema, public" );
+		} else {
+			$safeschema = $this->quote_ident($wgDBmwschema);
+			$safeschema2 = $this->quote_ident($wgDBts2schema);
+			$this->doQuery( "SET search_path = $safeschema, $safeshema2, public" );
 		}
 
 		return $this->mConn;
